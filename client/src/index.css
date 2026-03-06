@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* ================================
+   DESIGN TOKENS (Tailwind v4)
+================================ */
+@theme {
+  /* ===== COLORS ===== */
+  --color-primary: #f4f4f4;
+  --color-primary-deep: #1b1b1726;
+  --color-secondary: #777777;
+  --color-tertiary: #272626;
+  --color-gray-30: #7b7b7b;
+  --color-gray-50: #585858;
+
+  /* ===== BREAKPOINTS ===== */
+  --breakpoint-xs: 480px;
+
+  /* ===== BACKGROUND ===== */
+  --background-image-hero: url("/src/assets/hero-bg.png");
+
+  /* ===== FONTS ===== */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-pacifico: "Pacifico", cursive;
+}
+
+/* ================================
+   BASE STYLES
+================================ */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply text-tertiary bg-white;
+  }
+
+  h1 {
+    @apply text-[45px] md:text-[71px] font-bold;
+  }
+
+  h2 {
+    @apply text-[25px] md:text-[35px] font-bold;
+  }
+
+  h3 {
+    @apply text-[24px] md:text-[28px] font-bold;
+  }
+
+  h4 {
+    @apply text-[16px] md:text-[17px] font-bold;
+  }
+
+  h5 {
+    @apply text-[14px] md:text-[15px] font-bold;
+  }
+
+  p {
+    @apply text-[14px] leading-[1.5] text-gray-30;
+  }
+}
+
+/* ================================
+   UTILITIES
+================================ */
+@layer utilities {
+  /* Active link */
+  .active-link {
+    @apply relative;
+  }
+
+  .active-link::after {
+    content: "";
+    @apply absolute right-1 -bottom-1 h-0.5 w-2/5 bg-black;
+  }
+
+  /* Buttons */
+  .btn-white {
+    @apply px-7 py-3.5 text-sm font-medium transition-all
+           bg-white text-tertiary;
+  }
+
+  .btn-dark {
+    @apply px-7 py-3.5 text-sm font-medium transition-all
+           bg-tertiary text-white;
+  }
+
+  .btn-light {
+    @apply px-7 py-3.5 text-sm font-medium transition-all
+           bg-primary ring-1 ring-slate-900/10 hover:bg-white;
+  }
+
+  .btn-outline {
+    @apply px-7 py-3.5 text-sm font-medium transition-all
+           bg-white ring-1 ring-slate-900/10 hover:bg-primary;
+  }
+
+  .btn-secondary {
+    @apply px-7 py-3.5 text-sm font-medium transition-all
+           bg-secondary text-white;
+  }
+
+  /* Layout */
+  .max-padd-container {
+    @apply mx-auto max-w-[1440px] px-6 lg:px-12;
+  }
+
+  .flexCenter {
+    @apply flex items-center justify-center;
+  }
+
+  .flexBetween {
+    @apply flex items-center justify-between;
+  }
+
+  /* Scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ================================
+   MEDIA QUERIES
+================================ */
+@media (max-width: 768px) {
+  .bg-hero {
+    background-size: cover;
+    background-position: center;
+  }
+}
