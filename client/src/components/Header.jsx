@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'  // Thêm useEffect
+import React, { useState, useContext, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import { FaSearch, FaShoppingBasket } from "react-icons/fa"
@@ -8,18 +8,18 @@ import userImg from '../assets/user.png'
 import { ShopContext } from '../context/ShopContext'
 
 const Header = () => {
-    const { user, setUser, navigate, searchQuery, setSearchQuery, setShowUserLogin , getCartCount} = useContext(ShopContext)
+    const { user, setUser, navigate, searchQuery, setSearchQuery, setShowUserLogin, getCartCount } = useContext(ShopContext)
     const location = useLocation()
     const [menuOpened, setMenuOpened] = useState(false)
     const [showSearch, setShowSearch] = useState(false)
     
     const isHomepage = location.pathname === "/"
-    const isCollectionPage = location.pathname.includes('/collection')  // Thêm dòng này
+    const isCollectionPage = location.pathname.includes('/collection')
 
     const toggleMenu = () => setMenuOpened((prev) => !prev)
 
     useEffect(() => {
-        if (searchQuery?.length > 0 && !isCollectionPage) {  // Thêm optional chaining
+        if (searchQuery?.length > 0 && !isCollectionPage) {
             navigate('/collection');
         }
     }, [searchQuery, isCollectionPage, navigate]);
@@ -55,7 +55,7 @@ const Header = () => {
                             <div className={`${showSearch ? 'flex rounded-full bg-white w-[333px] p-3.5 pl-6' : 'hidden'} ${!isHomepage ? 'bg-primary' : ''} items-center gap-3`}>
                                 <input 
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    value={searchQuery || ''}  // Thêm value để kiểm soát input
+                                    value={searchQuery || ''}
                                     type="text" 
                                     placeholder="Type here..." 
                                     className="bg-transparent w-full outline-none text-[14px]" 
@@ -71,7 +71,9 @@ const Header = () => {
                         {/* Cart Icon */}
                         <div onClick={() => navigate('/cart')} className="flex gap-2 items-center cursor-pointer p-2 rounded-full bg-white relative">
                             <FaShoppingBasket size={27} />
-                            <label className="absolute bottom-8 -right-2 text-xs font-bold bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center">{getCartCount}</label>
+                            <label className="absolute bottom-8 -right-2 text-xs font-bold bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center">
+                                {getCartCount()}  {/* SỬA: thêm dấu () */}
+                            </label>
                         </div>
 
                         {/* User Profile */}

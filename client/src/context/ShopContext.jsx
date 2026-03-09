@@ -8,13 +8,13 @@ const ShopContext = createContext()
 const ShopContextProvider = ({ children }) => {
     const navigate = useNavigate()
     const currency = import.meta.env.VITE_CURRENCY
-    const delivery_charges =0 //10dolar
+    const delivery_charges =0 
     const [user, setUser] = useState(null)
     const [products, setProducts] = useState([])
     const [searchQuery, setSearchQuery] = useState("")
     const [showUserLogin, setShowUserLogin] = useState(false)
     const [cartItems, setCartItems] = useState({})  // SỬA: đúng tên
-
+    const [isAdmin, setIsAdmin] = useState(false)
     //fetch all products
     const fetchProducts = async () => {
         setProducts(dummyProducts)
@@ -80,6 +80,8 @@ const getCartAmount = () => {
         getCartCount,
         updateQuantity,
         getCartAmount,
+        isAdmin,
+        setIsAdmin,
     }
 
     return (
