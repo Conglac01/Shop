@@ -1,34 +1,53 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = ({ containerStyles, setMenuOpened }) => {
-    const navLinks = [
-        { path: '/', title: 'Home' },
-        { path: '/collection', title: 'Collection' },
-        { path: '/testimonial', title: 'Testimonial' },
-        { path: '/contact', title: 'Contact' },
-    ]
-    
-    return (
-        <nav className={containerStyles}>
-            {navLinks.map((link) => (
-                <NavLink
-                    onClick={() => setMenuOpened && setMenuOpened(false)}
-                    key={link.title}
-                    to={link.path}
-                    className={({ isActive }) => 
-                        `text-sm font-semibold uppercase tracking-wider relative px-2 py-1 transition-all duration-300 ${
-                            isActive 
-                                ? 'active-link text-black font-bold' 
-                                : 'text-gray-600 hover:text-black'
-                        }`
-                    }
-                >
-                    {link.title}
-                </NavLink>
-            ))}
-        </nav>
-    )
+
+const navLinks = [
+{ path: "/", title: "Home" },
+{ path: "/collection", title: "Collection" },
+{ path: "/wishlist", title: "Wishlist" },
+{ path: "/testimonial", title: "Testimonial" },
+{ path: "/contact", title: "Contact" },
+];
+
+return (
+
+<nav className={`flex items-center gap-8 ${containerStyles}`}>
+
+{navLinks.map((link) => (
+
+<NavLink
+key={link.title}
+to={link.path}
+onClick={() => setMenuOpened && setMenuOpened(false)}
+
+className={({ isActive }) =>
+`relative text-sm font-semibold uppercase tracking-wider transition duration-300 
+${isActive ? "text-black" : "text-gray-500 hover:text-black"}`
 }
 
-export default Navbar
+>
+
+{({ isActive }) => (
+<>
+{link.title}
+
+<span
+className={`absolute left-0 -bottom-1 h-[2px] bg-secondary transition-all duration-300
+${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
+></span>
+</>
+)}
+
+</NavLink>
+
+))}
+
+</nav>
+
+);
+
+};
+
+export default Navbar;

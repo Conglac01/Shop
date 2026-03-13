@@ -1,110 +1,175 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Title from '../components/Title'
-import { ShopContext } from '../context/ShopContext'
-import Item from '../components/Item'
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Title from "../components/Title";
+import { ShopContext } from "../context/ShopContext";
+import Item from "../components/Item";
+import ProductFilter from "../components/ProductFilter";
 
 const Collection = () => {
-  const { products, searchQuery } = useContext(ShopContext)
-  const [filteredProducts, setFilteredProducts] = useState([])
-  const [currPage, setCurrPage] = useState(1)
-  const itemsPerPage = 10
+
+  const { products, searchQuery } = useContext(ShopContext);
+  const { category } = useParams();
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [currPage, setCurrPage] = useState(1);
+
+  const [sortOption, setSortOption] = useState("default");
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    if (products && products.length > 0) {
-      let filtered = products
-      
-      // Lọc theo searchQuery
-      if (searchQuery?.length > 0) {
-        filtered = products.filter((product) => 
-          product.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      }
-      
-      // Lọc theo inStock
-      filtered = filtered.filter(product => product.inStock === true)
-      
-      setFilteredProducts(filtered)
-      setCurrPage(1)
+
+    if (!products || products.length === 0) return;
+
+    let filtered = [...products];
+
+    // CATEGORY
+    if (category) {
+      filtered = filtered.filter(
+        (product) =>
+          product.category?.toLowerCase() === category.toLowerCase()
+      );
     }
-  }, [products, searchQuery])
 
-    useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [currPage])
+    // SEARCH
+    if (searchQuery && searchQuery.trim() !== "") {
+      filtered = filtered.filter((product) =>
+        product.name?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
-  // Tính toán phân trang
-  const indexOfLastItem = currPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem)
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage)
+    // PRICE FILTER
+    filtered = filtered.filter((product) => {
+
+      const price = product.offerPrice ?? product.price ?? 0;
+
+      return price >= priceRange[0] && price <= priceRange[1];
+
+    });
+
+    // SORT
+    if (sortOption === "low-high") {
+      filtered.sort(
+        (a, b) =>
+          (a.offerPrice ?? a.price ?? 0) -
+          (b.offerPrice ?? b.price ?? 0)
+      );
+    }
+
+    if (sortOption === "high-low") {
+      filtered.sort(
+        (a, b) =>
+          (b.offerPrice ?? b.price ?? 0) -
+          (a.offerPrice ?? a.price ?? 0)
+      );
+    }
+
+    if (sortOption === "rating") {
+      filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    }
+
+    setFilteredProducts(filtered);
+    setCurrPage(1);
+
+  }, [products, searchQuery, category, sortOption, priceRange]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currPage]);
+
+  // PAGINATION
+  const indexOfLastItem = currPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   return (
-    <div className='max-padd-container py-16 pt-28'>
-      <Title 
-        title1="All" 
-        title2="Products" 
-        titleStyles="pb-10" 
+    <div className="max-padd-container py-16 pt-28">
+
+      <Title
+        title1="All"
+        title2={category ? category : "Products"}
+        titleStyles="pb-10"
       />
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-        {filteredProducts.length > 0 ? (
-          currentItems.map((product) => (
-            <Item key={product._id} product={product} />
-          ))
-        ) : (
-          <h4 className='h4 text-red-500 col-span-full text-center py-10'>
-            Oops! Nothing matched your search
-          </h4>
-        )}
+
+      <div className="flex gap-8">
+
+        <ProductFilter
+          setSortOption={setSortOption}
+          setPriceRange={setPriceRange}
+        />
+
+        <div className="flex-1">
+
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+
+            {currentItems.length > 0 ? (
+
+              currentItems.map((product) => (
+                <Item key={product._id} product={product} />
+              ))
+
+            ) : (
+
+              <h4 className="text-red-500 col-span-full text-center py-10">
+                Oops! Nothing matched your search
+              </h4>
+
+            )}
+
+          </div>
+
+          {totalPages > 1 && (
+
+            <div className="flex items-center justify-center gap-4 mt-12">
+
+              <button
+                disabled={currPage === 1}
+                onClick={() => setCurrPage((prev) => prev - 1)}
+                className="px-3 py-1.5 text-sm border rounded"
+              >
+                Previous
+              </button>
+
+              <div className="flex gap-2">
+
+                {Array.from({ length: totalPages }, (_, index) => (
+
+                  <button
+                    key={index + 1}
+                    onClick={() => setCurrPage(index + 1)}
+                    className={`px-3 py-1 rounded ${
+                      currPage === index + 1
+                        ? "bg-black text-white"
+                        : "border"
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+
+                ))}
+
+              </div>
+
+              <button
+                disabled={currPage === totalPages}
+                onClick={() => setCurrPage((prev) => prev + 1)}
+                className="px-3 py-1.5 text-sm border rounded"
+              >
+                Next
+              </button>
+
+            </div>
+
+          )}
+
+        </div>
+
       </div>
 
-      
-      {/* Pagination */}
-{totalPages > 1 && (
-  <div className='flex items-center justify-center gap-4 mt-12'>
-    <button
-      disabled={currPage === 1}
-      onClick={() => setCurrPage((prev) => prev - 1)}
-      className={`px-3 py-1.5 text-sm border rounded transition ${
-        currPage === 1 
-          ? 'opacity-50 cursor-not-allowed bg-gray-100 text-gray-400' 
-          : 'text-gray-700 border-gray-300 hover:bg-gray-50'
-      }`}
-    >
-      Previous
-    </button>
-
-    <div className='flex items-center gap-3'>
-      {Array.from({ length: totalPages }, (_, index) => (
-        <button
-          key={index + 1}
-          onClick={() => setCurrPage(index + 1)}
-          className={`text-sm transition ${
-            currPage === index + 1
-              ? 'text-black font-bold'
-              : 'text-gray-400 hover:text-gray-600'
-          }`}
-        >
-          {index + 1}
-        </button>
-      ))}
     </div>
+  );
+};
 
-    <button
-      disabled={currPage === totalPages}
-      onClick={() => setCurrPage((prev) => prev + 1)}
-      className={`px-2 py-0.5 text-sm border rounded transition ${
-        currPage === totalPages
-          ? 'opacity-50 cursor-not-allowed bg-gray-100 text-gray-400'
-          : 'text-gray-700 border-gray-300 hover:bg-gray-50'
-      }`}
-    >
-      Next
-    </button>
-  </div>
-)}
-    </div>
-  )
-}
-
-export default Collection
+export default Collection;

@@ -25,6 +25,8 @@ import Orders from "./pages/admin/Order";
 import { ShopContext } from "./context/ShopContext";
 import { Toaster } from "react-hot-toast";
 
+import Wishlist from "./pages/Wishlish";
+
 const App = () => {
   const { showUserLogin, isAdmin } = useContext(ShopContext);
   const location = useLocation();
@@ -49,13 +51,15 @@ const App = () => {
           {/* USER ROUTES */}
           <Route path="/" element={<Home />} />
           <Route path="/collection" element={<Collection />} />
-          <Route path="/collection/:category" element={<CategoryCollection />} />
+          <Route path="/collection/:category" element={<Collection />} />
           <Route path="/collection/:category/:id" element={<ProductDetails />} />
           <Route path="/testimonial" element={<Testimonial />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/place-order" element={<PlaceOrder />} />
           <Route path="/my-orders" element={<MyOrder />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+
 
           {/* ADMIN ROUTES */}
           <Route

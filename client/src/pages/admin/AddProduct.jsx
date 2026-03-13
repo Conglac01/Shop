@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FiUploadCloud } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { BiTrash } from 'react-icons/bi';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { ShopContext } from '../../context/ShopContext';
 
 const AddProduct = () => {
+    const { axios } = useContext(ShopContext);
     const [files, setFiles] = useState([null, null, null, null]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -13,18 +17,48 @@ const AddProduct = () => {
     const [popular, setPopular] = useState(false);
     const [sizes, setSizes] = useState([]);
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log({
-            name,
-            description,
-            price,
-            offerPrice,
-            category,
-            popular,
-            sizes,
-            files: files.filter(f => f !== null)
-        });
+        try {
+            const productData = {
+                name,
+                description,
+                category,
+                price,
+                offerPrice,
+                sizes,
+                popular
+            };
+
+            const formData = new FormData();
+            formData.append('productData', JSON.stringify(productData));
+            
+            for (let i = 0; i < files.length; i++) {
+                if (files[i]) {
+                    formData.append('images', files[i]);
+                }
+            }
+
+            const { data } = await axios.post('/api/product/add', formData);
+
+            if (data.success) {
+                toast.success(data.message);
+                // Reset form after successful submission
+                setName("");
+                setDescription("");
+                setPrice("10");
+                setOfferPrice("10");
+                setCategory("Men");
+                setPopular(false);
+                setSizes([]);
+                setFiles([null, null, null, null]);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
     };
 
     const handleSizeToggle = (size) => {

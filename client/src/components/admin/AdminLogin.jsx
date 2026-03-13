@@ -1,21 +1,32 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ShopContext } from "../../context/ShopContext";
 
+import toast from "react-hot-toast";
+
 const AdminLogin = () => {
-  const { isAdmin, setIsAdmin, navigate } = useContext(ShopContext);
+  const { isAdmin, setIsAdmin, navigate, axios } = useContext(ShopContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [state, setState] = useState("login");
 
-  const handleSubmit = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-
-    // demo login
-    if (email === "habeo@shop.com" && password === "112233") {
-      setIsAdmin(true);
-    } else {
-      alert("Email or password is incorrect");
+    try {
+        const { data } = await axios.post(
+  "http://localhost:4000/api/admin/login",
+  { email, password },
+  { withCredentials: true }
+);
+        if (data.success) {
+            setIsAdmin(true);
+            navigate('/admin');
+            toast.success(data.message);
+        } else {
+            toast.error(data.message);
+        }
+    } catch (error) {
+        toast.error(error.message);
     }
   };
 
@@ -31,7 +42,7 @@ const AdminLogin = () => {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center text-sm text-gray-600 bg-black/50">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onSubmitHandler}  // ✅ SỬA: handleSubmit → onSubmitHandler
         className="flex flex-col gap-4 p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white"
       >
         <h3 className="text-2xl font-bold text-center mb-3">
