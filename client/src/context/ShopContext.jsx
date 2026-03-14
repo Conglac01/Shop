@@ -20,6 +20,7 @@ const ShopContextProvider = ({ children }) => {
 
   // ⚡ PRODUCTS (KHÔNG LƯU LOCALSTORAGE NỮA)
   const [products, setProducts] = useState(dummyProducts);
+  const [loading, setLoading] = useState(false); // THÊM state loading
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showUserLogin, setShowUserLogin] = useState(false);
@@ -59,6 +60,8 @@ const ShopContextProvider = ({ children }) => {
 
     try {
 
+      setLoading(true); // THÊM setLoading
+
       const { data } = await axios.get("/api/product/list");
 
       // CHỈ CẬP NHẬT NẾU API TRẢ VỀ DỮ LIỆU THẬT
@@ -75,6 +78,8 @@ const ShopContextProvider = ({ children }) => {
       console.log("⚠️ API error, keeping dummy data:", error.message);
       // GIỮ NGUYÊN dummyProducts, KHÔNG LÀM GÌ
 
+    } finally {
+      setLoading(false); // THÊM setLoading trong finally
     }
 
   };
@@ -235,6 +240,7 @@ const ShopContextProvider = ({ children }) => {
     setUser,
 
     products,
+    loading, // THÊM loading vào value
 
     searchQuery,
     setSearchQuery,

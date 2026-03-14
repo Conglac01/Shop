@@ -71,7 +71,7 @@ const Cart = () => {
     }
 
     const subtotal = getCartAmount()
-    const shipping = subtotal > 500 ? 0 : 30
+    const shipping = subtotal > 500 ? 0 : 1
     const discountAmount = subtotal * discount
     const total = subtotal - discountAmount + shipping
 

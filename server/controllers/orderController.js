@@ -3,8 +3,8 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
 // Global variables for payment
-const currency = "pkr";
-const deliveryCharges = 0; // Free shipping
+const currency = "$";
+const deliveryCharges = 1; // Free shipping
 
 // Place order using COD = /api/order/cod
 export const placeOrderCOD = async (req, res) => {

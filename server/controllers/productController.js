@@ -50,6 +50,74 @@ export const singleProduct = async (req, res) => {
     }
 };
 
+// Controller function for updating product = /api/product/:id (PUT)
+export const updateProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+
+        // Nếu có productData từ form-data
+        if (updates.productData) {
+            const parsedData = JSON.parse(updates.productData);
+            Object.assign(updates, parsedData);
+            delete updates.productData;
+        }
+
+        // Xử lý sizes nếu là string
+        if (updates.sizes && typeof updates.sizes === 'string') {
+            updates.sizes = JSON.parse(updates.sizes);
+        }
+
+        const product = await productModel.findByIdAndUpdate(
+            id,
+            updates,
+            { new: true, runValidators: true }
+        );
+
+        if (!product) {
+            return res.json({ 
+                success: false, 
+                message: "Product not found" 
+            });
+        }
+
+        res.json({ 
+            success: true, 
+            message: "Product updated successfully",
+            product 
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+// Controller function for deleting product = /api/product/:id (DELETE)
+export const deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const product = await productModel.findByIdAndDelete(id);
+
+        if (!product) {
+            return res.json({ 
+                success: false, 
+                message: "Product not found" 
+            });
+        }
+
+        res.json({ 
+            success: true, 
+            message: "Product deleted successfully" 
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
+    }
+};
+
 // Controller function for changing the product stock = /api/product/stock
 export const changeStock = async (req, res) => {
     try {
