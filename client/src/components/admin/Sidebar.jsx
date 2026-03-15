@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../context/ShopContext";
-import { BiPlus, BiListUl, BiShoppingBag, BiLogOut } from "react-icons/bi";
+import { BiPlus, BiListUl, BiShoppingBag, BiLogOut, BiUser, BiHome } from "react-icons/bi";
 import { NavLink, Outlet, Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -48,6 +48,16 @@ const Sidebar = () => {
       label: "Orders",
       icon: <BiShoppingBag size={20} />,
     },
+    {
+      path: "/admin/users",
+      label: "Users",
+      icon: <BiUser size={20} />,
+    },
+    {
+      path: "/admin/dashboard",
+      label: "Dashboard",
+      icon: <BiHome size={20} />,
+    }
   ];
 
   return (

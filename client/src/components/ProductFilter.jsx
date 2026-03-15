@@ -1,15 +1,12 @@
 import React from "react";
 
-const ProductFilter = ({
-  setSortOption,
-  setPriceRange
-}) => {
+const ProductFilter = ({ setSortOption, setPriceRange }) => {
 
   return (
 
-    <div className="w-full md:w-60 bg-white p-4 rounded-xl shadow-sm">
+    <div className="w-full lg:w-[260px] bg-white p-5 rounded-xl shadow-sm border">
 
-      <h3 className="font-semibold mb-4 text-gray-700">
+      <h3 className="font-semibold mb-4 text-gray-700 text-lg">
         Filter Products
       </h3>
 
@@ -23,7 +20,7 @@ const ProductFilter = ({
 
         <select
           onChange={(e) => setSortOption(e.target.value)}
-          className="w-full border rounded p-2 text-sm"
+          className="w-full border rounded p-2 text-sm focus:outline-none"
         >
           <option value="default">Default</option>
           <option value="low-high">Price: Low → High</option>
@@ -51,10 +48,10 @@ const ProductFilter = ({
             if (value === "50") setPriceRange([0, 50])
             if (value === "100") setPriceRange([50, 100])
             if (value === "200") setPriceRange([100, 200])
-            if (value === "500") setPriceRange([200, 500])
+            if (value === "500") setPriceRange([200, 1000])
 
           }}
-          className="w-full border rounded p-2 text-sm"
+          className="w-full border rounded p-2 text-sm focus:outline-none"
         >
 
           <option value="all">All Prices</option>

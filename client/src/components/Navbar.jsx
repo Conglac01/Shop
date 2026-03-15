@@ -9,21 +9,21 @@ const navLinks = [
 { path: "/wishlist", title: "Wishlist" },
 { path: "/testimonial", title: "Testimonial" },
 { path: "/contact", title: "Contact" },
-];
+]
 
 return (
 
-<nav className={`flex items-center gap-8 ${containerStyles}`}>
+<nav className={containerStyles}>
 
 {navLinks.map((link) => (
 
 <NavLink
 key={link.title}
 to={link.path}
-onClick={() => setMenuOpened && setMenuOpened(false)}
+onClick={() => setMenuOpened(false)}
 
 className={({ isActive }) =>
-`relative text-sm font-semibold uppercase tracking-wider transition duration-300 
+`group relative text-sm font-semibold uppercase tracking-wider transition
 ${isActive ? "text-black" : "text-gray-500 hover:text-black"}`
 }
 
@@ -31,12 +31,14 @@ ${isActive ? "text-black" : "text-gray-500 hover:text-black"}`
 
 {({ isActive }) => (
 <>
+
 {link.title}
 
 <span
 className={`absolute left-0 -bottom-1 h-[2px] bg-secondary transition-all duration-300
 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
 ></span>
+
 </>
 )}
 
@@ -46,8 +48,8 @@ ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
 
 </nav>
 
-);
+)
 
-};
+}
 
-export default Navbar;
+export default Navbar

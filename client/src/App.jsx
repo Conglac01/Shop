@@ -27,9 +27,11 @@ import OrderDetail from './pages/admin/OrderDetail';
 
 import { ShopContext } from "./context/ShopContext";
 import { Toaster } from "react-hot-toast";
+import Users from "./pages/Users";
+import Dashboard from "./pages/Dashboard"
 
 const App = () => {
-  const { showUserLogin, isAdmin, setIsAdmin } = useContext(ShopContext);
+  const { showUserLogin, isAdmin, setIsAdmin, user } = useContext(ShopContext);
   const location = useLocation();
 
   // Kiểm tra token trong localStorage khi component mount
@@ -42,7 +44,16 @@ const App = () => {
 
   const isAdminRoute = location.pathname.startsWith("/admin");
 
-  // Protected route component
+  // 👇 PROTECTED ROUTE CHO USER
+  const ProtectedUserRoute = ({ children }) => {
+    if (!user) {
+      // Lưu lại trang định vào để sau login quay lại
+      return <Navigate to="/" state={{ from: location.pathname }} replace />;
+    }
+    return children;
+  };
+
+  // Admin route component (bạn đã có)
   const AdminRoute = ({ children }) => {
     if (!isAdmin) {
       return <Navigate to="/admin/login" replace />;
@@ -85,28 +96,49 @@ const App = () => {
         />
 
         <Routes>
-          {/* USER ROUTES */}
+          {/* PUBLIC ROUTES - ai cũng vào được */}
           <Route path="/" element={<Home />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/collection/:category" element={<Collection />} />
           <Route path="/collection/:category/:id" element={<ProductDetails />} />
           <Route path="/testimonial" element={<Testimonial />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/place-order" element={<PlaceOrder />} />
-          <Route path="/my-orders" element={<MyOrder />} />
-          <Route path="/wishlist" element={<Wishlist />} />
 
-          {/* ADMIN LOGIN ROUTE */}
+          {/* 👇 PROTECTED USER ROUTES - cần đăng nhập */}
+          <Route path="/cart" element={
+            <ProtectedUserRoute>
+              <Cart />
+            </ProtectedUserRoute>
+          } />
+          
+          <Route path="/place-order" element={
+            <ProtectedUserRoute>
+              <PlaceOrder />
+            </ProtectedUserRoute>
+          } />
+          
+          <Route path="/my-orders" element={
+            <ProtectedUserRoute>
+              <MyOrder />
+            </ProtectedUserRoute>
+          } />
+          
+          <Route path="/wishlist" element={
+            <ProtectedUserRoute>
+              <Wishlist />
+            </ProtectedUserRoute>
+          } />
+
+          {/* ADMIN ROUTES (giữ nguyên) */}
           <Route path="/admin/login" element={<AdminLogin />} />
-
-          {/* PROTECTED ADMIN ROUTES */}
           <Route path="/admin" element={<AdminRoute><Sidebar /></AdminRoute>}>
             <Route index element={<AddProduct />} />
             <Route path="list" element={<ProductList />} />
             <Route path="orders" element={<Orders />} />
             <Route path="orders/:id" element={<OrderDetail />} />
             <Route path="edit/:id" element={<EditProduct />} />
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
           </Route>
 
           {/* 404 Route */}

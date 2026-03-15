@@ -85,7 +85,7 @@ const Collection = () => {
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   return (
-    <div className="max-padd-container py-16 pt-28">
+    <div className="max-w-[1440px] mx-auto px-4 py-16 pt-28">
 
       <Title
         title1="All"
@@ -93,16 +93,21 @@ const Collection = () => {
         titleStyles="pb-10"
       />
 
-      <div className="flex gap-8">
+      {/* MAIN LAYOUT */}
+      <div className="flex flex-col lg:flex-row gap-6">
 
-        <ProductFilter
-          setSortOption={setSortOption}
-          setPriceRange={setPriceRange}
-        />
+        {/* FILTER SIDEBAR */}
+        <div className="w-full lg:w-[260px]">
+          <ProductFilter
+            setSortOption={setSortOption}
+            setPriceRange={setPriceRange}
+          />
+        </div>
 
+        {/* PRODUCTS */}
         <div className="flex-1">
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
 
             {currentItems.length > 0 ? (
 
@@ -120,19 +125,21 @@ const Collection = () => {
 
           </div>
 
+          {/* PAGINATION */}
+
           {totalPages > 1 && (
 
-            <div className="flex items-center justify-center gap-4 mt-12">
+            <div className="flex items-center justify-center gap-3 mt-12 flex-wrap">
 
               <button
                 disabled={currPage === 1}
                 onClick={() => setCurrPage((prev) => prev - 1)}
-                className="px-3 py-1.5 text-sm border rounded"
+                className="px-3 py-1.5 text-sm border rounded hover:bg-gray-100"
               >
                 Previous
               </button>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
 
                 {Array.from({ length: totalPages }, (_, index) => (
 
@@ -155,7 +162,7 @@ const Collection = () => {
               <button
                 disabled={currPage === totalPages}
                 onClick={() => setCurrPage((prev) => prev + 1)}
-                className="px-3 py-1.5 text-sm border rounded"
+                className="px-3 py-1.5 text-sm border rounded hover:bg-gray-100"
               >
                 Next
               </button>

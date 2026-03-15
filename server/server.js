@@ -9,6 +9,9 @@ import connectCloudinary from './config/cloudinary.js';
 import productRouter from './routes/productRouter.js';
 import cartRouter from './routes/cartRouter.js';
 import orderRouter from './routes/orderRoute.js';  
+import adminUserRouter from './routes/adminUserRoute.js'
+import dashboardRouter from "./routes/dashboardRoute.js";
+
 
 const app = express(); // Initialize Express Application
 const port = process.env.PORT || 4000; // Define server port
@@ -35,9 +38,11 @@ app.get("/", (req, res) => {
 //define API routes
 app.use('/api/user', userRouter);// Routes for user-related operation
 app.use('/api/admin', adminRouter)
+app.use('/api/admin', adminUserRouter)
 app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/order',orderRouter)
+app.use("/api/dashboard", dashboardRouter);
 
 
 // Start the server

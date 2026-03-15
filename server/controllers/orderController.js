@@ -1,120 +1,133 @@
-import productModel from "../models/productModel.js";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
-// Global variables for payment
-const currency = "$";
-const deliveryCharges = 1; // Free shipping
+/* PLACE ORDER COD */
 
-// Place order using COD = /api/order/cod
 export const placeOrderCOD = async (req, res) => {
-    try {
-        const { items, address } = req.body;
-        const userId = req.userId;
 
-        if (items.length === 0) {
-            return res.json({ success: false, message: "Please add product first" });
-        }
+  try {
 
-        // calculate amount using items
-        let subtotal = 0;
-        for (const item of items) {
-            const product = await productModel.findById(item.product);
-            if (!product) {
-                return res.json({ success: false, message: "Product not found" });
-            }
-            subtotal += product.offerPrice * item.quantity;
-        }
+    const { userId } = req;
 
-        // calculate total (free shipping)
-        const totalAmount = subtotal; // Không cộng deliveryCharges vì đã = 0
+    const { items, amount, address } = req.body;
 
-        // Create order
-        const orderData = {
-            userId,
-            items,
-            amount: totalAmount,
-            address,
-            paymentMethod: "COD",
-            isPaid: false,
-            status: "Order Placed"
-        };
+    const orderData = {
+      userId,
+      items,
+      amount,
+      address,
+      paymentMethod: "COD",
+      payment: false,
+      date: Date.now()
+    };
 
-        const newOrder = new orderModel(orderData);
-        await newOrder.save();
+    const newOrder = new orderModel(orderData);
 
-        // Clear user's cart after order placed
-        await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    await newOrder.save();
 
-        res.json({ 
-            success: true, 
-            message: "Order Placed Successfully"
-        });
+    await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
-    } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message });
-    }
+    res.json({
+      success: true,
+      message: "Order placed successfully"
+    });
+
+  } catch (error) {
+
+    console.log(error.message);
+
+    res.json({
+      success: false,
+      message: error.message
+    });
+
+  }
+
 };
 
-// Place Order using Stripe = /api/order/stripe
-export const placeOrderStripe = async (req, res) => {
-    try {
-        // Stripe implementation will go here
-        res.json({ success: true, message: "Stripe payment coming soon" });
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
-    }
-};
+/* USER ORDERS */
 
-// ALL Orders data for Frontend by UserId = /api/order/userorders
 export const userOrders = async (req, res) => {
-    try {
-        const userId = req.userId;
 
-        const orders = await orderModel.find({ 
-            userId, 
-            $or: [{ paymentMethod: "COD" }, { isPaid: true }] 
-        })
-        .populate("items.product")
-        .sort({ createdAt: -1 });
+  try {
 
-        res.json({ success: true, orders });
+    const { userId } = req;
 
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
-    }
+    const orders = await orderModel.find({ userId });
+
+    res.json({
+      success: true,
+      orders
+    });
+
+  } catch (error) {
+
+    res.json({
+      success: false,
+      message: error.message
+    });
+
+  }
+
 };
 
-// ALL Orders data for Admin panel = /api/order/list
+/* ADMIN ORDERS */
+
 export const allOrders = async (req, res) => {
-    try {
-        const orders = await orderModel.find({ 
-            $or: [{ paymentMethod: "COD" }, { isPaid: true }] 
-        })
-        .populate("items.product")
-        .sort({ createdAt: -1 });
 
-        res.json({ success: true, orders });
+  try {
 
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
-    }
+    const orders = await orderModel.find({});
+
+    res.json({
+      success: true,
+      orders
+    });
+
+  } catch (error) {
+
+    res.json({
+      success: false,
+      message: error.message
+    });
+
+  }
+
 };
 
-// Updating order status from admin panel = /api/order/status
+/* UPDATE STATUS */
+
 export const updateStatus = async (req, res) => {
-    try {
-        const { orderId, status } = req.body;
-        await orderModel.findByIdAndUpdate(orderId, { status });
 
-        res.json({ success: true, message: "Order Status Updated" });
+  try {
 
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: error.message });
-    }
+    const { orderId, status } = req.body;
+
+    await orderModel.findByIdAndUpdate(orderId, { status });
+
+    res.json({
+      success: true,
+      message: "Status Updated"
+    });
+
+  } catch (error) {
+
+    res.json({
+      success: false,
+      message: error.message
+    });
+
+  }
+
+};
+
+/* STRIPE (placeholder) */
+
+export const placeOrderStripe = async (req, res) => {
+
+  res.json({
+    success: false,
+    message: "Stripe not implemented yet"
+  });
+
 };

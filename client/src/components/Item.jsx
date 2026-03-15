@@ -45,7 +45,7 @@ const Item = ({ product }) => {
 
     <div
       onClick={goToProduct}
-      className="relative rounded-xl p-4 hover:shadow-lg transition cursor-pointer bg-white flex flex-col justify-between group"
+      className="relative rounded-xl p-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer bg-white flex flex-col justify-between group"
     >
 
       {/* SALE BADGE */}
