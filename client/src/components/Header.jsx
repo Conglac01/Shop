@@ -9,6 +9,8 @@ import { FiChevronDown } from "react-icons/fi";
 
 import userImg from "../assets/user.png";
 import { ShopContext } from "../context/ShopContext";
+// 👇 IMPORT HOOK
+import useScrollToTop from "../hooks/useScrollToTop";
 
 const Header = () => {
   const {
@@ -20,6 +22,9 @@ const Header = () => {
     setShowUserLogin,
     getCartCount,
   } = useContext(ShopContext);
+
+  // 👇 LẤY HÀM CUỘN TỪ HOOK
+  const { scrollToTopSmooth } = useScrollToTop();
 
   const location = useLocation();
 
@@ -38,6 +43,16 @@ const Header = () => {
   const toggleMenu = () => setMenuOpened((prev) => !prev);
 
   const displayName = user?.name?.split(" ")[0] || "User";
+
+  // 👇 XỬ LÝ CLICK LOGO
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    navigate('/');
+    // Cuộn lên đầu sau khi chuyển trang
+    setTimeout(() => {
+      scrollToTopSmooth();
+    }, 100);
+  };
 
   // Sticky header
   useEffect(() => {
@@ -94,8 +109,12 @@ const Header = () => {
       >
         <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between py-3">
 
-          {/* Logo */}
-          <Link to="/" className="bold-22 uppercase font-pacifico">
+          {/* Logo - ĐÃ SỬA */}
+          <Link 
+            to="/" 
+            onClick={handleLogoClick}
+            className="bold-22 uppercase font-pacifico"
+          >
             Shop <span className="text-secondary bold-28">.</span>
           </Link>
 
@@ -107,7 +126,7 @@ const Header = () => {
                 ? "flex flex-col gap-6 fixed top-16 right-6 bg-white p-6 shadow-xl rounded-lg z-50"
                 : "hidden lg:flex items-center gap-x-10"
             }
-/>
+          />
 
           {/* Right icons */}
           <div className="flex gap-8 items-center">

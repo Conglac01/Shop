@@ -4,10 +4,13 @@ import Item from "../components/Item";
 
 const Wishlist = () => {
 
-  const { wishlist } = useContext(ShopContext);
+  const { wishlist, products } = useContext(ShopContext);
 
-  // nếu wishlist chưa có
-  if (!wishlist || wishlist.length === 0) {
+  const wishlistProducts = products.filter((product) =>
+    wishlist.includes(product._id)
+  );
+
+  if (wishlistProducts.length === 0) {
     return (
       <div className="flex justify-center items-center h-[60vh] text-gray-500 text-lg">
         Your wishlist is empty ❤️
@@ -25,14 +28,12 @@ const Wishlist = () => {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
 
-        {wishlist
-          .filter(product => product) // tránh undefined
-          .map((product) => (
+        {wishlistProducts.map((product) => (
 
-            <Item
-              key={product._id}
-              product={product}
-            />
+          <Item
+            key={product._id}
+            product={product}
+          />
 
         ))}
 

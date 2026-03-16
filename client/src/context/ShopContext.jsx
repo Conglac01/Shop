@@ -22,10 +22,6 @@ const ShopContextProvider = ({ children }) => {
   const currency = import.meta.env.VITE_CURRENCY || "$";
   const delivery_charges = 0;
 
-  // =========================
-  // STATE
-  // =========================
-
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState(dummyProducts);
   const [loading, setLoading] = useState(false);
@@ -33,45 +29,14 @@ const ShopContextProvider = ({ children }) => {
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // =========================
-  // CART (LOCAL STORAGE)
-  // =========================
-
-  const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem("cartItems");
-    return savedCart ? JSON.parse(savedCart) : {};
-  });
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  // =========================
-  // WISHLIST
-  // =========================
-
-  const [wishlist, setWishlist] = useState(() => {
-    const savedWishlist = localStorage.getItem("wishlist");
-    return savedWishlist ? JSON.parse(savedWishlist) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }, [wishlist]);
-
-  // =========================
-  // PRODUCT MAP (OPTIMIZE)
-  // =========================
+  const [cartItems, setCartItems] = useState({});
+  const [wishlist, setWishlist] = useState([]);
 
   const productMap = useMemo(() => {
     const map = {};
     products.forEach((p) => (map[p._id] = p));
     return map;
   }, [products]);
-
-  // =========================
-  // AUTO LOGOUT TIMER
-  // =========================
 
   const logoutTimerRef = useRef(null);
   const INACTIVE_TIMEOUT = 30 * 60 * 1000;
@@ -80,10 +45,12 @@ const ShopContextProvider = ({ children }) => {
     try {
       await axios.post("/api/user/logout");
       setUser(null);
+      setCartItems({});
+      setWishlist([]);
       toast("Logged out due to inactivity");
       navigate("/");
     } catch (error) {
-      console.log("Auto logout error:", error.message);
+      console.log(error.message);
     }
   }, [navigate]);
 
@@ -120,44 +87,32 @@ const ShopContextProvider = ({ children }) => {
     };
   }, [user, resetLogoutTimer]);
 
-  // =========================
-  // CART MERGE
-  // =========================
-
   const mergeCart = (localCart, serverCart) => {
-    const merged = { ...localCart };
+    const merged = { ...serverCart };
 
-    for (const itemId in serverCart) {
-      if (!merged[itemId]) {
-        merged[itemId] = serverCart[itemId];
-      } else {
-        for (const size in serverCart[itemId]) {
-          merged[itemId][size] =
-            (merged[itemId][size] || 0) + serverCart[itemId][size];
-        }
+    for (const itemId in localCart) {
+      if (!merged[itemId]) merged[itemId] = {};
+
+      for (const size in localCart[itemId]) {
+        merged[itemId][size] =
+          (merged[itemId][size] || 0) + localCart[itemId][size];
       }
     }
 
     return merged;
   };
 
-  // =========================
-  // SYNC CART TO SERVER
-  // =========================
-
   const syncCartToServer = async (cart) => {
     if (!user) return;
 
     try {
-      await axios.post("/api/user/sync-cart", { cartData: cart });
+      await axios.post("/api/user/sync-cart", {
+        cartData: cart,
+      });
     } catch (error) {
       console.log("Sync cart error:", error.message);
     }
   };
-
-  // =========================
-  // FETCH PRODUCTS
-  // =========================
 
   const fetchProducts = async () => {
     try {
@@ -175,9 +130,19 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // =========================
-  // FETCH USER
-  // =========================
+  const fetchWishlist = async () => {
+    if (!user) return;
+
+    try {
+      const { data } = await axios.get("/api/user/wishlist");
+
+      if (data.success) {
+        setWishlist(data.wishlist);
+      }
+    } catch (error) {
+      console.log("Wishlist fetch error:", error.message);
+    }
+  };
 
   const fetchUser = async () => {
     try {
@@ -187,21 +152,23 @@ const ShopContextProvider = ({ children }) => {
         setUser(data.user);
 
         const serverCart = data.user.cartData || {};
+        const localCart =
+          JSON.parse(localStorage.getItem("cart_guest")) || {};
 
-        const mergedCart = mergeCart(cartItems, serverCart);
+        const mergedCart = mergeCart(localCart, serverCart);
 
         setCartItems(mergedCart);
 
         await syncCartToServer(mergedCart);
+
+        localStorage.removeItem("cart_guest");
+
+        await fetchWishlist();
       }
     } catch {
       setUser(null);
     }
   };
-
-  // =========================
-  // ADMIN AUTH
-  // =========================
 
   const fetchAdmin = async () => {
     try {
@@ -212,52 +179,74 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // =========================
-  // LOGOUT
-  // =========================
-
-  const logout = async (clearCart = false) => {
+  const logout = async () => {
     try {
       const { data } = await axios.post("/api/user/logout");
 
       if (data.success) {
         setUser(null);
-
-        if (clearCart) {
-          setCartItems({});
-          localStorage.removeItem("cartItems");
-        }
-
+        setCartItems({});
+        setWishlist([]);
         toast.success("Logged out");
-
         navigate("/");
       }
-    } catch (error) {
+    } catch {
       toast.error("Logout failed");
     }
   };
 
   // =========================
-  // WISHLIST
+  // WISHLIST TOGGLE - ĐÃ SỬA
   // =========================
+  const toggleWishlist = async (productId) => {
+    if (!user) {
+      toast.error("Please login to use wishlist");
+      setShowUserLogin(true);
+      return;
+    }
 
-  const toggleWishlist = (product) => {
-    const exists = wishlist.find((item) => item._id === product._id);
+    try {
+      // Kiểm tra trạng thái hiện tại
+      const isInWishlist = wishlist.includes(productId);
+      
+      // Optimistic update - cập nhật UI ngay
+      if (isInWishlist) {
+        setWishlist(prev => prev.filter(id => id !== productId));
+      } else {
+        setWishlist(prev => [...prev, productId]);
+      }
 
-    if (exists) {
-      setWishlist((prev) =>
-        prev.filter((item) => item._id !== product._id)
-      );
-      toast.success("Removed from wishlist");
-    } else {
-      setWishlist((prev) => [...prev, product]);
-      toast.success("Added to wishlist");
+      // Gọi API
+      const { data } = await axios.post("/api/user/toggle-wishlist", {
+        productId,
+      });
+
+      // Nếu API thất bại, rollback
+      if (!data.success) {
+        // Rollback về trạng thái cũ
+        if (isInWishlist) {
+          setWishlist(prev => [...prev, productId]);
+        } else {
+          setWishlist(prev => prev.filter(id => id !== productId));
+        }
+        toast.error(data.message || "Failed to update wishlist");
+      } else {
+        // Cập nhật với dữ liệu từ server
+        setWishlist(data.wishlist);
+        toast.success(
+          isInWishlist 
+            ? "Removed from wishlist" 
+            : "Added to wishlist"
+        );
+      }
+    } catch (error) {
+      console.log("Wishlist toggle error:", error.message);
+      toast.error("Network error. Please try again.");
+      
+      // Rollback về trạng thái ban đầu bằng cách fetch lại wishlist
+      await fetchWishlist();
     }
   };
-
-  // =========================
-  // CART FUNCTIONS
-  // =========================
 
   const addToCart = (itemId, size) => {
     if (!size) return toast.error("Select size");
@@ -272,7 +261,11 @@ const ShopContextProvider = ({ children }) => {
 
     setCartItems(cartData);
 
-    syncCartToServer(cartData);
+    if (user) {
+      syncCartToServer(cartData);
+    } else {
+      localStorage.setItem("cart_guest", JSON.stringify(cartData));
+    }
 
     toast.success("Added to cart");
   };
@@ -289,20 +282,20 @@ const ShopContextProvider = ({ children }) => {
 
       setCartItems(cartData);
 
-      syncCartToServer(cartData);
+      if (user) syncCartToServer(cartData);
     }
   };
 
   const updateQuantity = (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
 
-    if (!cartData[itemId] || !cartData[itemId][size]) return;
+    if (!cartData[itemId]) cartData[itemId] = {};
 
     cartData[itemId][size] = quantity;
 
     setCartItems(cartData);
 
-    syncCartToServer(cartData);
+    if (user) syncCartToServer(cartData);
   };
 
   const getCartCount = () => {
@@ -335,10 +328,6 @@ const ShopContextProvider = ({ children }) => {
     return total;
   };
 
-  // =========================
-  // INIT
-  // =========================
-
   useEffect(() => {
     fetchProducts();
     fetchAdmin();
@@ -353,6 +342,7 @@ const ShopContextProvider = ({ children }) => {
     setUser,
 
     products,
+    productMap,
     loading,
 
     searchQuery,
@@ -365,7 +355,6 @@ const ShopContextProvider = ({ children }) => {
     setShowUserLogin,
 
     cartItems,
-    setCartItems,
 
     addToCart,
     removeFromCart,
@@ -378,7 +367,6 @@ const ShopContextProvider = ({ children }) => {
     toggleWishlist,
 
     isAdmin,
-    setIsAdmin,
 
     logout,
   };

@@ -1,55 +1,114 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import jacket from "../assets/hero/jacket.png";
+import son from "../assets/hero/son.png";
+import dress from "../assets/hero/dress.png";
+import clothes from "../assets/hero/clothes.png";
+
 const Hero = () => {
   return (
+    <section className="w-full min-h-screen bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 flex items-center">
 
-<section className="w-full bg-hero bg-no-repeat bg-cover bg-[right_center] min-h-[520px] sm:min-h-[600px] lg:min-h-[700px] flex items-center">
+      <div className="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
 
-<div className="max-padd-container">
+        {/* LEFT TEXT */}
+        <div>
 
-<div className="max-w-[520px]">
+          <h3 className="text-secondary font-pacifico text-xl mb-3">
+            Winter Collection
+          </h3>
 
-<h3 className="text-secondary font-pacifico text-lg sm:text-xl mb-2">
-Fresh Fits for Frosty Days
-</h3>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+            Style Meets Comfort
+          </h1>
 
-<h2 className="uppercase text-sm sm:text-lg tracking-widest mb-2">
-GET MORE FOR LESS | 40% OFF!
-</h2>
+          <p className="mt-5 max-w-md text-gray-700">
+            Discover premium jackets, sneakers and fashion essentials designed
+            for modern lifestyle.
+          </p>
 
-<h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-on Coats & Jackets
-</h1>
+          <div className="flex gap-4 mt-8">
+            <Link
+              to="/collection"
+              className="bg-tertiary text-white px-7 py-3 rounded-lg hover:scale-105 transition"
+            >
+              Shop Now
+            </Link>
+          </div>
 
-<div className="flex items-center mt-4">
+        </div>
 
-<h3 className="text-base sm:text-lg">Starting at</h3>
+        {/* RIGHT PRODUCT GRID */}
 
-<span className="bg-white px-2 py-1 inline-block rotate-[-2deg] ml-3 text-2xl sm:text-3xl font-bold">
+        <div className="grid grid-cols-2 gap-6">
 
-<span className="text-lg sm:text-xl relative bottom-1">$</span>
-99<span className="text-lg sm:text-xl">.99</span>
+          {/* CARD */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
 
-</span>
+            <div className="h-[160px] flex items-center justify-center">
+              <img
+                src={jacket}
+                alt="jacket"
+                className="max-h-full object-contain"
+              />
+            </div>
 
-</div>
+            <h4 className="font-semibold mt-4">Winter Jacket</h4>
+            <p className="text-gray-600">$99</p>
 
-<Link
-to="/collection"
-className="inline-flex items-center justify-center bg-tertiary text-white px-6 sm:px-8 py-3 mt-6 rounded-lg hover:bg-opacity-90 transition"
->
+          </div>
 
-Shop Now
+          <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
 
-</Link>
+            <div className="h-[160px] flex items-center justify-center">
+              <img
+                src={son}
+                alt="son"
+                className="max-h-full object-contain"
+              />
+            </div>
 
-</div>
+            <h4 className="font-semibold mt-4">Son</h4>
+            <p className="text-gray-600">$79</p>
 
-</div>
+          </div>
 
-</section>
+          <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
 
+            <div className="h-[160px] flex items-center justify-center">
+              <img
+                src={dress}
+                alt="dress"
+                className="max-h-full object-contain"
+              />
+            </div>
+
+            <h4 className="font-semibold mt-4">Dress</h4>
+            <p className="text-gray-600">$59</p>
+
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+
+            <div className="h-[160px] flex items-center justify-center">
+              <img
+                src={clothes}
+                alt="clothes"
+                className="max-h-full object-contain"
+              />
+            </div>
+
+            <h4 className="font-semibold mt-4">Clothes</h4>
+            <p className="text-gray-600">$129</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
   );
 };
 

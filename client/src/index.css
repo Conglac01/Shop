@@ -179,3 +179,21 @@ body {
   }
 
 }
+/* Điều chỉnh vị trí ảnh trên các màn hình */
+@media (max-width: 480px) {
+  .bg-hero {
+    background-position: 80% center !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .bg-hero {
+    background-position: 75% center !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .bg-hero {
+    background-position: 70% center !important;
+  }
+}

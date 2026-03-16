@@ -9,7 +9,8 @@ const Item = ({ product }) => {
 
   const [added, setAdded] = useState(false);
 
-  const isWishlisted = wishlist.find(item => item._id === product._id);
+  // FIX: wishlist là array productId
+  const isWishlisted = wishlist.includes(product._id);
 
   const handleAddToCart = (e) => {
 
@@ -48,20 +49,16 @@ const Item = ({ product }) => {
       className="relative rounded-xl p-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer bg-white flex flex-col justify-between group"
     >
 
-      {/* SALE BADGE */}
-
       {discount > 0 && (
         <div className="absolute top-3 left-3 bg-red-500 text-white text-[10px] px-2 py-[2px] rounded z-10">
           -{discount}%
         </div>
       )}
 
-      {/* WISHLIST */}
-
       <div
         onClick={(e) => {
           e.stopPropagation();
-          toggleWishlist(product);
+          toggleWishlist(product._id);
         }}
         className="absolute top-3 right-3 text-lg cursor-pointer z-10"
       >
@@ -71,9 +68,6 @@ const Item = ({ product }) => {
           <FiHeart className="text-gray-400 hover:text-red-400" />
         )}
       </div>
-
-
-      {/* IMAGE HOVER */}
 
       <div className="overflow-hidden rounded-lg relative">
 
@@ -90,9 +84,6 @@ const Item = ({ product }) => {
         />
 
       </div>
-
-
-      {/* CONTENT */}
 
       <div className="mt-3 flex flex-col flex-grow">
 
