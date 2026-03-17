@@ -1,50 +1,170 @@
-// Category Images
-import men from "./product_8.png";
-import women from "./product_9.png";
-import kids from "./product_15.png";
-import footwear from "./product_23.png";
-import winterwear from "./product_27.png";
-import sportswear from "./product_36.png";
+// Category Images - Chỉ lấy 5 loại áo
+import Tshirt from "./picturedata/Tshirt1-10/ao3.png";
+import Poloshirt from "./picturedata/Poloshirt11-20/ao14.png";
+import Windbreaker from "./picturedata/Windbreaker21-30/ao21.png";
+import Sweatshirt from "./picturedata/Sweatshirt31-40/ao31.png";
+import Downjacket from "./picturedata/Downjacket41-50/ao41.png";
 
-// Product Images (1-38)
-import product_1 from "./product_1.png";
-import product_2 from "./product_2.png";
-import product_3 from "./product_3.png";
-import product_4 from "./product_4.png";
-import product_5 from "./product_5.png";
-import product_6 from "./product_6.png";
-import product_7 from "./product_7.png";
-import product_8 from "./product_8.png";
-import product_9 from "./product_9.png";
-import product_10 from "./product_10.png";
-import product_11 from "./product_11.png";
-import product_12 from "./product_12.png";
-import product_13 from "./product_13.png";
-import product_14 from "./product_14.png";
-import product_15 from "./product_15.png";
-import product_16 from "./product_16.png";
-import product_17 from "./product_17.png";
-import product_18 from "./product_18.png";
-import product_19 from "./product_19.png";
-import product_20 from "./product_20.png";
-import product_21 from "./product_21.png";
-import product_22 from "./product_22.png";
-import product_23 from "./product_23.png";
-import product_24 from "./product_24.png";
-import product_25 from "./product_25.png";
-import product_26 from "./product_26.png";
-import product_27 from "./product_27.png";
-import product_28 from "./product_28.png";
-import product_29 from "./product_29.png";
-import product_30 from "./product_30.png";
-import product_31 from "./product_31.png";
-import product_32 from "./product_32.png";
-import product_33 from "./product_33.png";
-import product_34 from "./product_34.png";
-import product_35 from "./product_35.png";
-import product_36 from "./product_36.png";
-import product_37 from "./product_37.png";
-import product_38 from "./product_38.png";
+// ==================== PRODUCT IMAGES TỪ THƯ MỤC PICTUREDATA ====================
+// Tshirt1-10 (1-10) - với tiền tố "ao"
+import product_1 from "./picturedata/Tshirt1-10/ao1.png";
+import product_1_1 from "./picturedata/Tshirt1-10/ao1_1.png";
+import product_1_2 from "./picturedata/Tshirt1-10/ao1_2.png";
+import product_2 from "./picturedata/Tshirt1-10/ao2.png";
+import product_2_1 from "./picturedata/Tshirt1-10/ao2_1.png";
+import product_2_2 from "./picturedata/Tshirt1-10/ao2_2.png";
+import product_3 from "./picturedata/Tshirt1-10/ao3.png";
+import product_3_1 from "./picturedata/Tshirt1-10/ao3_1.png";
+import product_3_2 from "./picturedata/Tshirt1-10/ao3_2.png";
+import product_4 from "./picturedata/Tshirt1-10/ao4.png";
+import product_4_1 from "./picturedata/Tshirt1-10/ao4_1.png";
+import product_4_2 from "./picturedata/Tshirt1-10/ao4_2.png";
+import product_5 from "./picturedata/Tshirt1-10/ao5.png";
+import product_5_1 from "./picturedata/Tshirt1-10/ao5_1.png";
+import product_5_2 from "./picturedata/Tshirt1-10/ao5_2.png";
+import product_6 from "./picturedata/Tshirt1-10/ao6.png";
+import product_6_1 from "./picturedata/Tshirt1-10/ao6_1.png";
+import product_6_2 from "./picturedata/Tshirt1-10/ao6_2.png";
+import product_7 from "./picturedata/Tshirt1-10/ao7.png";
+import product_7_1 from "./picturedata/Tshirt1-10/ao7_1.png";
+import product_7_2 from "./picturedata/Tshirt1-10/ao7_2.png";
+import product_8 from "./picturedata/Tshirt1-10/ao8.png";
+import product_8_1 from "./picturedata/Tshirt1-10/ao8_1.png";
+import product_8_2 from "./picturedata/Tshirt1-10/ao8_2.png";
+import product_9 from "./picturedata/Tshirt1-10/ao9.png";
+import product_9_1 from "./picturedata/Tshirt1-10/ao9_1.png";
+import product_9_2 from "./picturedata/Tshirt1-10/ao9_2.png";
+import product_10 from "./picturedata/Tshirt1-10/ao10.png";
+import product_10_1 from "./picturedata/Tshirt1-10/ao10_1.png";
+import product_10_2 from "./picturedata/Tshirt1-10/ao10_2.png";
+
+// Poloshirt11-20 (11-20) - với tiền tố "ao"
+import product_11 from "./picturedata/Poloshirt11-20/ao11.png";
+import product_11_1 from "./picturedata/Poloshirt11-20/ao11_1.png";
+import product_11_2 from "./picturedata/Poloshirt11-20/ao11_2.png";
+import product_12 from "./picturedata/Poloshirt11-20/ao12.png";
+import product_12_1 from "./picturedata/Poloshirt11-20/ao12_1.png";
+import product_12_2 from "./picturedata/Poloshirt11-20/ao12_2.png";
+import product_13 from "./picturedata/Poloshirt11-20/ao13.png";
+import product_13_1 from "./picturedata/Poloshirt11-20/ao13_1.png";
+import product_13_2 from "./picturedata/Poloshirt11-20/ao13_2.png";
+import product_14 from "./picturedata/Poloshirt11-20/ao14.png";
+import product_14_1 from "./picturedata/Poloshirt11-20/ao14_1.png";
+import product_14_2 from "./picturedata/Poloshirt11-20/ao14_2.png";
+import product_15 from "./picturedata/Poloshirt11-20/ao15.png";
+import product_15_1 from "./picturedata/Poloshirt11-20/ao15_1.png";
+import product_15_2 from "./picturedata/Poloshirt11-20/ao15_2.png";
+import product_16 from "./picturedata/Poloshirt11-20/ao16.png";
+import product_16_1 from "./picturedata/Poloshirt11-20/ao16_1.png";
+import product_16_2 from "./picturedata/Poloshirt11-20/ao16_2.png";
+import product_17 from "./picturedata/Poloshirt11-20/ao17.png";
+import product_17_1 from "./picturedata/Poloshirt11-20/ao17_1.png";
+import product_17_2 from "./picturedata/Poloshirt11-20/ao17_2.png";
+import product_18 from "./picturedata/Poloshirt11-20/ao18.png";
+import product_18_1 from "./picturedata/Poloshirt11-20/ao18_1.png";
+import product_18_2 from "./picturedata/Poloshirt11-20/ao18_2.png";
+import product_19 from "./picturedata/Poloshirt11-20/ao19.png";
+import product_19_1 from "./picturedata/Poloshirt11-20/ao19_1.png";
+import product_19_2 from "./picturedata/Poloshirt11-20/ao19_2.png";
+import product_20 from "./picturedata/Poloshirt11-20/ao20.png";
+import product_20_1 from "./picturedata/Poloshirt11-20/ao20_1.png";
+import product_20_2 from "./picturedata/Poloshirt11-20/ao20_2.png";
+
+// Windbreaker21-30 (21-30) - với tiền tố "ao"
+import product_21 from "./picturedata/Windbreaker21-30/ao21.png";
+import product_21_1 from "./picturedata/Windbreaker21-30/ao21_1.png";
+import product_21_2 from "./picturedata/Windbreaker21-30/ao21_2.png";
+import product_22 from "./picturedata/Windbreaker21-30/ao22.png";
+import product_22_1 from "./picturedata/Windbreaker21-30/ao22_1.png";
+import product_22_2 from "./picturedata/Windbreaker21-30/ao22_2.png";
+import product_23 from "./picturedata/Windbreaker21-30/ao23.png";
+import product_23_1 from "./picturedata/Windbreaker21-30/ao23_1.png";
+import product_23_2 from "./picturedata/Windbreaker21-30/ao23_2.png";
+import product_24 from "./picturedata/Windbreaker21-30/ao24.png";
+import product_24_1 from "./picturedata/Windbreaker21-30/ao24_1.png";
+import product_24_2 from "./picturedata/Windbreaker21-30/ao24_2.png";
+import product_25 from "./picturedata/Windbreaker21-30/ao25.png";
+import product_25_1 from "./picturedata/Windbreaker21-30/ao25_1.png";
+import product_25_2 from "./picturedata/Windbreaker21-30/ao25_2.png";
+import product_26 from "./picturedata/Windbreaker21-30/ao26.png";
+import product_26_1 from "./picturedata/Windbreaker21-30/ao26_1.png";
+import product_26_2 from "./picturedata/Windbreaker21-30/ao26_2.png";
+import product_27 from "./picturedata/Windbreaker21-30/ao27.png";
+import product_27_1 from "./picturedata/Windbreaker21-30/ao27_1.png";
+import product_27_2 from "./picturedata/Windbreaker21-30/ao27_2.png";
+import product_28 from "./picturedata/Windbreaker21-30/ao28.png";
+import product_28_1 from "./picturedata/Windbreaker21-30/ao28_1.png";
+import product_28_2 from "./picturedata/Windbreaker21-30/ao28_2.png";
+import product_29 from "./picturedata/Windbreaker21-30/ao29.png";
+import product_29_1 from "./picturedata/Windbreaker21-30/ao29_1.png";
+import product_29_2 from "./picturedata/Windbreaker21-30/ao29_2.png";
+import product_30 from "./picturedata/Windbreaker21-30/ao30.png";
+import product_30_1 from "./picturedata/Windbreaker21-30/ao30_1.png";
+import product_30_2 from "./picturedata/Windbreaker21-30/ao30_2.png";
+
+// Sweatshirt31-40 (31-40) - với tiền tố "ao"
+import product_31 from "./picturedata/Sweatshirt31-40/ao31.png";
+import product_31_1 from "./picturedata/Sweatshirt31-40/ao31_1.png";
+import product_31_2 from "./picturedata/Sweatshirt31-40/ao31_2.png";
+import product_32 from "./picturedata/Sweatshirt31-40/ao32.png";
+import product_32_1 from "./picturedata/Sweatshirt31-40/ao32_1.png";
+import product_32_2 from "./picturedata/Sweatshirt31-40/ao32_2.png";
+import product_33 from "./picturedata/Sweatshirt31-40/ao33.png";
+import product_33_1 from "./picturedata/Sweatshirt31-40/ao33_1.png";
+import product_33_2 from "./picturedata/Sweatshirt31-40/ao33_2.png";
+import product_34 from "./picturedata/Sweatshirt31-40/ao34.png";
+import product_34_1 from "./picturedata/Sweatshirt31-40/ao34_1.png";
+import product_34_2 from "./picturedata/Sweatshirt31-40/ao34_2.png";
+import product_35 from "./picturedata/Sweatshirt31-40/ao35.png";
+import product_35_1 from "./picturedata/Sweatshirt31-40/ao35_1.png";
+import product_35_2 from "./picturedata/Sweatshirt31-40/ao35_2.png";
+import product_36 from "./picturedata/Sweatshirt31-40/ao36.png";
+import product_36_1 from "./picturedata/Sweatshirt31-40/ao36_1.png";
+import product_36_2 from "./picturedata/Sweatshirt31-40/ao36_2.png";
+import product_37 from "./picturedata/Sweatshirt31-40/ao37.png";
+import product_37_1 from "./picturedata/Sweatshirt31-40/ao37_1.png";
+import product_37_2 from "./picturedata/Sweatshirt31-40/ao37_2.png";
+import product_38 from "./picturedata/Sweatshirt31-40/ao38.png";
+import product_38_1 from "./picturedata/Sweatshirt31-40/ao38_1.png";
+import product_38_2 from "./picturedata/Sweatshirt31-40/ao38_2.png";
+import product_39 from "./picturedata/Sweatshirt31-40/ao39.png";
+import product_39_1 from "./picturedata/Sweatshirt31-40/ao39_1.png";
+import product_39_2 from "./picturedata/Sweatshirt31-40/ao39_2.png";
+import product_40 from "./picturedata/Sweatshirt31-40/ao40.png";
+import product_40_1 from "./picturedata/Sweatshirt31-40/ao40_1.png";
+import product_40_2 from "./picturedata/Sweatshirt31-40/ao40_2.png";
+
+// Downjacket41-50 (41-50) - với tiền tố "ao"
+import product_41 from "./picturedata/Downjacket41-50/ao41.png";
+import product_41_1 from "./picturedata/Downjacket41-50/ao41_1.png";
+import product_41_2 from "./picturedata/Downjacket41-50/ao41_2.png";
+import product_42 from "./picturedata/Downjacket41-50/ao42.png";
+import product_42_1 from "./picturedata/Downjacket41-50/ao42_1.png";
+import product_42_2 from "./picturedata/Downjacket41-50/ao42_2.png";
+import product_43 from "./picturedata/Downjacket41-50/ao43.png";
+import product_43_1 from "./picturedata/Downjacket41-50/ao43_1.png";
+import product_43_2 from "./picturedata/Downjacket41-50/ao43_2.png";
+import product_44 from "./picturedata/Downjacket41-50/ao44.png";
+import product_44_1 from "./picturedata/Downjacket41-50/ao44_1.png";
+import product_44_2 from "./picturedata/Downjacket41-50/ao44_2.png";
+import product_45 from "./picturedata/Downjacket41-50/ao45.png";
+import product_45_1 from "./picturedata/Downjacket41-50/ao45_1.png";
+import product_45_2 from "./picturedata/Downjacket41-50/ao45_2.png";
+import product_46 from "./picturedata/Downjacket41-50/ao46.png";
+import product_46_1 from "./picturedata/Downjacket41-50/ao46_1.png";
+import product_46_2 from "./picturedata/Downjacket41-50/ao46_2.png";
+import product_47 from "./picturedata/Downjacket41-50/ao47.png";
+import product_47_1 from "./picturedata/Downjacket41-50/ao47_1.png";
+import product_47_2 from "./picturedata/Downjacket41-50/ao47_2.png";
+import product_48 from "./picturedata/Downjacket41-50/ao48.png";
+import product_48_1 from "./picturedata/Downjacket41-50/ao48_1.png";
+import product_48_2 from "./picturedata/Downjacket41-50/ao48_2.png";
+import product_49 from "./picturedata/Downjacket41-50/ao49.png";
+import product_49_1 from "./picturedata/Downjacket41-50/ao49_1.png";
+import product_49_2 from "./picturedata/Downjacket41-50/ao49_2.png";
+import product_50 from "./picturedata/Downjacket41-50/ao50.png";
+import product_50_1 from "./picturedata/Downjacket41-50/ao50_1.png";
+import product_50_2 from "./picturedata/Downjacket41-50/ao50_2.png";
 
 // Blog Images
 import blog1 from "./blogs/blog1.png";
@@ -54,444 +174,785 @@ import blog4 from "./blogs/blog4.png";
 
 // ==================== CATEGORIES ====================
 export const categories = [
-  { id: 1, name: "Men", image: men },
-  { id: 2, name: "Women", image: women },
-  { id: 3, name: "Kids", image: kids },
-  { id: 4, name: "Footwear", image: footwear },
-  { id: 5, name: "Winterwear", image: winterwear },
-  { id: 6, name: "Sportswear", image: sportswear },
+  { id: 1, name: "Tshirt", image: Tshirt },
+  { id: 2, name: "Poloshirt", image: Poloshirt },
+  { id: 3, name: "Windbreaker", image: Windbreaker },
+  { id: 4, name: "Sweatshirt", image: Sweatshirt },
+  { id: 5, name: "Downjacket", image: Downjacket },
 ];
 
-// ==================== DUMMY PRODUCTS (Chi tiết với nhiều ảnh) ====================
-export const dummyProducts = [
-  // Men's Products
+// ==================== PRODUCTS ====================
+export const dummyProducts = [];
+
+// ==================== T-SHIRTS (1-10) ====================
+dummyProducts.push(
+  // 1 - Tshirt
   {
-    _id: "1",
-    name: "Classic Striped Button Down Shirt for Formal Office Wear",
-    image: [product_1, product_3, product_6, product_7],
-    price: 95,
-    offerPrice: 45,
+    _id: "tshirt_1",
+    name: "Men's Classic Cotton T-Shirt",
+    image: [product_1, product_1_1, product_1_2],
+    price: 45,
+    offerPrice: 29,
     sizes: ["S", "M", "L", "XL"],
-    description: "Elevate your formal style with our classic striped shirt. Perfect for business meetings and elegant events. Made from premium cotton for all-day comfort.",
-    category: "Men",
+    description: "Comfortable cotton t-shirt for everyday wear. Soft, breathable, and perfect for casual occasions.",
+    category: "Tshirt",
+     type: "T-shirt",
     rating: 4.5,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 2 - Tshirt
   {
-    _id: "2",
-    name: "Premium Cotton Casual T-Shirt for Men",
-    image: [product_2, product_5, product_8],
+    _id: "tshirt_2",
+    name: "Men's Premium Crew Neck T-Shirt",
+    image: [product_2, product_2_1, product_2_2],
     price: 49,
-    offerPrice: 29,
+    offerPrice: 32,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    description: "Experience ultimate comfort with our premium cotton t-shirt. Soft, breathable, and perfect for everyday casual wear.",
-    category: "Men",
+    description: "Premium quality crew neck t-shirt made from 100% cotton. Ideal for daily wear.",
+    category: "Tshirt",
+     type: "T-shirt",
+    rating: 4.4,
+    inStock: true,
+    popular: true
+  },
+  // 3 - Tshirt
+  {
+    _id: "tshirt_3",
+    name: "Men's Graphic Print T-Shirt",
+    image: [product_3, product_3_1, product_3_2],
+    price: 55,
+    offerPrice: 35,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Stylish graphic print t-shirt for a casual look. Comfortable and trendy.",
+    category: "Tshirt",
+     type: "T-shirt",
     rating: 4.3,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 4 - Tshirt
   {
-    _id: "3",
-    name: "Slim Fit Denim Jeans for Men",
-    image: [product_4, product_10, product_12],
-    price: 89,
-    offerPrice: 59,
-    sizes: ["28", "30", "32", "34", "36"],
-    description: "Classic slim fit jeans that never go out of style. Durable denim with just the right amount of stretch for maximum comfort.",
-    category: "Men",
-    rating: 4.6,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "4",
-    name: "Men's Casual Hoodie with Front Pocket",
-    image: [product_7, product_11, product_14],
-    price: 79,
-    offerPrice: 49,
-    sizes: ["S", "M", "L", "XL"],
-    description: "Stay cozy and stylish with our premium hoodie. Features a comfortable fit, front pocket, and adjustable hood.",
-    category: "Men",
-    rating: 4.7,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "5",
-    name: "Men's Formal Blazer for Business Meetings",
-    image: [product_13, product_17, product_19],
-    price: 199,
-    offerPrice: 129,
-    sizes: ["38", "40", "42", "44"],
-    description: "Make a lasting impression with our tailored blazer. Perfect for formal occasions and business meetings.",
-    category: "Men",
-    rating: 4.8,
-    inStock: true,
-     popular: true  
-  },
-  
-  // Women's Products
-  {
-    _id: "6",
-    name: "Women's Floral Print Summer Dress",
-    image: [product_8, product_16, product_20],
-    price: 89,
-    offerPrice: 49,
-    sizes: ["XS", "S", "M", "L"],
-    description: "Embrace the summer vibes with our floral print dress. Lightweight, breathable, and perfect for any occasion.",
-    category: "Women",
-    rating: 4.6,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "7",
-    name: "Women's High-Waist Skinny Jeans",
-    image: [product_12, product_18, product_22],
-    price: 79,
-    offerPrice: 54,
-    sizes: ["26", "28", "30", "32", "34"],
-    description: "Flattering high-waist skinny jeans that hug your curves in all the right places. Premium stretch denim for all-day comfort.",
-    category: "Women",
-    rating: 4.5,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "8",
-    name: "Women's Elegant Evening Gown",
-    image: [product_9, product_14, product_21],
-    price: 249,
-    offerPrice: 179,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    description: "Turn heads at any special event with our elegant evening gown. Sophisticated design with luxurious fabric.",
-    category: "Women",
-    rating: 4.9,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "9",
-    name: "Women's Casual Blouse with Ruffles",
-    image: [product_11, product_15, product_19],
+    _id: "tshirt_4",
+    name: "Men's Long Sleeve T-Shirt",
+    image: [product_4, product_4_1, product_4_2],
     price: 59,
     offerPrice: 39,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    description: "Add a touch of femininity to your wardrobe with our ruffled blouse. Perfect for office or casual outings.",
-    category: "Women",
-    rating: 4.4,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "10",
-    name: "Women's Winter Coat with Faux Fur",
-    image: [product_27, product_29, product_31],
-    price: 189,
-    offerPrice: 129,
     sizes: ["S", "M", "L", "XL"],
-    description: "Stay warm and stylish during the cold season with our premium winter coat. Features luxurious faux fur trim.",
-    category: "Women",
-    rating: 4.7,
-    inStock: true,
-     popular: true  
-  },
-  
-  // Kids Products
-  {
-    _id: "11",
-    name: "Kids Colorful Cartoon T-Shirt",
-    image: [product_15, product_18, product_20],
-    price: 29,
-    offerPrice: 19,
-    sizes: ["2-3Y", "3-4Y", "4-5Y", "5-6Y", "6-7Y"],
-    description: "Make your little one smile with our fun cartoon t-shirt. Soft cotton fabric that's gentle on sensitive skin.",
-    category: "Kids",
+    description: "Long sleeve t-shirt perfect for cooler days. Soft and comfortable fit.",
+    category: "Tshirt",
+    type: "T-shirt",
     rating: 4.5,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 5 - Tshirt
   {
-    _id: "12",
-    name: "Kids Denim Jeans with Elastic Waist",
-    image: [product_16, product_19, product_22],
-    price: 39,
-    offerPrice: 27,
-    sizes: ["2-3Y", "3-4Y", "4-5Y", "5-6Y", "6-7Y"],
-    description: "Comfortable denim jeans with elastic waistband for easy dressing. Durable enough for active play.",
-    category: "Kids",
+    _id: "tshirt_5",
+    name: "Men's Henley T-Shirt",
+    image: [product_5, product_5_1, product_5_2],
+    price: 52,
+    offerPrice: 34,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Classic henley t-shirt with button detail. Versatile for any casual occasion.",
+    category: "Tshirt",
+    type: "T-shirt",
     rating: 4.4,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 6 - Tshirt
   {
-    _id: "13",
-    name: "Kids Winter Jacket with Hood",
-    image: [product_17, product_25, product_28],
-    price: 69,
-    offerPrice: 49,
-    sizes: ["2-3Y", "3-4Y", "4-5Y", "5-6Y", "6-7Y"],
-    description: "Keep your child warm and cozy with our insulated winter jacket. Features a warm hood and soft lining.",
-    category: "Kids",
-    rating: 4.6,
+    _id: "tshirt_6",
+    name: "Men's Striped T-Shirt",
+    image: [product_6, product_6_1, product_6_2],
+    price: 48,
+    offerPrice: 31,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Classic striped pattern t-shirt for a timeless look. Comfortable cotton fabric.",
+    category: "Tshirt",
+     type: "T-shirt",
+    rating: 4.3,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 7 - Tshirt
   {
-    _id: "14",
-    name: "Kids Party Dress with Bow",
-    image: [product_19, product_21, product_24],
-    price: 49,
-    offerPrice: 34,
-    sizes: ["2-3Y", "3-4Y", "4-5Y", "5-6Y"],
-    description: "Make your little girl feel like a princess with our beautiful party dress. Adorable bow detail and comfortable fit.",
-    category: "Kids",
-    rating: 4.8,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "15",
-    name: "Kids Sportswear Set (T-Shirt + Shorts)",
-    image: [product_33, product_34, product_36],
+    _id: "tshirt_7",
+    name: "Men's V-Neck T-Shirt",
+    image: [product_7, product_7_1, product_7_2],
     price: 44,
-    offerPrice: 32,
-    sizes: ["2-3Y", "3-4Y", "4-5Y", "5-6Y", "6-7Y"],
-    description: "Perfect for active kids! This sportswear set includes a breathable t-shirt and matching shorts.",
-    category: "Kids",
-    rating: 4.5,
-    inStock: true,
-     popular: true  
-  },
-  
-  // Footwear Products
-  {
-    _id: "16",
-    name: "Men's Leather Formal Shoes",
-    image: [product_21, product_23, product_25],
-    price: 129,
-    offerPrice: 89,
-    sizes: ["39", "40", "41", "42", "43", "44"],
-    description: "Step up your formal game with our premium leather shoes. Classic design with superior comfort for all-day wear.",
-    category: "Footwear",
-    rating: 4.7,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "17",
-    name: "Women's Casual Sneakers",
-    image: [product_22, product_24, product_26],
-    price: 79,
-    offerPrice: 54,
-    sizes: ["36", "37", "38", "39", "40"],
-    description: "Stylish and comfortable sneakers for everyday wear. Cushioned insole and durable outsole.",
-    category: "Footwear",
-    rating: 4.5,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "18",
-    name: "Running Shoes for Men",
-    image: [product_21, product_28, product_32],
-    price: 99,
-    offerPrice: 69,
-    sizes: ["39", "40", "41", "42", "43", "44"],
-    description: "Enhance your performance with our lightweight running shoes. Breathable mesh and responsive cushioning.",
-    category: "Footwear",
-    rating: 4.6,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "19",
-    name: "Women's Heeled Sandals",
-    image: [product_24, product_26, product_30],
-    price: 69,
-    offerPrice: 49,
-    sizes: ["36", "37", "38", "39", "40"],
-    description: "Elevate your style with our elegant heeled sandals. Perfect for parties and special occasions.",
-    category: "Footwear",
-    rating: 4.4,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "20",
-    name: "Kids School Shoes",
-    image: [product_23, product_25, product_27],
-    price: 49,
-    offerPrice: 34,
-    sizes: ["28", "29", "30", "31", "32", "33"],
-    description: "Durable and comfortable school shoes for active kids. Easy to clean and long-lasting.",
-    category: "Footwear",
-    rating: 4.5,
-    inStock: true,
-     popular: true  
-  },
-  
-  // Winterwear Products
-  {
-    _id: "21",
-    name: "Men's Heavy Duty Winter Parka",
-    image: [product_27, product_29, product_31],
-    price: 229,
-    offerPrice: 169,
+    offerPrice: 28,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    description: "Extreme cold? No problem! Our heavy-duty parka will keep you warm even in the harshest winter conditions.",
-    category: "Winterwear",
-    rating: 4.8,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "22",
-    name: "Women's Wool Blend Coat",
-    image: [product_28, product_30, product_32],
-    price: 189,
-    offerPrice: 139,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    description: "Elegant and warm wool blend coat for the modern woman. Perfect for both casual and formal winter outings.",
-    category: "Winterwear",
-    rating: 4.7,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "23",
-    name: "Unisex Winter Gloves",
-    image: [product_30, product_31, product_33],
-    price: 29,
-    offerPrice: 19,
-    sizes: ["S", "M", "L"],
-    description: "Keep your hands warm with our thermal gloves. Touchscreen compatible so you can use your phone without removing them.",
-    category: "Winterwear",
+    description: "V-neck t-shirt with a modern fit. Soft and comfortable for everyday wear.",
+    category: "Tshirt",
+     type: "T-shirt",
     rating: 4.4,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 8 - Tshirt
   {
-    _id: "24",
-    name: "Knit Winter Scarf",
-    image: [product_31, product_32, product_35],
-    price: 34,
-    offerPrice: 24,
-    sizes: ["One Size"],
-    description: "Add a pop of color to your winter outfit with our soft knit scarf. Available in multiple colors.",
-    category: "Winterwear",
+    _id: "tshirt_8",
+    name: "Men's Pocket T-Shirt",
+    image: [product_8, product_8_1, product_8_2],
+    price: 47,
+    offerPrice: 30,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Casual t-shirt with chest pocket. Simple and stylish design.",
+    category: "Tshirt",
+     type: "T-shirt",
+    rating: 4.3,
+    inStock: true,
+    popular: true
+  },
+  // 9 - Tshirt
+  {
+    _id: "tshirt_9",
+    name: "Men's Heavyweight T-Shirt",
+    image: [product_9, product_9_1, product_9_2],
+    price: 54,
+    offerPrice: 36,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Heavyweight cotton t-shirt for durability and comfort. Perfect for everyday use.",
+    category: "Tshirt",
+     type: "T-shirt",
     rating: 4.5,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 10 - Tshirt
   {
-    _id: "25",
-    name: "Thermal Beanie Hat",
-    image: [product_32, product_34, product_37],
-    price: 24,
-    offerPrice: 17,
-    sizes: ["One Size"],
-    description: "Stay warm and stylish with our thermal beanie. Perfect for cold weather and outdoor activities.",
-    category: "Winterwear",
-    rating: 4.4,
-    inStock: true,
-     popular: true  
-  },
-  
-  // Sportswear Products
-  {
-    _id: "26",
-    name: "Men's Performance Gym T-Shirt",
-    image: [product_33, product_35, product_37],
-    price: 39,
+    _id: "tshirt_10",
+    name: "Men's Athletic T-Shirt",
+    image: [product_10, product_10_1, product_10_2],
+    price: 42,
     offerPrice: 27,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    description: "Moisture-wicking fabric keeps you dry during intense workouts. Lightweight and breathable for maximum performance.",
-    category: "Sportswear",
-    rating: 4.6,
+    description: "Athletic fit t-shirt for an active lifestyle. Moisture-wicking fabric.",
+    category: "Tshirt",
+    type: "T-shirt",
+    rating: 4.4,
     inStock: true,
-     popular: true  
-  },
+    popular: true
+  }
+);
+
+// ==================== POLO SHIRTS (11-20) ====================
+dummyProducts.push(
+  // 11 - Poloshirt
   {
-    _id: "27",
-    name: "Women's Yoga Leggings",
-    image: [product_34, product_36, product_38],
-    price: 49,
-    offerPrice: 34,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    description: "High-waist, squat-proof leggings for yoga and workouts. Buttery-soft fabric with excellent stretch.",
-    category: "Sportswear",
-    rating: 4.8,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "28",
-    name: "Men's Running Shorts",
-    image: [product_34, product_35, product_36],
-    price: 34,
-    offerPrice: 24,
+    _id: "polo_1",
+    name: "Men's Classic Polo Shirt",
+    image: [product_11, product_11_1, product_11_2],
+    price: 69,
+    offerPrice: 45,
     sizes: ["S", "M", "L", "XL"],
-    description: "Lightweight running shorts with built-in liner and zippered pocket for your essentials.",
-    category: "Sportswear",
-    rating: 4.5,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "29",
-    name: "Women's Sports Bra",
-    image: [product_35, product_37, product_38],
-    price: 29,
-    offerPrice: 19,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    description: "Medium-support sports bra for yoga, gym, and running. Comfortable and stylish design.",
-    category: "Sportswear",
-    rating: 4.5,
-    inStock: true,
-     popular: true  
-  },
-  {
-    _id: "30",
-    name: "Unisex Training Hoodie",
-    image: [product_36, product_37, product_38],
-    price: 59,
-    offerPrice: 44,
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    description: "Perfect for pre and post-workout. Lightweight, breathable, and comfortable for training sessions.",
-    category: "Sportswear",
+    description: "Classic polo shirt perfect for casual and semi-formal occasions. Comfortable cotton fabric.",
+    category: "Poloshirt",
+     type: "Polo Shirt",
     rating: 4.6,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 12 - Poloshirt
   {
-    _id: "31",
-    name: "Men's Sports Jacket",
-    image: [product_37, product_38, product_35],
+    _id: "polo_2",
+    name: "Men's Pique Polo Shirt",
+    image: [product_12, product_12_1, product_12_2],
+    price: 72,
+    offerPrice: 48,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Pique fabric polo shirt with a textured finish. Breathable and comfortable.",
+    category: "Poloshirt",
+   type: "Polo Shirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 13 - Poloshirt
+  {
+    _id: "polo_3",
+    name: "Men's Long Sleeve Polo",
+    image: [product_13, product_13_1, product_13_2],
     price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Long sleeve polo shirt for cooler weather. Versatile and stylish.",
+    category: "Poloshirt",
+   type: "Polo Shirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 14 - Poloshirt
+  {
+    _id: "polo_4",
+    name: "Men's Striped Polo Shirt",
+    image: [product_14, product_14_1, product_14_2],
+    price: 74,
+    offerPrice: 49,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Striped design polo shirt for a classic look. Soft cotton fabric.",
+    category: "Poloshirt",
+   type: "Polo Shirt",
+    rating: 4.4,
+    inStock: true,
+    popular: true
+  },
+  // 15 - Poloshirt
+  {
+    _id: "polo_5",
+    name: "Men's Performance Polo",
+    image: [product_15, product_15_1, product_15_2],
+    price: 84,
+    offerPrice: 56,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Performance polo with moisture-wicking technology. Perfect for golf or active days.",
+    category: "Poloshirt",
+    type: "Polo Shirt",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 16 - Poloshirt
+  {
+    _id: "polo_6",
+    name: "Men's Cotton Pique Polo",
+    image: [product_16, product_16_1, product_16_2],
+    price: 67,
+    offerPrice: 44,
+    sizes: ["S", "M", "L", "XL"],
+    description: "100% cotton pique polo for everyday comfort. Classic design with ribbed collar.",
+    category: "Poloshirt",
+    type: "Polo Shirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 17 - Poloshirt
+  {
+    _id: "polo_7",
+    name: "Men's Contrast Collar Polo",
+    image: [product_17, product_17_1, product_17_2],
+    price: 77,
+    offerPrice: 51,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Stylish polo with contrast collar detail. Adds a touch of sophistication.",
+    category: "Poloshirt",
+    type: "Polo Shirt",
+    rating: 4.4,
+    inStock: true,
+    popular: true
+  },
+  // 18 - Poloshirt
+  {
+    _id: "polo_8",
+    name: "Men's Heavyweight Polo",
+    image: [product_18, product_18_1, product_18_2],
+    price: 82,
+    offerPrice: 54,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Heavyweight fabric polo for durability and comfort. Ideal for year-round wear.",
+    category: "Poloshirt",
+    type: "Polo Shirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 19 - Poloshirt
+  {
+    _id: "polo_9",
+    name: "Men's Textured Polo Shirt",
+    image: [product_19, product_19_1, product_19_2],
+    price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Textured fabric polo for a unique look. Soft and comfortable.",
+    category: "Poloshirt",
+    type: "Polo Shirt",
+    rating: 4.4,
+    inStock: true,
+    popular: true
+  },
+  // 20 - Poloshirt
+  {
+    _id: "polo_10",
+    name: "Men's Short Sleeve Polo",
+    image: [product_20, product_20_1, product_20_2],
+    price: 64,
+    offerPrice: 42,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Classic short sleeve polo for summer. Breathable and comfortable.",
+    category: "Poloshirt",
+   type: "Polo Shirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  }
+);
+
+// ==================== WINDBREAKER (21-30) ====================
+dummyProducts.push(
+  // 21 - Windbreaker
+  {
+    _id: "wind_1",
+    name: "Men's Lightweight Windbreaker",
+    image: [product_21, product_21_1, product_21_2],
+    price: 89,
+    offerPrice: 59,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Lightweight windbreaker perfect for windy days. Packable and easy to carry.",
+    category: "Windbreaker",
+   type: "Windbreaker",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 22 - Windbreaker
+  {
+    _id: "wind_2",
+    name: "Men's Waterproof Windbreaker",
+    image: [product_22, product_22_1, product_22_2],
+    price: 99,
+    offerPrice: 65,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Waterproof windbreaker for rainy weather. Keeps you dry and comfortable.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.7,
+    inStock: true,
+    popular: true
+  },
+  // 23 - Windbreaker
+  {
+    _id: "wind_3",
+    name: "Men's Hooded Windbreaker",
+    image: [product_23, product_23_1, product_23_2],
+    price: 94,
+    offerPrice: 62,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Hooded windbreaker for extra protection. Adjustable hood and cuffs.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 24 - Windbreaker
+  {
+    _id: "wind_4",
+    name: "Men's Packable Windbreaker",
+    image: [product_24, product_24_1, product_24_2],
+    price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Packable windbreaker that folds into its own pocket. Perfect for travel.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 25 - Windbreaker
+  {
+    _id: "wind_5",
+    name: "Men's Reflective Windbreaker",
+    image: [product_25, product_25_1, product_25_2],
+    price: 89,
     offerPrice: 59,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    description: "Water-resistant sports jacket for outdoor training. Lightweight and packable design.",
-    category: "Sportswear",
+    description: "Reflective details for visibility at night. Perfect for evening runs.",
+    category: "Windbreaker",
+   type: "Windbreaker",
     rating: 4.5,
     inStock: true,
-     popular: true  
+    popular: true
   },
+  // 26 - Windbreaker
   {
-    _id: "32",
-    name: "Women's Athletic Sneakers",
-    image: [product_38, product_34, product_36],
-    price: 89,
-    offerPrice: 64,
-    sizes: ["36", "37", "38", "39", "40", "41"],
-    description: "Versatile athletic shoes for gym, running, and daily wear. Cushioned sole for maximum comfort.",
-    category: "Sportswear",
+    _id: "wind_6",
+    name: "Men's Insulated Windbreaker",
+    image: [product_26, product_26_1, product_26_2],
+    price: 109,
+    offerPrice: 72,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Lightweight insulation for added warmth. Perfect for cool, windy days.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 27 - Windbreaker
+  {
+    _id: "wind_7",
+    name: "Men's Breathable Windbreaker",
+    image: [product_27, product_27_1, product_27_2],
+    price: 84,
+    offerPrice: 55,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Breathable fabric prevents overheating. Ideal for active use.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 28 - Windbreaker
+  {
+    _id: "wind_8",
+    name: "Men's Zippered Windbreaker",
+    image: [product_28, product_28_1, product_28_2],
+    price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Full-zip windbreaker with multiple pockets. Practical and stylish.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.4,
+    inStock: true,
+    popular: true
+  },
+  // 29 - Windbreaker
+  {
+    _id: "wind_9",
+    name: "Men's Color Block Windbreaker",
+    image: [product_29, product_29_1, product_29_2],
+    price: 86,
+    offerPrice: 57,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Retro color block design. Stylish and functional for everyday wear.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 30 - Windbreaker
+  {
+    _id: "wind_10",
+    name: "Men's Lightweight Sports Windbreaker",
+    image: [product_30, product_30_1, product_30_2],
+    price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Designed for sports and outdoor activities. Lightweight and flexible.",
+    category: "Windbreaker",
+    type: "Windbreaker",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  }
+);
+
+// ==================== SWEATSHIRT (31-40) ====================
+dummyProducts.push(
+  // 31 - Sweatshirt
+  {
+    _id: "sweat_1",
+    name: "Men's Classic Crewneck Sweatshirt",
+    image: [product_31, product_31_1, product_31_2],
+    price: 69,
+    offerPrice: 45,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Classic crewneck sweatshirt for casual comfort. Soft fleece lining.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 32 - Sweatshirt
+  {
+    _id: "sweat_2",
+    name: "Men's Hooded Sweatshirt",
+    image: [product_32, product_32_1, product_32_2],
+    price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Hooded sweatshirt with adjustable drawstring. Perfect for casual days.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
     rating: 4.7,
     inStock: true,
-     popular: true  
+    popular: true
+  },
+  // 33 - Sweatshirt
+  {
+    _id: "sweat_3",
+    name: "Men's Graphic Sweatshirt",
+    image: [product_33, product_33_1, product_33_2],
+    price: 74,
+    offerPrice: 49,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Bold graphic print sweatshirt for a trendy look. Soft and comfortable.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 34 - Sweatshirt
+  {
+    _id: "sweat_4",
+    name: "Men's Pullover Sweatshirt",
+    image: [product_34, product_34_1, product_34_2],
+    price: 64,
+    offerPrice: 42,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Classic pullover sweatshirt for everyday wear. Ribbed cuffs and hem.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 35 - Sweatshirt
+  {
+    _id: "sweat_5",
+    name: "Men's Zip-Up Hoodie",
+    image: [product_35, product_35_1, product_35_2],
+    price: 84,
+    offerPrice: 55,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Full-zip hoodie with front pockets. Convenient and comfortable.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 36 - Sweatshirt
+  {
+    _id: "sweat_6",
+    name: "Men's Heavyweight Sweatshirt",
+    image: [product_36, product_36_1, product_36_2],
+    price: 89,
+    offerPrice: 59,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Heavyweight fabric for extra warmth. Ideal for cold weather.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.7,
+    inStock: true,
+    popular: true
+  },
+  // 37 - Sweatshirt
+  {
+    _id: "sweat_7",
+    name: "Men's Quarter-Zip Sweatshirt",
+    image: [product_37, product_37_1, product_37_2],
+    price: 79,
+    offerPrice: 52,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Quarter-zip design for easy layering. Great for golf and casual wear.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 38 - Sweatshirt
+  {
+    _id: "sweat_8",
+    name: "Men's French Terry Sweatshirt",
+    image: [product_38, product_38_1, product_38_2],
+    price: 74,
+    offerPrice: 49,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "French terry fabric for a soft, comfortable feel. Breathable and stylish.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
+  },
+  // 39 - Sweatshirt
+  {
+    _id: "sweat_9",
+    name: "Men's Color Block Sweatshirt",
+    image: [product_39, product_39_1, product_39_2],
+    price: 69,
+    offerPrice: 45,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Color block design for a modern look. Soft and comfortable fabric.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.4,
+    inStock: true,
+    popular: true
+  },
+  // 40 - Sweatshirt
+  {
+    _id: "sweat_10",
+    name: "Men's Athletic Sweatshirt",
+    image: [product_40, product_40_1, product_40_2],
+    price: 64,
+    offerPrice: 42,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Athletic fit sweatshirt for an active lifestyle. Moisture-wicking fabric.",
+    category: "Sweatshirt",
+    type: "Sweatshirt",
+    rating: 4.5,
+    inStock: true,
+    popular: true
   }
-];
+);
+
+// ==================== DOWN JACKET (41-50) ====================
+dummyProducts.push(
+  // 41 - Down Jacket
+  {
+    _id: "down_1",
+    name: "Men's Lightweight Down Jacket",
+    image: [product_41, product_41_1, product_41_2],
+    price: 149,
+    offerPrice: 99,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Lightweight down jacket for warmth without bulk. Packable and warm.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.7,
+    inStock: true,
+    popular: true
+  },
+  // 42 - Down Jacket
+  {
+    _id: "down_2",
+    name: "Men's Hooded Down Jacket",
+    image: [product_42, product_42_1, product_42_2],
+    price: 169,
+    offerPrice: 112,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Hooded down jacket with adjustable features. Perfect for cold weather.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.8,
+    inStock: true,
+    popular: true
+  },
+  // 43 - Down Jacket
+  {
+    _id: "down_3",
+    name: "Men's Waterproof Down Jacket",
+    image: [product_43, product_43_1, product_43_2],
+    price: 189,
+    offerPrice: 125,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Waterproof down jacket for wet conditions. Stay warm and dry.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.8,
+    inStock: true,
+    popular: true
+  },
+  // 44 - Down Jacket
+  {
+    _id: "down_4",
+    name: "Men's Puffer Down Jacket",
+    image: [product_44, product_44_1, product_44_2],
+    price: 159,
+    offerPrice: 105,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Classic puffer style down jacket. Warm and stylish.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.7,
+    inStock: true,
+    popular: true
+  },
+  // 45 - Down Jacket
+  {
+    _id: "down_5",
+    name: "Men's Long Down Coat",
+    image: [product_45, product_45_1, product_45_2],
+    price: 199,
+    offerPrice: 132,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Long length down coat for maximum warmth. Perfect for extreme cold.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.9,
+    inStock: true,
+    popular: true
+  },
+  // 46 - Down Jacket
+  {
+    _id: "down_6",
+    name: "Men's Packable Down Vest",
+    image: [product_46, product_46_1, product_46_2],
+    price: 99,
+    offerPrice: 65,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Packable down vest for core warmth. Great for layering.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 47 - Down Jacket
+  {
+    _id: "down_7",
+    name: "Men's Ski Down Jacket",
+    image: [product_47, product_47_1, product_47_2],
+    price: 219,
+    offerPrice: 145,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Ski-ready down jacket with snow skirt. Perfect for the slopes.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.9,
+    inStock: true,
+    popular: true
+  },
+  // 48 - Down Jacket
+  {
+    _id: "down_8",
+    name: "Men's Urban Down Jacket",
+    image: [product_48, product_48_1, product_48_2],
+    price: 169,
+    offerPrice: 112,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Stylish urban down jacket for city winter. Warm and fashionable.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.7,
+    inStock: true,
+    popular: true
+  },
+  // 49 - Down Jacket
+  {
+    _id: "down_9",
+    name: "Men's Lightweight Down Vest",
+    image: [product_49, product_49_1, product_49_2],
+    price: 89,
+    offerPrice: 59,
+    sizes: ["S", "M", "L", "XL"],
+    description: "Lightweight down vest for mild winter days. Easy to layer.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 4.6,
+    inStock: true,
+    popular: true
+  },
+  // 50 - Down Jacket
+  {
+    _id: "down_10",
+    name: "Men's Expedition Down Jacket",
+    image: [product_50, product_50_1, product_50_2],
+    price: 249,
+    offerPrice: 165,
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description: "Expedition-grade down jacket for extreme conditions. Maximum warmth.",
+    category: "Downjacket",
+    type: "Down Jacket",
+    rating: 5.0,
+    inStock: true,
+    popular: true
+  }
+);
 
 // ==================== BLOGS ====================
 export const blogs = [
@@ -557,15 +1018,18 @@ export const getRelatedProducts = (productId, categoryName, count = 4) => {
     .slice(0, count);
 };
 
-// Get products by price range
+// Get products by price range - ĐÃ FIX LỖI
 export const getProductsByPriceRange = (min, max) => {
-  return dummyProducts.filter(product => product.offerPrice >= min && product.offerPrice <= max);
+  return dummyProducts.filter(product => {
+    const price = product.offerPrice ?? product.price ?? 0;
+    return price >= min && price <= max;
+  });
 };
 
-// Search products by name
+// Search products by name - ĐÃ FIX LỖI
 export const searchProducts = (query) => {
   return dummyProducts.filter(product => 
-    product.name.toLowerCase().includes(query.toLowerCase())
+    (product.name?.toLowerCase() || '').includes(query.toLowerCase())
   );
 };
 
@@ -574,98 +1038,96 @@ export const getProductsOnSale = () => {
   return dummyProducts.filter(product => product.offerPrice < product.price);
 };
 
-////dummyOrders
-// Thêm vào cuối file data.js (sau phần products, blogs, helper functions)
+// Get products by type (summer, winter, wind)
+export const getProductsByType = (type) => {
+  return dummyProducts.filter(product => product.type === type);
+};
 
+// Get summer products
+export const getSummerProducts = () => {
+  return dummyProducts.filter(product => product.type === "summer");
+};
+
+// Get winter products
+export const getWinterProducts = () => {
+  return dummyProducts.filter(product => product.type === "winter");
+};
+
+// Get wind products
+export const getWindProducts = () => {
+  return dummyProducts.filter(product => product.type === "wind");
+};
+
+// ==================== DUMMY ORDERS - ĐÃ FIX LỖI ID ====================
 export const dummyOrders = [
-    {
-        _id: "ORD-2025-001",
-        items: [
-            {
-                product: {
-                    _id: "3",
-                    name: "Slim Fit Denim Jeans for Men",
-                    image: [product_4],
-                    offerPrice: 59
-                },
-                quantity: 2,
-                size: "32"
-            },
-            {
-                product: {
-                    _id: "4",
-                    name: "Men's Casual Hoodie with Front Pocket",
-                    image: [product_7],
-                    offerPrice: 49
-                },
-                quantity: 1,
-                size: "L"
-            }
-        ],
-        isPaid: true,
-        paymentMethod: "COD",
-        createdAt: "2025-03-15",
-        amount: 167,
-        status: "Delivered"
-    },
-    {
-        _id: "ORD-2025-002",
-        items: [
-            {
-                product: {
-                    _id: "6",
-                    name: "Women's Floral Print Summer Dress",
-                    image: [product_8],
-                    offerPrice: 49
-                },
-                quantity: 1,
-                size: "M"
-            },
-            {
-                product: {
-                    _id: "8",
-                    name: "Women's Elegant Evening Gown",
-                    image: [product_9],
-                    offerPrice: 179
-                },
-                quantity: 1,
-                size: "S"
-            }
-        ],
-        isPaid: false,
-        paymentMethod: "Stripe",
-        createdAt: "2025-03-20",
-        amount: 228,
-        status: "Processing"
-    },
-    {
-        _id: "ORD-2025-003",
-        items: [
-            {
-                product: {
-                    _id: "11",
-                    name: "Kids Colorful Cartoon T-Shirt",
-                    image: [product_15],
-                    offerPrice: 19
-                },
-                quantity: 3,
-                size: "4-5Y"
-            },
-            {
-                product: {
-                    _id: "13",
-                    name: "Kids Winter Jacket with Hood",
-                    image: [product_17],
-                    offerPrice: 49
-                },
-                quantity: 1,
-                size: "5-6Y"
-            }
-        ],
-        isPaid: true,
-        paymentMethod: "COD",
-        createdAt: "2025-03-18",
-        amount: 106,
-        status: "Shipped"
-    }
-]
+  {
+    _id: "ORD-2025-001",
+    items: [
+      {
+        product: {
+          _id: "tshirt_1", // ĐÃ SỬA: khớp với _id trong dummyProducts
+          name: "Men's Classic Cotton T-Shirt",
+          image: ["/src/assets/picturedata/Tshirt1-10/ao1.png"],
+          offerPrice: 29
+        },
+        quantity: 2,
+        size: "M"
+      },
+      {
+        product: {
+          _id: "polo_1", // ĐÃ SỬA: khớp với _id trong dummyProducts
+          name: "Men's Classic Polo Shirt",
+          image: ["/src/assets/picturedata/Poloshirt11-20/ao11.png"],
+          offerPrice: 45
+        },
+        quantity: 1,
+        size: "L"
+      }
+    ],
+    isPaid: true,
+    paymentMethod: "COD",
+    createdAt: "2025-03-15",
+    amount: 103,
+    status: "Delivered"
+  },
+  {
+    _id: "ORD-2025-002",
+    items: [
+      {
+        product: {
+          _id: "wind_1", // ĐÃ SỬA: khớp với _id trong dummyProducts
+          name: "Men's Lightweight Windbreaker",
+          image: ["/src/assets/picturedata/Windbreaker21-30/ao21.png"],
+          offerPrice: 59
+        },
+        quantity: 1,
+        size: "L"
+      }
+    ],
+    isPaid: false,
+    paymentMethod: "Stripe",
+    createdAt: "2025-03-20",
+    amount: 59,
+    status: "Processing"
+  },
+  {
+    _id: "ORD-2025-003",
+    items: [
+      {
+        product: {
+          _id: "sweat_1", // ĐÃ SỬA: khớp với _id trong dummyProducts
+          name: "Men's Classic Crewneck Sweatshirt",
+          image: ["/src/assets/picturedata/Sweatshirt31-40/ao31.png"],
+          offerPrice: 45
+        },
+        quantity: 3,
+        size: "XL"
+      }
+    ],
+    isPaid: true,
+    paymentMethod: "COD",
+    createdAt: "2025-03-18",
+    amount: 135,
+    status: "Shipped"
+  }
+];

@@ -16,6 +16,9 @@ body {
   width: 100%;
   overflow-x: hidden;
 }
+html {
+  font-size: clamp(16px, 1.5vw, 24px);
+}
 
 /* ================================
    DESIGN TOKENS (Tailwind v4)

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import Title from "../components/Title";
 import { ShopContext } from "../context/ShopContext";
 import Item from "../components/Item";
@@ -8,11 +7,11 @@ import ProductFilter from "../components/ProductFilter";
 const Collection = () => {
 
   const { products, searchQuery } = useContext(ShopContext);
-  const { category } = useParams();
 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currPage, setCurrPage] = useState(1);
 
+  const [selectedFilter, setSelectedFilter] = useState("all");
   const [sortOption, setSortOption] = useState("default");
   const [priceRange, setPriceRange] = useState([0, 1000]);
 
@@ -24,11 +23,10 @@ const Collection = () => {
 
     let filtered = [...products];
 
-    // CATEGORY
-    if (category) {
+    // ✅ FILTER THEO TYPE (CHUẨN MỚI)
+    if (selectedFilter !== "all") {
       filtered = filtered.filter(
-        (product) =>
-          product.category?.toLowerCase() === category.toLowerCase()
+        (product) => product.type === selectedFilter
       );
     }
 
@@ -39,13 +37,10 @@ const Collection = () => {
       );
     }
 
-    // PRICE FILTER
+    // PRICE
     filtered = filtered.filter((product) => {
-
       const price = product.offerPrice ?? product.price ?? 0;
-
       return price >= priceRange[0] && price <= priceRange[1];
-
     });
 
     // SORT
@@ -72,11 +67,7 @@ const Collection = () => {
     setFilteredProducts(filtered);
     setCurrPage(1);
 
-  }, [products, searchQuery, category, sortOption, priceRange]);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currPage]);
+  }, [products, searchQuery, selectedFilter, sortOption, priceRange]);
 
   // PAGINATION
   const indexOfLastItem = currPage * itemsPerPage;
@@ -87,20 +78,17 @@ const Collection = () => {
   return (
     <div className="max-w-[1440px] mx-auto px-4 py-16 pt-28">
 
-      <Title
-        title1="All"
-        title2={category ? category : "Products"}
-        titleStyles="pb-10"
-      />
+      <Title title1="All" title2="Products" titleStyles="pb-10" />
 
-      {/* MAIN LAYOUT */}
       <div className="flex flex-col lg:flex-row gap-6">
 
-        {/* FILTER SIDEBAR */}
+        {/* SIDEBAR */}
         <div className="w-full lg:w-[260px]">
           <ProductFilter
             setSortOption={setSortOption}
             setPriceRange={setPriceRange}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
           />
         </div>
 
@@ -110,25 +98,19 @@ const Collection = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
 
             {currentItems.length > 0 ? (
-
               currentItems.map((product) => (
                 <Item key={product._id} product={product} />
               ))
-
             ) : (
-
               <h4 className="text-red-500 col-span-full text-center py-10">
                 Oops! Nothing matched your search
               </h4>
-
             )}
 
           </div>
 
           {/* PAGINATION */}
-
           {totalPages > 1 && (
-
             <div className="flex items-center justify-center gap-3 mt-12 flex-wrap">
 
               <button
@@ -140,9 +122,7 @@ const Collection = () => {
               </button>
 
               <div className="flex gap-2 flex-wrap">
-
                 {Array.from({ length: totalPages }, (_, index) => (
-
                   <button
                     key={index + 1}
                     onClick={() => setCurrPage(index + 1)}
@@ -154,9 +134,7 @@ const Collection = () => {
                   >
                     {index + 1}
                   </button>
-
                 ))}
-
               </div>
 
               <button
@@ -168,7 +146,6 @@ const Collection = () => {
               </button>
 
             </div>
-
           )}
 
         </div>

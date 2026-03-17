@@ -5,16 +5,43 @@ import { FaHeart } from "react-icons/fa";
 
 const Item = ({ product }) => {
 
-  const { currency, navigate, addToCart, wishlist, toggleWishlist } = useContext(ShopContext);
+  const {
+    currency,
+    navigate,
+    addToCart,
+    wishlist,
+    toggleWishlist,
+    user
+  } = useContext(ShopContext);
 
   const [added, setAdded] = useState(false);
 
-  // FIX: wishlist là array productId
-  const isWishlisted = wishlist.includes(product._id);
+  // ✅ FIX 1: so sánh chuẩn ObjectId
+  const isWishlisted = wishlist.some(
+    (id) => id.toString() === product._id.toString()
+  );
 
+  // ✅ FIX 2: chặn chưa login vẫn dùng wishlist
+  const handleWishlist = (e) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("Bạn cần đăng nhập!");
+      return;
+    }
+
+    toggleWishlist(product._id);
+  };
+
+  // ✅ FIX 3: chặn chưa login add cart
   const handleAddToCart = (e) => {
 
     e.stopPropagation();
+
+    if (!user) {
+      alert("Bạn cần đăng nhập!");
+      return;
+    }
 
     addToCart(product._id, product.sizes?.[0] || "M");
 
@@ -23,7 +50,6 @@ const Item = ({ product }) => {
     setTimeout(() => {
       navigate(`/collection/${product.category?.toLowerCase()}/${product._id}`);
     }, 300);
-
   };
 
   const images = Array.isArray(product.image) ? product.image : [product.image];
@@ -55,11 +81,9 @@ const Item = ({ product }) => {
         </div>
       )}
 
+      {/* ❤️ WISHLIST */}
       <div
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleWishlist(product._id);
-        }}
+        onClick={handleWishlist}
         className="absolute top-3 right-3 text-lg cursor-pointer z-10"
       >
         {isWishlisted ? (

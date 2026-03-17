@@ -1,6 +1,21 @@
 import React from "react";
 
-const ProductFilter = ({ setSortOption, setPriceRange }) => {
+const ProductFilter = ({
+  setSortOption,
+  setPriceRange,
+  selectedFilter,
+  setSelectedFilter
+}) => {
+
+  // ✅ FILTER THEO TYPE
+  const filters = [
+    { label: "All", value: "all" },
+    { label: "T-shirt", value: "T-shirt" },
+    { label: "Polo Shirt", value: "Polo Shirt" },
+    { label: "Windbreaker", value: "Windbreaker" },
+    { label: "Sweatshirt", value: "Sweatshirt" },
+    { label: "Down Jacket", value: "Down Jacket" },
+  ];
 
   return (
 
@@ -10,29 +25,28 @@ const ProductFilter = ({ setSortOption, setPriceRange }) => {
         Filter Products
       </h3>
 
-      {/* SORT */}
+      {/* FILTER TYPE */}
+      <div className="mb-6 flex flex-col gap-2 text-sm">
 
-      <div className="mb-6">
+        {filters.map((item) => (
 
-        <h4 className="text-sm font-medium mb-2">
-          Sort By
-        </h4>
+          <button
+            key={item.value}
+            onClick={() => setSelectedFilter(item.value)}
+            className={`text-left px-3 py-2 rounded-lg transition ${
+              selectedFilter === item.value
+                ? "bg-black text-white"
+                : "hover:bg-gray-100"
+            }`}
+          >
+            {item.label}
+          </button>
 
-        <select
-          onChange={(e) => setSortOption(e.target.value)}
-          className="w-full border rounded p-2 text-sm focus:outline-none"
-        >
-          <option value="default">Default</option>
-          <option value="low-high">Price: Low → High</option>
-          <option value="high-low">Price: High → Low</option>
-          <option value="rating">Best Rating</option>
-        </select>
+        ))}
 
       </div>
 
-
       {/* PRICE */}
-
       <div>
 
         <h4 className="text-sm font-medium mb-2">
@@ -42,13 +56,13 @@ const ProductFilter = ({ setSortOption, setPriceRange }) => {
         <select
           onChange={(e) => {
 
-            const value = e.target.value
+            const value = e.target.value;
 
-            if (value === "all") setPriceRange([0, 1000])
-            if (value === "50") setPriceRange([0, 50])
-            if (value === "100") setPriceRange([50, 100])
-            if (value === "200") setPriceRange([100, 200])
-            if (value === "500") setPriceRange([200, 1000])
+            if (value === "all") setPriceRange([0, 1000]);
+            if (value === "50") setPriceRange([0, 50]);
+            if (value === "100") setPriceRange([50, 100]);
+            if (value === "200") setPriceRange([100, 200]);
+            if (value === "500") setPriceRange([200, 1000]);
 
           }}
           className="w-full border rounded p-2 text-sm focus:outline-none"
@@ -64,10 +78,29 @@ const ProductFilter = ({ setSortOption, setPriceRange }) => {
 
       </div>
 
+      {/* SORT (BONUS) */}
+      <div className="mt-6">
+
+        <h4 className="text-sm font-medium mb-2">
+          Sort By
+        </h4>
+
+        <select
+          onChange={(e) => setSortOption(e.target.value)}
+          className="w-full border rounded p-2 text-sm"
+        >
+          <option value="default">Default</option>
+          <option value="low-high">Price: Low → High</option>
+          <option value="high-low">Price: High → Low</option>
+          <option value="rating">Rating</option>
+        </select>
+
+      </div>
+
     </div>
 
-  )
+  );
 
-}
+};
 
-export default ProductFilter
+export default ProductFilter;

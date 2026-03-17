@@ -20,65 +20,107 @@ const Home = () => {
 
       {/* SALE BANNER */}
 
-      <div className="max-padd-container py-10 lg:py-16">
+      {/* SALE BANNER */}
+<div className="max-padd-container py-12 lg:py-20">
 
-        <div className="
-        relative
+  <div className="
+    relative
+    w-full
+    h-[300px] sm:h-[360px] md:h-[420px] lg:h-[480px]
+    rounded-3xl
+    overflow-hidden
+    shadow-2xl
+    group
+  ">
+
+    {/* IMAGE */}
+    <img
+      src={banner}
+      alt="bannerImg"
+      className="
         w-full
-        h-[260px] sm:h-[320px] md:h-[360px] lg:h-[420px]
-        rounded-2xl
-        overflow-hidden
-        shadow-xl
-        group
-        ">
+        h-full
+        object-cover
+        object-center
+        group-hover:scale-110
+        transition-transform
+        duration-700
+        ease-out
+      "
+    />
 
-          <img
-            src={banner}
-            alt="bannerImg"
-            className="
-            w-full
-            h-full
-            object-cover
-            object-center
-            group-hover:scale-105
-            transition-transform
-            duration-700
-            "
-          />
+    {/* OVERLAY */}
+    <div className="
+      absolute inset-0
+      bg-gradient-to-r
+      from-black/70
+      via-black/30
+      to-transparent
+    "></div>
 
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60"></div>
+    {/* CONTENT */}
+    <div className="
+      absolute inset-0
+      flex flex-col
+      justify-center
+      items-start
+      px-6 sm:px-10 md:px-16
+      text-white
+    ">
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+      <span className="
+        mb-3
+        px-4 py-1
+        text-xs sm:text-sm
+        bg-red-500/90
+        rounded-full
+        font-semibold
+        tracking-wider
+        uppercase
+        shadow-md
+      ">
+        Limited Offer
+      </span>
 
-            <h2 className="
-            text-3xl
-            sm:text-4xl
-            md:text-5xl
-            lg:text-6xl
-            font-black
-            uppercase
-            mb-3
-            text-red-500
-            ">
-              SALE UP TO 40%
-            </h2>
+      <h2 className="
+        text-3xl sm:text-4xl md:text-5xl lg:text-6xl
+        font-extrabold
+        leading-tight
+        mb-4
+        drop-shadow-lg
+      ">
+        Up to <span className="text-red-500">40% OFF</span>
+      </h2>
 
-            <p className="
-            text-sm
-            sm:text-base
-            md:text-lg
-            lg:text-xl
-            font-medium
-            text-red-500
-            ">
-              FOR ALL WINTER
-            </p>
+      <p className="
+        text-sm sm:text-base md:text-lg
+        mb-6
+        text-gray-200
+        max-w-md
+      ">
+        Discover our winter collection with premium quality and modern style.
+      </p>
 
-          </div>
+      {/* BUTTON */}
+      <button className="
+        px-6 py-3
+        bg-red-500
+        hover:bg-red-600
+        transition
+        duration-300
+        rounded-full
+        font-semibold
+        shadow-lg
+        hover:scale-105
+      ">
+        Shop Now
+      </button>
 
-        </div>
+    </div>
 
-      </div>
+  </div>
+
+</div>
 
       <Blog />
 

@@ -32,7 +32,8 @@ const Login = () => {
                     setUser(data.user)
                     setShowUserLogin(false)
                     toast.success('Registration successful!')
-                    navigate("/")
+                    // ✅ FIX LỖI 4: Reload để sync lại toàn bộ state
+                    window.location.reload()
                 } else {
                     toast.error(data.message || 'Registration failed')
                 }
@@ -48,7 +49,8 @@ const Login = () => {
                     setUser(data.user)
                     setShowUserLogin(false)
                     toast.success('Login successful!')
-                    navigate("/")
+                    // ✅ FIX LỖI 4: Reload để sync lại toàn bộ state
+                    window.location.reload()
                 } else {
                     toast.error(data.message || 'Login failed')
                 }

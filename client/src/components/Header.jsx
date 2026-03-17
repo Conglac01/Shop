@@ -9,7 +9,6 @@ import { FiChevronDown } from "react-icons/fi";
 
 import userImg from "../assets/user.png";
 import { ShopContext } from "../context/ShopContext";
-// 👇 IMPORT HOOK
 import useScrollToTop from "../hooks/useScrollToTop";
 
 const Header = () => {
@@ -23,7 +22,6 @@ const Header = () => {
     getCartCount,
   } = useContext(ShopContext);
 
-  // 👇 LẤY HÀM CUỘN TỪ HOOK
   const { scrollToTopSmooth } = useScrollToTop();
 
   const location = useLocation();
@@ -44,17 +42,14 @@ const Header = () => {
 
   const displayName = user?.name?.split(" ")[0] || "User";
 
-  // 👇 XỬ LÝ CLICK LOGO
   const handleLogoClick = (e) => {
     e.preventDefault();
     navigate('/');
-    // Cuộn lên đầu sau khi chuyển trang
     setTimeout(() => {
       scrollToTopSmooth();
     }, 100);
   };
 
-  // Sticky header
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
@@ -65,7 +60,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchQuery);
@@ -74,14 +68,12 @@ const Header = () => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Navigate search
   useEffect(() => {
     if (debouncedSearch && !isCollectionPage) {
       navigate("/collection");
     }
   }, [debouncedSearch, isCollectionPage, navigate]);
 
-  // Click outside close user menu
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
@@ -94,7 +86,11 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const cartCount = useMemo(() => getCartCount(), [getCartCount]);
+  // ✅ FIX LỖI 2: Cart count chỉ hiện khi có user
+  const cartCount = useMemo(() => {
+    if (!user) return 0;
+    return getCartCount();
+  }, [getCartCount, user]);
 
   return (
     <>
@@ -109,7 +105,7 @@ const Header = () => {
       >
         <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between py-3">
 
-          {/* Logo - ĐÃ SỬA */}
+          {/* Logo */}
           <Link 
             to="/" 
             onClick={handleLogoClick}
@@ -162,16 +158,24 @@ const Header = () => {
 
             </div>
 
-            {/* Cart */}
+            {/* Cart - chỉ hiện badge khi có user */}
             <div
-              onClick={() => navigate("/cart")}
+              onClick={() => {
+                if (!user) {
+                  setShowUserLogin(true);
+                  return;
+                }
+                navigate("/cart");
+              }}
               className="flex gap-2 items-center cursor-pointer p-2 rounded-full bg-white relative"
             >
               <FaShoppingBasket size={26} />
 
-              <span className="absolute bottom-8 -right-2 text-xs font-bold bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center">
-                {cartCount}
-              </span>
+              {user && cartCount > 0 && (
+                <span className="absolute bottom-8 -right-2 text-xs font-bold bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </div>
 
             {/* User */}

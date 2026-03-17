@@ -30,14 +30,12 @@ const userSchema = new mongoose.Schema(
   },
 
   // =========================
-  // WISHLIST
+  // WISHLIST - ĐÃ SỬA ĐỂ NHẬN CẢ STRING VÀ OBJECTID
   // =========================
-  wishlist: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "product"
-    }
-  ],
+  wishlist: {
+    type: [mongoose.Schema.Types.Mixed], // ✅ Cho phép cả ObjectId và string
+    default: []
+  },
 
   // =========================
   // ORDER HISTORY

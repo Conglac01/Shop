@@ -6,8 +6,9 @@ const Wishlist = () => {
 
   const { wishlist, products } = useContext(ShopContext);
 
+  // ✅ FIX: ép về string để so sánh
   const wishlistProducts = products.filter((product) =>
-    wishlist.includes(product._id)
+    wishlist.some((id) => id.toString() === product._id.toString())
   );
 
   if (wishlistProducts.length === 0) {

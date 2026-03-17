@@ -137,7 +137,9 @@ const ShopContextProvider = ({ children }) => {
       const { data } = await axios.get("/api/user/wishlist");
 
       if (data.success) {
-        setWishlist(data.wishlist);
+        // Lấy mảng các _id từ wishlist đã populate
+        const wishlistIds = data.wishlist.map(item => item._id);
+        setWishlist(wishlistIds);
       }
     } catch (error) {
       console.log("Wishlist fetch error:", error.message);
@@ -195,9 +197,7 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // =========================
-  // WISHLIST TOGGLE - ĐÃ SỬA
-  // =========================
+  // ✅ FIX LỖI 1 & 3: Wishlist toggle với xử lý ObjectId
   const toggleWishlist = async (productId) => {
     if (!user) {
       toast.error("Please login to use wishlist");
@@ -209,7 +209,7 @@ const ShopContextProvider = ({ children }) => {
       // Kiểm tra trạng thái hiện tại
       const isInWishlist = wishlist.includes(productId);
       
-      // Optimistic update - cập nhật UI ngay
+      // Optimistic update
       if (isInWishlist) {
         setWishlist(prev => prev.filter(id => id !== productId));
       } else {
@@ -221,9 +221,8 @@ const ShopContextProvider = ({ children }) => {
         productId,
       });
 
-      // Nếu API thất bại, rollback
       if (!data.success) {
-        // Rollback về trạng thái cũ
+        // Rollback nếu lỗi
         if (isInWishlist) {
           setWishlist(prev => [...prev, productId]);
         } else {
@@ -231,7 +230,6 @@ const ShopContextProvider = ({ children }) => {
         }
         toast.error(data.message || "Failed to update wishlist");
       } else {
-        // Cập nhật với dữ liệu từ server
         setWishlist(data.wishlist);
         toast.success(
           isInWishlist 
@@ -242,14 +240,23 @@ const ShopContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Wishlist toggle error:", error.message);
       toast.error("Network error. Please try again.");
-      
-      // Rollback về trạng thái ban đầu bằng cách fetch lại wishlist
-      await fetchWishlist();
+      await fetchWishlist(); // Rollback bằng cách fetch lại
     }
   };
 
+  // ✅ FIX LỖI 1: Add to cart - chặn guest
   const addToCart = (itemId, size) => {
-    if (!size) return toast.error("Select size");
+    // Kiểm tra login trước
+    if (!user) {
+      toast.error("Please login to add to cart");
+      setShowUserLogin(true);
+      return;
+    }
+
+    if (!size) {
+      toast.error("Select size");
+      return;
+    }
 
     let cartData = structuredClone(cartItems);
 
@@ -261,16 +268,15 @@ const ShopContextProvider = ({ children }) => {
 
     setCartItems(cartData);
 
-    if (user) {
-      syncCartToServer(cartData);
-    } else {
-      localStorage.setItem("cart_guest", JSON.stringify(cartData));
-    }
+    // ✅ Đã có user nên sync thẳng lên server
+    syncCartToServer(cartData);
 
     toast.success("Added to cart");
   };
 
   const removeFromCart = (itemId, size) => {
+    if (!user) return;
+
     let cartData = structuredClone(cartItems);
 
     if (cartData[itemId] && cartData[itemId][size]) {
@@ -281,24 +287,35 @@ const ShopContextProvider = ({ children }) => {
       }
 
       setCartItems(cartData);
-
-      if (user) syncCartToServer(cartData);
+      syncCartToServer(cartData);
+      toast.success("Removed from cart");
     }
   };
 
   const updateQuantity = (itemId, size, quantity) => {
+    if (!user) return;
+
     let cartData = structuredClone(cartItems);
 
     if (!cartData[itemId]) cartData[itemId] = {};
 
-    cartData[itemId][size] = quantity;
+    if (quantity <= 0) {
+      delete cartData[itemId][size];
+      if (Object.keys(cartData[itemId]).length === 0) {
+        delete cartData[itemId];
+      }
+    } else {
+      cartData[itemId][size] = quantity;
+    }
 
     setCartItems(cartData);
-
-    if (user) syncCartToServer(cartData);
+    syncCartToServer(cartData);
   };
 
+  // ✅ FIX LỖI 2: Cart count chỉ tính khi có user
   const getCartCount = () => {
+    if (!user) return 0;
+
     let total = 0;
 
     for (const itemId in cartItems) {
@@ -311,6 +328,8 @@ const ShopContextProvider = ({ children }) => {
   };
 
   const getCartAmount = () => {
+    if (!user) return 0;
+
     let total = 0;
 
     for (const itemId in cartItems) {
