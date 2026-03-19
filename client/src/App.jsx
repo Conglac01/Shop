@@ -15,6 +15,8 @@ import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import MyOrder from "./pages/MyOrder";
 import Wishlist from "./pages/Wishlish";
+import PaymentSuccess from "./pages/PaymentSuccess";  // ✅ THÊM IMPORT
+import PaymentCancel from "./pages/PaymentCancel";    // ✅ THÊM IMPORT
 
 // Admin imports
 import Sidebar from "./components/admin/Sidebar";
@@ -96,6 +98,8 @@ return ( <div className="bg-primary min-h-screen flex flex-col">
       <Route path="/collection/:category/:id" element={<ProductDetails />} />
       <Route path="/testimonial" element={<Testimonial />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/payment-success" element={<PaymentSuccess />} /> {/* ✅ THÊM */}
+      <Route path="/payment-cancel" element={<PaymentCancel />} />   {/* ✅ THÊM */}
 
       {/* USER ROUTES */}
       <Route path="/cart" element={
@@ -135,7 +139,7 @@ return ( <div className="bg-primary min-h-screen flex flex-col">
         <Route path="/admin/dashboard" element={<Dashboard />} />
       </Route>
 
-      {/* 404 */}
+      {/* 404 - ĐỂ CUỐI CÙNG */}
       <Route path="*" element={
         <div className="text-center py-20">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>

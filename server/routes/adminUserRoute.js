@@ -1,18 +1,46 @@
 import express from "express";
 import authAdmin from "../middleware/authAdmin.js";
+import User from "../models/userModel.js";
 
-import {
-  getUsers,
-  deleteUser,
-  blockUser
-} from "../controllers/adminUserController.js";
+const router = express.Router();
 
-const adminUserRouter = express.Router();
+router.get("/users", authAdmin, async (req, res) => {
+  try {
+    console.log("📢 Admin fetching users...");
+    
+    const users = await User.find({}).select("-password");
+    console.log(`✅ Found ${users.length} users`);
+    
+    res.json({ success: true, users });
+  } catch (error) {
+    console.error("❌ Error fetching users:", error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
-adminUserRouter.get("/users", authAdmin, getUsers);
+router.delete("/user/:id", authAdmin, async (req, res) => {
+  try {
+    console.log("🗑️ Deleting user:", req.params.id);
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
-adminUserRouter.delete("/user/:id", authAdmin, deleteUser);
+router.post("/block/:id", authAdmin, async (req, res) => {
+  try {
+    console.log("🔒 Blocking/Unblocking user:", req.params.id);
+    const user = await User.findById(req.params.id);
+    user.isBlocked = !user.isBlocked;
+    await user.save();
+    res.json({ 
+      success: true, 
+      message: user.isBlocked ? "User blocked" : "User unblocked" 
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
 
-adminUserRouter.post("/block/:id", authAdmin, blockUser);
-
-export default adminUserRouter;
+export default router;

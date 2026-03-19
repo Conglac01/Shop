@@ -137,7 +137,6 @@ const ShopContextProvider = ({ children }) => {
       const { data } = await axios.get("/api/user/wishlist");
 
       if (data.success) {
-        // Lấy mảng các _id từ wishlist đã populate
         const wishlistIds = data.wishlist.map(item => item._id);
         setWishlist(wishlistIds);
       }
@@ -197,56 +196,8 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // ✅ FIX LỖI 1 & 3: Wishlist toggle với xử lý ObjectId
-  const toggleWishlist = async (productId) => {
-    if (!user) {
-      toast.error("Please login to use wishlist");
-      setShowUserLogin(true);
-      return;
-    }
-
-    try {
-      // Kiểm tra trạng thái hiện tại
-      const isInWishlist = wishlist.includes(productId);
-      
-      // Optimistic update
-      if (isInWishlist) {
-        setWishlist(prev => prev.filter(id => id !== productId));
-      } else {
-        setWishlist(prev => [...prev, productId]);
-      }
-
-      // Gọi API
-      const { data } = await axios.post("/api/user/toggle-wishlist", {
-        productId,
-      });
-
-      if (!data.success) {
-        // Rollback nếu lỗi
-        if (isInWishlist) {
-          setWishlist(prev => [...prev, productId]);
-        } else {
-          setWishlist(prev => prev.filter(id => id !== productId));
-        }
-        toast.error(data.message || "Failed to update wishlist");
-      } else {
-        setWishlist(data.wishlist);
-        toast.success(
-          isInWishlist 
-            ? "Removed from wishlist" 
-            : "Added to wishlist"
-        );
-      }
-    } catch (error) {
-      console.log("Wishlist toggle error:", error.message);
-      toast.error("Network error. Please try again.");
-      await fetchWishlist(); // Rollback bằng cách fetch lại
-    }
-  };
-
-  // ✅ FIX LỖI 1: Add to cart - chặn guest
+  // ✅ Add to cart - chỉ cho user đã login
   const addToCart = (itemId, size) => {
-    // Kiểm tra login trước
     if (!user) {
       toast.error("Please login to add to cart");
       setShowUserLogin(true);
@@ -267,10 +218,7 @@ const ShopContextProvider = ({ children }) => {
     cartData[itemId][size] += 1;
 
     setCartItems(cartData);
-
-    // ✅ Đã có user nên sync thẳng lên server
     syncCartToServer(cartData);
-
     toast.success("Added to cart");
   };
 
@@ -312,7 +260,6 @@ const ShopContextProvider = ({ children }) => {
     syncCartToServer(cartData);
   };
 
-  // ✅ FIX LỖI 2: Cart count chỉ tính khi có user
   const getCartCount = () => {
     if (!user) return 0;
 
@@ -347,6 +294,51 @@ const ShopContextProvider = ({ children }) => {
     return total;
   };
 
+  // ================================
+  // TOGGLE WISHLIST
+  // ================================
+  const toggleWishlist = async (productId) => {
+    if (!user) {
+      toast.error("Please login to use wishlist");
+      setShowUserLogin(true);
+      return;
+    }
+
+    try {
+      const isInWishlist = wishlist.includes(productId);
+      
+      if (isInWishlist) {
+        setWishlist(prev => prev.filter(id => id !== productId));
+      } else {
+        setWishlist(prev => [...prev, productId]);
+      }
+
+      const { data } = await axios.post("/api/user/toggle-wishlist", {
+        productId,
+      });
+
+      if (!data.success) {
+        if (isInWishlist) {
+          setWishlist(prev => [...prev, productId]);
+        } else {
+          setWishlist(prev => prev.filter(id => id !== productId));
+        }
+        toast.error(data.message || "Failed to update wishlist");
+      } else {
+        setWishlist(data.wishlist);
+        toast.success(
+          isInWishlist 
+            ? "Removed from wishlist" 
+            : "Added to wishlist"
+        );
+      }
+    } catch (error) {
+      console.log("Wishlist toggle error:", error.message);
+      toast.error("Network error. Please try again.");
+      await fetchWishlist();
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
     fetchAdmin();
@@ -374,6 +366,7 @@ const ShopContextProvider = ({ children }) => {
     setShowUserLogin,
 
     cartItems,
+    setCartItems,
 
     addToCart,
     removeFromCart,
@@ -383,9 +376,10 @@ const ShopContextProvider = ({ children }) => {
     getCartAmount,
 
     wishlist,
-    toggleWishlist,
+    toggleWishlist,  // ✅ ĐÃ THÊM
 
     isAdmin,
+    setIsAdmin,
 
     logout,
   };

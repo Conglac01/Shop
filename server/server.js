@@ -11,6 +11,7 @@ import cartRouter from './routes/cartRouter.js';
 import orderRouter from './routes/orderRoute.js';  
 import adminUserRouter from './routes/adminUserRoute.js'
 import dashboardRouter from "./routes/dashboardRoute.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 
 const app = express(); // Initialize Express Application
@@ -43,6 +44,7 @@ app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/order',orderRouter)
 app.use("/api/dashboard", dashboardRouter);
+app.use("/api/payment", paymentRoutes); 
 
 
 // Start the server

@@ -7,20 +7,20 @@ import {
   placeOrderStripe,
   userOrders,
   allOrders,
-  updateStatus
+  updateStatus,
+   getOrderById 
 } from "../controllers/orderController.js";
 
 const orderRouter = express.Router();
 
 /* USER */
-
 orderRouter.post("/cod", authUser, placeOrderCOD);
 orderRouter.post("/stripe", authUser, placeOrderStripe);
-orderRouter.post("/userorders", authUser, userOrders);
+orderRouter.post("/user-orders", authUser, userOrders);  // ✅ SỬA THÀNH user-orders
 
 /* ADMIN */
-
 orderRouter.post("/list", authAdmin, allOrders);
 orderRouter.post("/status", authAdmin, updateStatus);
+orderRouter.get("/:orderId", authAdmin, getOrderById);
 
 export default orderRouter;

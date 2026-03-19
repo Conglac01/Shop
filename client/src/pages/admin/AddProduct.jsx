@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { FiUploadCloud } from 'react-icons/fi';
-import { IoClose } from 'react-icons/io5';
 import { BiTrash } from 'react-icons/bi';
-import axios from 'axios';
-import toast from 'react-hot-toast';
 import { ShopContext } from '../../context/ShopContext';
+import toast from 'react-hot-toast';
 
 const AddProduct = () => {
     const { axios } = useContext(ShopContext);
@@ -13,9 +11,17 @@ const AddProduct = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("10");
     const [offerPrice, setOfferPrice] = useState("10");
-    const [category, setCategory] = useState("Men");
+    const [category, setCategory] = useState("Tshirt");
     const [popular, setPopular] = useState(false);
     const [sizes, setSizes] = useState([]);
+
+    const categories = [
+        { value: "Tshirt", label: "👕 T-Shirt" },
+        { value: "Poloshirt", label: "👔 Polo Shirt" },
+        { value: "Windbreaker", label: "🧥 Windbreaker" },
+        { value: "Sweatshirt", label: "🧶 Sweatshirt" },
+        { value: "Downjacket", label: "🧥 Down Jacket" }
+    ];
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
@@ -24,10 +30,14 @@ const AddProduct = () => {
                 name,
                 description,
                 category,
-                price,
-                offerPrice,
+                type: category,
+                price: Number(price),
+                offerPrice: Number(offerPrice),
                 sizes,
-                popular
+                popular,
+                inStock: true,
+                rating: 4.5,
+                image: []
             };
 
             const formData = new FormData();
@@ -43,12 +53,11 @@ const AddProduct = () => {
 
             if (data.success) {
                 toast.success(data.message);
-                // Reset form after successful submission
                 setName("");
                 setDescription("");
                 setPrice("10");
                 setOfferPrice("10");
-                setCategory("Men");
+                setCategory("Tshirt");
                 setPopular(false);
                 setSizes([]);
                 setFiles([null, null, null, null]);
@@ -74,7 +83,6 @@ const AddProduct = () => {
             <h2 className="text-3xl font-bold mb-8 text-gray-800">Add New Product</h2>
             
             <form onSubmit={onSubmitHandler} className="space-y-8">
-                {/* Product Name & Category */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -84,11 +92,12 @@ const AddProduct = () => {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="e.g. Classic Denim Jacket"
+                            placeholder="e.g. Men's Classic Cotton T-Shirt"
                             className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-200 focus:border-pink-400 outline-none transition"
                             required
                         />
                     </div>
+                    
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
                             Category <span className="text-red-400">*</span>
@@ -98,17 +107,18 @@ const AddProduct = () => {
                             onChange={(e) => setCategory(e.target.value)}
                             className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-200 focus:border-pink-400 outline-none text-gray-700"
                         >
-                            <option value="Men">👔 Men</option>
-                            <option value="Women">👗 Women</option>
-                            <option value="Kids">🧸 Kids</option>
-                            <option value="Footwear">👟 Footwear</option>
-                            <option value="Winterwear">🧥 Winterwear</option>
-                            <option value="Sportswear">⚽ Sportswear</option>
+                            {categories.map(cat => (
+                                <option key={cat.value} value={cat.value}>
+                                    {cat.label}
+                                </option>
+                            ))}
                         </select>
+                        <p className="text-xs text-gray-400 mt-1">
+                            Type will be automatically set to: <span className="font-medium text-pink-500">{category}</span>
+                        </p>
                     </div>
                 </div>
 
-                {/* Product Description */}
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Product Description <span className="text-red-400">*</span>
@@ -123,7 +133,6 @@ const AddProduct = () => {
                     />
                 </div>
 
-                {/* Prices */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -152,7 +161,6 @@ const AddProduct = () => {
                     </div>
                 </div>
 
-                {/* Product Sizes */}
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-3">
                         Product Sizes
@@ -175,7 +183,6 @@ const AddProduct = () => {
                     </div>
                 </div>
 
-                {/* Product Images */}
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-3">
                         Product Images
@@ -229,7 +236,6 @@ const AddProduct = () => {
                     </p>
                 </div>
 
-                {/* Popular Toggle */}
                 <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-xl">
                     <label className="relative inline-flex items-center cursor-pointer">
                         <input
@@ -245,7 +251,6 @@ const AddProduct = () => {
                     </span>
                 </div>
 
-                {/* Submit Button */}
                 <div className="flex justify-end pt-4">
                     <button
                         type="submit"
