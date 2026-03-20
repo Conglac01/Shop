@@ -17,6 +17,7 @@ const PlaceOrder = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [loading, setLoading] = useState(false);
+  const [phoneError, setPhoneError] = useState(""); // ✅ Thêm state cho lỗi phone
 
   const [address, setAddress] = useState({
     name: "",
@@ -39,19 +40,48 @@ const PlaceOrder = () => {
     }
   }
 
+  // ✅ Hàm xử lý change phone - CHỈ CHO PHÉP NHẬP SỐ
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    // Chỉ cho phép số (0-9)
+    const numericValue = value.replace(/[^0-9]/g, '');
+    
+    // Giới hạn độ dài 10-11 số
+    if (numericValue.length <= 11) {
+      setAddress({...address, phone: numericValue});
+      
+      // Validate realtime
+      if (numericValue.length > 0 && numericValue.length < 10) {
+        setPhoneError("Số điện thoại phải có ít nhất 10 số");
+      } else if (numericValue.length > 11) {
+        setPhoneError("Số điện thoại không được quá 11 số");
+      } else {
+        setPhoneError("");
+      }
+    }
+  };
+
   const validateForm = () => {
     if (!address.name.trim()) {
-      toast.error("Enter your name");
+      toast.error("Vui lòng nhập họ tên");
       return false;
     }
     if (!address.city.trim()) {
-      toast.error("Enter your city");
+      toast.error("Vui lòng nhập thành phố");
       return false;
     }
     if (!address.phone.trim()) {
-      toast.error("Enter your phone");
+      toast.error("Vui lòng nhập số điện thoại");
       return false;
     }
+    
+    // ✅ Kiểm tra phone number chỉ chứa số và đủ độ dài
+    const phoneRegex = /^[0-9]{10,11}$/;
+    if (!phoneRegex.test(address.phone)) {
+      toast.error("Số điện thoại không hợp lệ! Vui lòng nhập 10-11 chữ số");
+      return false;
+    }
+    
     return true;
   };
 
@@ -131,10 +161,10 @@ const PlaceOrder = () => {
               withCredentials: true
             });
             
-            toast.success("Order placed successfully");
+            toast.success("Đặt hàng thành công!");
             navigate("/my-orders");
           } else {
-            toast.error(data.message || "Order failed");
+            toast.error(data.message || "Đặt hàng thất bại");
           }
         } catch (codError) {
           console.error("❌ COD API Error:", codError);
@@ -171,13 +201,26 @@ const PlaceOrder = () => {
               value={address.city}
               onChange={(e)=>setAddress({...address,city:e.target.value})}
             />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className="w-full border p-3 rounded"
-              value={address.phone}
-              onChange={(e)=>setAddress({...address,phone:e.target.value})}
-            />
+            
+            {/* ✅ PHONE INPUT ĐÃ SỬA */}
+            <div>
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                className={`w-full border p-3 rounded ${
+                  phoneError ? 'border-red-500' : ''
+                }`}
+                value={address.phone}
+                onChange={handlePhoneChange}
+                maxLength={11}
+              />
+              {phoneError && (
+                <p className="text-red-500 text-sm mt-1">{phoneError}</p>
+              )}
+              {address.phone && !phoneError && address.phone.length >= 10 && (
+                <p className="text-green-500 text-sm mt-1">✓ Số điện thoại hợp lệ</p>
+              )}
+            </div>
           </div>
 
           <h2 className="text-xl font-semibold mt-10 mb-4">Payment Method</h2>

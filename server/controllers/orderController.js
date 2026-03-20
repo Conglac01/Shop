@@ -7,6 +7,7 @@ export const placeOrderCOD = async (req, res) => {
     
     console.log("📦 COD Order Data:", { userId, items, amount, address });
 
+    // 1. Tạo order
     const order = await orderModel.create({
       userId,
       items,
@@ -17,8 +18,16 @@ export const placeOrderCOD = async (req, res) => {
       status: "Order Placed"
     });
 
-    // Clear cart
-    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    // 2. QUAN TRỌNG: Thêm order ID vào mảng orders của user VÀ clear cart
+    await userModel.findByIdAndUpdate(
+      userId, 
+      { 
+        $push: { orders: order._id },  // THÊM order vào mảng
+        cartData: {}                    // Clear cart
+      }
+    );
+
+    console.log("✅ Order saved and added to user:", order._id);
 
     res.json({
       success: true,
@@ -35,6 +44,7 @@ export const placeOrderStripe = async (req, res) => {
   try {
     const { userId, items, amount, address, sessionId } = req.body;
     
+    // 1. Tạo order
     const order = await orderModel.create({
       userId,
       items,
@@ -46,7 +56,16 @@ export const placeOrderStripe = async (req, res) => {
       status: "Order Placed"
     });
 
-    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    // 2. QUAN TRỌNG: Thêm order ID vào mảng orders của user VÀ clear cart
+    await userModel.findByIdAndUpdate(
+      userId, 
+      { 
+        $push: { orders: order._id },  // THÊM order vào mảng
+        cartData: {}                    // Clear cart
+      }
+    );
+
+    console.log("✅ Order saved and added to user:", order._id);
 
     res.json({
       success: true,

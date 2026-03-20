@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import authUser from "../middleware/authUser.js";
 import orderModel from "../models/orderModel.js";
+import userModel from "../models/userModel.js";  // THÊM import userModel
 
 dotenv.config();
 const router = express.Router();
@@ -88,6 +89,7 @@ router.post("/webhook", express.raw({ type: "application/json" }), async (req, r
       try {
         const items = JSON.parse(session.metadata.items || "[]");
         
+        // 1. Tạo order
         const order = await orderModel.create({
           userId: session.metadata.userId,
           items: items.map(item => ({
@@ -108,7 +110,13 @@ router.post("/webhook", express.raw({ type: "application/json" }), async (req, r
           }
         });
 
-        console.log("✅ Order saved:", order._id);
+        // 2. QUAN TRỌNG: Thêm order ID vào mảng orders của user
+        await userModel.findByIdAndUpdate(
+          session.metadata.userId,
+          { $push: { orders: order._id } }
+        );
+
+        console.log("✅ Order saved and added to user:", order._id);
       } catch (error) {
         console.error("❌ Failed to save order:", error.message);
       }
