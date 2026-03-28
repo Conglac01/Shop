@@ -3,11 +3,11 @@ import userModel from "../models/userModel.js";
 
 export const placeOrderCOD = async (req, res) => {
   try {
-    const { userId, items, amount, address } = req.body;
+    const { items, amount, address } = req.body;
+    const userId = req.userId;  // ✅ SỬA: Lấy từ auth middleware
     
     console.log("📦 COD Order Data:", { userId, items, amount, address });
 
-    // 1. Tạo order
     const order = await orderModel.create({
       userId,
       items,
@@ -18,12 +18,11 @@ export const placeOrderCOD = async (req, res) => {
       status: "Order Placed"
     });
 
-    // 2. QUAN TRỌNG: Thêm order ID vào mảng orders của user VÀ clear cart
     await userModel.findByIdAndUpdate(
       userId, 
       { 
-        $push: { orders: order._id },  // THÊM order vào mảng
-        cartData: {}                    // Clear cart
+        $push: { orders: order._id },
+        cartData: {}
       }
     );
 
@@ -42,9 +41,9 @@ export const placeOrderCOD = async (req, res) => {
 
 export const placeOrderStripe = async (req, res) => {
   try {
-    const { userId, items, amount, address, sessionId } = req.body;
+    const { items, amount, address, sessionId } = req.body;
+    const userId = req.userId;  // ✅ SỬA: Lấy từ auth middleware
     
-    // 1. Tạo order
     const order = await orderModel.create({
       userId,
       items,
@@ -56,12 +55,11 @@ export const placeOrderStripe = async (req, res) => {
       status: "Order Placed"
     });
 
-    // 2. QUAN TRỌNG: Thêm order ID vào mảng orders của user VÀ clear cart
     await userModel.findByIdAndUpdate(
       userId, 
       { 
-        $push: { orders: order._id },  // THÊM order vào mảng
-        cartData: {}                    // Clear cart
+        $push: { orders: order._id },
+        cartData: {}
       }
     );
 
@@ -78,10 +76,10 @@ export const placeOrderStripe = async (req, res) => {
   }
 };
 
-// ✅ ĐÃ SỬA - BỎ POPULATE items.product
+// ✅ SỬA: Lấy userId từ req.userId thay vì req.body
 export const userOrders = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const userId = req.userId;  // ✅ Lấy từ auth middleware
     
     console.log("📢 Fetching orders for user:", userId);
     
@@ -97,13 +95,12 @@ export const userOrders = async (req, res) => {
   }
 };
 
-// ✅ ĐÃ SỬA - BỎ POPULATE items.product
 export const allOrders = async (req, res) => {
   try {
     console.log("📢 Fetching all orders for admin...");
     
     const orders = await orderModel.find({})
-      .populate("userId", "name email") // Giữ lại populate userId
+      .populate("userId", "name email")
       .sort({ createdAt: -1 });
 
     console.log(`✅ Found ${orders.length} orders`);
@@ -137,9 +134,6 @@ export const updateStatus = async (req, res) => {
   }
 };
 
-// ================================
-// GET ORDER BY ID (ADMIN) - THÊM MỚI
-// ================================
 export const getOrderById = async (req, res) => {
   try {
     const { orderId } = req.params;

@@ -19,9 +19,8 @@ const MyOrders = () => {
             setLoading(true)
             console.log("📢 Fetching user orders...")
             
-            const { data } = await axios.post("/api/order/user-orders", {
-                userId: user._id
-            }, {
+            // ✅ SỬA: Không gửi userId trong body, auth middleware sẽ tự lấy từ token
+            const { data } = await axios.post("/api/order/user-orders", {}, {
                 withCredentials: true
             })
 
@@ -146,7 +145,6 @@ const MyOrders = () => {
                             <div className='space-y-4'>
                                 {order.items.map((item, idx) => (
                                     <div key={idx} className='flex flex-col sm:flex-row gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0 hover:bg-pink-50 p-2 rounded-lg transition'>
-                                        {/* Product Image */}
                                         <img 
                                             src={item.image || "https://via.placeholder.com/100"} 
                                             alt={item.name} 
@@ -155,11 +153,8 @@ const MyOrders = () => {
                                                 e.target.src = "https://via.placeholder.com/100?text=Product"
                                             }}
                                         />
-                                        
-                                        {/* Product Details */}
                                         <div className='flex-1'>
                                             <h5 className='font-semibold text-gray-800'>{item.name}</h5>
-                                            
                                             <div className='grid grid-cols-2 sm:grid-cols-4 gap-4 mt-3'>
                                                 <div>
                                                     <h5 className='text-xs text-gray-500'>Price</h5>
@@ -186,21 +181,16 @@ const MyOrders = () => {
                             {/* Order Summary */}
                             <div className='mt-6 pt-4 border-t border-gray-200'>
                                 <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-                                    {/* Payment Method */}
                                     <div className='bg-pink-50 p-3 rounded-lg border border-pink-100'>
                                         <h5 className='text-xs text-gray-500 mb-1'>Payment Method</h5>
                                         <p className='text-sm font-medium text-pink-600 capitalize'>{order.paymentMethod}</p>
                                     </div>
-
-                                    {/* Payment Status */}
                                     <div className='bg-pink-50 p-3 rounded-lg border border-pink-100'>
                                         <h5 className='text-xs text-gray-500 mb-1'>Payment Status</h5>
                                         <p className={`text-sm font-medium ${order.paymentStatus === 'Paid' ? 'text-green-600' : 'text-yellow-600'}`}>
                                             {order.paymentStatus || 'Pending'}
                                         </p>
                                     </div>
-
-                                    {/* Shipping Address */}
                                     <div className='bg-pink-50 p-3 rounded-lg border border-pink-100 col-span-2'>
                                         <h5 className='text-xs text-gray-500 mb-1'>Shipping Address</h5>
                                         <p className='text-sm text-gray-700'>
@@ -208,8 +198,6 @@ const MyOrders = () => {
                                         </p>
                                     </div>
                                 </div>
-
-                                {/* Total and Actions */}
                                 <div className='flex flex-wrap items-center justify-between gap-4 mt-4 pt-4 border-t border-gray-100'>
                                     <div className='flex items-center gap-4'>
                                         <div className='bg-pink-500/10 px-4 py-2 rounded-lg border border-pink-200'>
@@ -217,7 +205,6 @@ const MyOrders = () => {
                                             <p className='font-bold text-pink-500 text-xl'>{currency}{order.amount}</p>
                                         </div>
                                     </div>
-
                                     <div className='flex gap-3'>
                                         <button 
                                             onClick={() => window.location.href = `/order-tracking/${order._id}`} 

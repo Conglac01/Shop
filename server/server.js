@@ -9,43 +9,43 @@ import connectCloudinary from './config/cloudinary.js';
 import productRouter from './routes/productRouter.js';
 import cartRouter from './routes/cartRouter.js';
 import orderRouter from './routes/orderRoute.js';  
-import adminUserRouter from './routes/adminUserRoute.js'
+import adminUserRouter from './routes/adminUserRoute.js';
 import dashboardRouter from "./routes/dashboardRoute.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 
+const app = express();
+const port = process.env.PORT || 4000;
 
-const app = express(); // Initialize Express Application
-const port = process.env.PORT || 4000; // Define server port
+await connectDB();
+await connectCloudinary();
 
-await connectDB()
-await connectCloudinary()// setup cloudinary for image storage
+// ✅ QUAN TRỌNG: Webhook phải được đặt TRƯỚC express.json()
+app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
 
-// Allow multiple origin
+// Middleware cho các route khác
+app.use(express.json());
+app.use(cookieParser());
+
+// CORS config
 const allowedOrigins = ['http://localhost:5173'];
-
-// Middleware Setup
-app.use(express.json()); // Enables JSON request body parsing
-app.use(cookieParser()); // Cookie-parser middleware to parse HTTP request cookies
 app.use(cors({
-    origin: allowedOrigins, // Whitelist of allowed domains
-    credentials: true // Required for cookies/authorization headers
+    origin: allowedOrigins,
+    credentials: true
 }));
 
-// Root endpoint to check API status
+// Root endpoint
 app.get("/", (req, res) => {
     res.send("API successfully connected!");
 });
 
-//define API routes
-app.use('/api/user', userRouter);// Routes for user-related operation
-app.use('/api/admin', adminRouter)
-app.use('/api/admin', adminUserRouter)
-app.use('/api/product', productRouter)
-app.use('/api/cart', cartRouter)
-app.use('/api/order',orderRouter)
+// API routes
+app.use('/api/user', userRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/admin', adminUserRouter);
+app.use('/api/product', productRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/order', orderRouter);
 app.use("/api/dashboard", dashboardRouter);
-app.use("/api/payment", paymentRoutes); 
+app.use("/api/payment", paymentRoutes);
 
-
-// Start the server
 app.listen(port, () => console.log(`Server is running at http://localhost:${port}`));

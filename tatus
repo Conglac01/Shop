@@ -1,0 +1,10 @@
+[33m754342f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m sửa thêm lỗi user mới đăng ký thanh toá lần 1 không hiện my order
+[33m9b9fee6[m cập nhập user mới thanh toán được, code paymentsuccess.jsx
+[33m9d30e3e[m Fix mongo
+[33m8cce4d6[m fix gan het loi
+[33m5b143cd[m Fix wishlish, cart, data.js
+[33mb47917b[m Update project with latest changes
+[33m43c9d27[m Update full project with cart sync and protected routes
+[33m564f93a[m Update project: fix bugs and update features
+[33m7bc8e3b[m Update full project
+[33md12cf83[m Update frontend and admin pages
