@@ -12,12 +12,12 @@ const PlaceOrder = () => {
     axios,
     currency,
     user,
-    setCartItems  // ✅ THÊM setCartItems
+    setCartItems
   } = useContext(ShopContext);
 
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [loading, setLoading] = useState(false);
-  const [phoneError, setPhoneError] = useState(""); // ✅ Thêm state cho lỗi phone
+  const [phoneError, setPhoneError] = useState("");
 
   const [address, setAddress] = useState({
     name: "",
@@ -40,17 +40,13 @@ const PlaceOrder = () => {
     }
   }
 
-  // ✅ Hàm xử lý change phone - CHỈ CHO PHÉP NHẬP SỐ
   const handlePhoneChange = (e) => {
     const value = e.target.value;
-    // Chỉ cho phép số (0-9)
     const numericValue = value.replace(/[^0-9]/g, '');
     
-    // Giới hạn độ dài 10-11 số
     if (numericValue.length <= 11) {
       setAddress({...address, phone: numericValue});
       
-      // Validate realtime
       if (numericValue.length > 0 && numericValue.length < 10) {
         setPhoneError("Số điện thoại phải có ít nhất 10 số");
       } else if (numericValue.length > 11) {
@@ -75,7 +71,6 @@ const PlaceOrder = () => {
       return false;
     }
     
-    // ✅ Kiểm tra phone number chỉ chứa số và đủ độ dài
     const phoneRegex = /^[0-9]{10,11}$/;
     if (!phoneRegex.test(address.phone)) {
       toast.error("Số điện thoại không hợp lệ! Vui lòng nhập 10-11 chữ số");
@@ -114,9 +109,11 @@ const PlaceOrder = () => {
               name: item.name,
               price: item.price,
               quantity: item.quantity,
+              size: item.size,
               image: item.image
             })),
-            email: user?.email || "guest@example.com"
+            email: user?.email || "guest@example.com",
+            address: address
           });
 
           console.log("✅ Stripe response:", data);
@@ -153,10 +150,8 @@ const PlaceOrder = () => {
           console.log("✅ COD response:", data);
 
           if (data.success) {
-            // ✅ XÓA GIỎ HÀNG NGAY LẬP TỨC
-            setCartItems({}); // Xóa trong context
+            setCartItems({});
             
-            // ✅ GỌI API CLEAR CART TRÊN SERVER
             await axios.post("/api/user/clear-cart", {}, {
               withCredentials: true
             });
@@ -202,7 +197,6 @@ const PlaceOrder = () => {
               onChange={(e)=>setAddress({...address,city:e.target.value})}
             />
             
-            {/* ✅ PHONE INPUT ĐÃ SỬA */}
             <div>
               <input
                 type="tel"

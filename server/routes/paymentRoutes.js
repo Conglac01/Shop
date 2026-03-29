@@ -1,6 +1,7 @@
 import express from "express";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import mongoose from "mongoose"; // ✅ THÊM
 import authUser from "../middleware/authUser.js";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
@@ -13,8 +14,6 @@ router.post("/create-checkout-session", authUser, async (req, res) => {
   try {
     const { items, email, address } = req.body;
     const userId = req.userId;
-
-    console.log("📦 Items received:", items);
 
     if (!items || items.length === 0) {
       return res.status(400).json({ error: "No items in cart" });
@@ -31,8 +30,6 @@ router.post("/create-checkout-session", authUser, async (req, res) => {
       quantity: item.quantity,
     }));
 
-    console.log("✅ Line items created");
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: line_items,
@@ -47,12 +44,12 @@ router.post("/create-checkout-session", authUser, async (req, res) => {
           price: item.price,
           quantity: item.quantity,
           size: item.size,
+          image: item.image || ""
         }))),
         address: JSON.stringify(address || {}),
       },
     });
 
-    console.log("✅ Session created:", session.id);
     res.json({ url: session.url });
     
   } catch (error) {
@@ -61,27 +58,15 @@ router.post("/create-checkout-session", authUser, async (req, res) => {
   }
 });
 
-// Webhook - Không có middleware express.json()
+// ✅ WEBHOOK
 router.post("/webhook", async (req, res) => {
   const sig = req.headers["stripe-signature"];
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  console.log("=".repeat(50));
-  console.log("🔔 WEBHOOK RECEIVED");
-  console.log("📝 Signature present:", !!sig);
-  console.log("📦 Body length:", req.body?.length || 0);
-  console.log("=".repeat(50));
-
   let event;
 
   try {
-    if (webhookSecret) {
-      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
-      console.log("✅ Webhook verified successfully");
-    } else {
-      console.log("⚠️ No webhook secret, using raw body");
-      event = JSON.parse(req.body.toString());
-    }
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
     console.error("❌ Webhook verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -89,15 +74,17 @@ router.post("/webhook", async (req, res) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    console.log("✅ Payment successful for session:", session.id);
 
     try {
+      // ✅ CHECK DB READY
+      if (mongoose.connection.readyState !== 1) {
+        console.log("❌ DB not ready, skip webhook");
+        return res.status(500).send("DB not ready");
+      }
+
       const items = JSON.parse(session.metadata.items || "[]");
       const addressFromMetadata = JSON.parse(session.metadata.address || "{}");
-      
-      console.log("📦 Creating order for user:", session.metadata.userId);
-      
-      // Tạo order
+
       const order = await orderModel.create({
         userId: session.metadata.userId,
         items: items.map(item => ({
@@ -119,9 +106,6 @@ router.post("/webhook", async (req, res) => {
         }
       });
 
-      console.log("✅ Order created:", order._id);
-
-      // Thêm order vào user
       await userModel.findByIdAndUpdate(
         session.metadata.userId,
         { 
@@ -130,35 +114,14 @@ router.post("/webhook", async (req, res) => {
         }
       );
 
-      console.log("✅ Order added to user:", session.metadata.userId);
-      
+      console.log("✅ Order created:", order._id);
+
     } catch (error) {
       console.error("❌ Failed to save order:", error.message);
     }
   }
 
   res.json({ received: true });
-});
-
-router.get("/verify/:sessionId", async (req, res) => {
-  try {
-    const { sessionId } = req.params;
-    const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ['line_items', 'customer_details']
-    });
-    
-    res.json({
-      success: true,
-      session: {
-        id: session.id,
-        amount_total: session.amount_total / 100,
-        customer_email: session.customer_details?.email,
-        payment_status: session.payment_status,
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
 });
 
 export default router;

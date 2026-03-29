@@ -16,29 +16,26 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-await connectDB();
-await connectCloudinary();
+// ✅ KHÔNG connect DB ở top-level nữa
 
-// ✅ QUAN TRỌNG: Webhook phải được đặt TRƯỚC express.json()
+// ✅ QUAN TRỌNG: Webhook phải đặt trước express.json()
 app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
 
-// Middleware cho các route khác
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS config
 const allowedOrigins = ['http://localhost:5173'];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
 }));
 
-// Root endpoint
 app.get("/", (req, res) => {
     res.send("API successfully connected!");
 });
 
-// API routes
+// Routes
 app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/admin', adminUserRouter);
@@ -48,4 +45,19 @@ app.use('/api/order', orderRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/payment", paymentRoutes);
 
-app.listen(port, () => console.log(`Server is running at http://localhost:${port}`));
+// ✅ START SERVER SAU KHI DB READY
+const startServer = async () => {
+  try {
+    await connectDB();
+    await connectCloudinary();
+
+    app.listen(port, () => {
+      console.log(`Server is running at http://localhost:${port}`);
+    });
+
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+  }
+};
+
+startServer();
