@@ -25,9 +25,20 @@ app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use(cookieParser());
 
-const allowedOrigins = ['http://localhost:5173'];
+// 🔥 SỬA CORS - THÊM DOMAIN VERCEL MỚI
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://shop-seven-roan-99.vercel.app'  // link web mới
+];
+
 app.use(cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
 }));
 
