@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 /* ================================
-   GLOBAL FIX (VERY IMPORTANT)
+   GLOBAL FIX
 ================================ */
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  max-width: 100%;
 }
 
 html,
@@ -16,16 +15,16 @@ body {
   width: 100%;
   overflow-x: hidden;
 }
+
+/* 🔥 FIX LỖI UI BỊ PHÓNG TO */
 html {
-  font-size: clamp(16px, 1.5vw, 24px);
+  font-size: 16px;
 }
 
 /* ================================
-   DESIGN TOKENS (Tailwind v4)
+   DESIGN TOKENS
 ================================ */
 @theme {
-
-  /* COLORS */
 
   --color-primary: #f4f4f4;
   --color-primary-deep: #1b1b1726;
@@ -34,23 +33,16 @@ html {
   --color-gray-30: #7b7b7b;
   --color-gray-50: #585858;
 
-  /* BREAKPOINTS */
-
   --breakpoint-xs: 480px;
-
-  /* BACKGROUND */
 
   --background-image-hero: url("/src/assets/hero-bg.png");
 
-  /* FONTS */
-
   --font-sans: "Inter", system-ui, sans-serif;
   --font-pacifico: "Pacifico", cursive;
-
 }
 
 /* ================================
-   BASE STYLES
+   BASE
 ================================ */
 
 @layer base {
@@ -86,7 +78,6 @@ html {
   p {
     @apply text-[14px] leading-[1.5] text-gray-30;
   }
-
 }
 
 /* ================================
@@ -94,8 +85,6 @@ html {
 ================================ */
 
 @layer utilities {
-
-  /* Active link */
 
   .active-link {
     @apply relative;
@@ -106,34 +95,25 @@ html {
     @apply absolute right-1 -bottom-1 h-0.5 w-2/5 bg-black;
   }
 
-  /* Buttons */
-
   .btn-white {
-    @apply px-6 py-3 text-sm font-medium transition-all
-           bg-white text-tertiary;
+    @apply px-6 py-3 text-sm font-medium transition-all bg-white text-tertiary;
   }
 
   .btn-dark {
-    @apply px-6 py-3 text-sm font-medium transition-all
-           bg-tertiary text-white;
+    @apply px-6 py-3 text-sm font-medium transition-all bg-tertiary text-white;
   }
 
   .btn-light {
-    @apply px-6 py-3 text-sm font-medium transition-all
-           bg-primary ring-1 ring-slate-900/10 hover:bg-white;
+    @apply px-6 py-3 text-sm font-medium transition-all bg-primary ring-1 ring-slate-900/10 hover:bg-white;
   }
 
   .btn-outline {
-    @apply px-6 py-3 text-sm font-medium transition-all
-           bg-white ring-1 ring-slate-900/10 hover:bg-primary;
+    @apply px-6 py-3 text-sm font-medium transition-all bg-white ring-1 ring-slate-900/10 hover:bg-primary;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 text-sm font-medium transition-all
-           bg-secondary text-white;
+    @apply px-6 py-3 text-sm font-medium transition-all bg-secondary text-white;
   }
-
-  /* Layout */
 
   .max-padd-container {
     @apply w-full mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10;
@@ -147,22 +127,17 @@ html {
     @apply flex items-center justify-between;
   }
 
-  /* Prevent image overflow */
-
   img {
     @apply max-w-full h-auto;
   }
 
-  /* Scrollbar */
-
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-
 }
 
 /* ================================
-   HERO FIX
+   HERO
 ================================ */
 
 .bg-hero {
@@ -172,17 +147,15 @@ html {
 }
 
 /* ================================
-   MOBILE FIX
+   RESPONSIVE HERO
 ================================ */
 
 @media (max-width: 768px) {
-
   .bg-hero {
     background-position: center;
   }
-
 }
-/* Điều chỉnh vị trí ảnh trên các màn hình */
+
 @media (max-width: 480px) {
   .bg-hero {
     background-position: 80% center !important;
