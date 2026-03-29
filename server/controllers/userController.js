@@ -4,10 +4,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
+// 🔥 SỬA COOKIE OPTIONS - ĐƠN GIẢN HÓA ĐỂ TEST
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.APP_ENV === "production",
-  sameSite: process.env.APP_ENV === "production" ? "none" : "strict",
+  secure: false,      // tạm thời để false để test trên cross-domain
+  sameSite: "lax",    // thay vì "none" hoặc "strict"
+  maxAge: 7 * 24 * 60 * 60 * 1000
 };
 
 // ================================
@@ -57,10 +59,7 @@ export const userRegister = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    res.cookie("token", token, {
-      ...cookieOptions,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("token", token, cookieOptions);
 
     return res.json({
       success: true,
@@ -113,10 +112,7 @@ export const userLogin = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    res.cookie("token", token, {
-      ...cookieOptions,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("token", token, cookieOptions);
 
     return res.json({
       success: true,
@@ -234,7 +230,7 @@ export const clearCart = async (req, res) => {
 };
 
 // ================================
-// TOGGLE WISHLIST - FIX CHO CẢ STRING VÀ OBJECTID
+// TOGGLE WISHLIST
 // ================================
 
 export const toggleWishlist = async (req, res) => {
@@ -245,14 +241,11 @@ export const toggleWishlist = async (req, res) => {
     const user = await userModel.findById(userId);
     let wishlist = user.wishlist || [];
 
-    // ✅ Kiểm tra tồn tại (so sánh dạng string)
     const exists = wishlist.some(id => id.toString() === productId.toString());
 
     if (exists) {
-      // Xóa khỏi wishlist
       wishlist = wishlist.filter(id => id.toString() !== productId.toString());
     } else {
-      // Thêm vào wishlist - giữ nguyên giá trị gốc (không convert)
       wishlist.push(productId);
     }
 
@@ -273,7 +266,7 @@ export const toggleWishlist = async (req, res) => {
 };
 
 // ================================
-// GET WISHLIST - FIX CHO CẢ STRING VÀ OBJECTID
+// GET WISHLIST
 // ================================
 
 export const getWishlist = async (req, res) => {
@@ -291,7 +284,6 @@ export const getWishlist = async (req, res) => {
 
     const wishlist = user.wishlist || [];
     
-    // Tách riêng ObjectId và string
     const objectIds = wishlist.filter(id => 
       mongoose.Types.ObjectId.isValid(id)
     );
@@ -300,17 +292,15 @@ export const getWishlist = async (req, res) => {
       !mongoose.Types.ObjectId.isValid(id)
     );
 
-    // Lấy thông tin sản phẩm cho ObjectId
     let products = [];
     if (objectIds.length > 0) {
       const Product = mongoose.model('product');
       products = await Product.find({ _id: { $in: objectIds } });
     }
 
-    // Kết quả trả về
     const result = [
-      ...products, // Sản phẩm thật từ database
-      ...stringIds.map(id => ({ _id: id, isDummy: true })) // Dummy data
+      ...products,
+      ...stringIds.map(id => ({ _id: id, isDummy: true }))
     ];
 
     return res.json({
