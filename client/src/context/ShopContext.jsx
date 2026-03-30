@@ -167,7 +167,6 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // ✅ SỬA fetchUser - DÙNG TOKEN TỪ LOCALSTORAGE
   const fetchUser = async () => {
     try {
       const token = getToken();
@@ -232,7 +231,7 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // ✅ Add to cart - chỉ cho user đã login
+  // ✅ ĐÃ SỬA - KHÔNG BỊ TRÙNG SẢN PHẨM
   const addToCart = (itemId, size) => {
     if (!user) {
       toast.error("Please login to add to cart");
@@ -247,11 +246,17 @@ const ShopContextProvider = ({ children }) => {
 
     let cartData = structuredClone(cartItems);
 
-    if (!cartData[itemId]) cartData[itemId] = {};
+    if (!cartData[itemId]) {
+      cartData[itemId] = {};
+    }
 
-    if (!cartData[itemId][size]) cartData[itemId][size] = 0;
-
-    cartData[itemId][size] += 1;
+    if (cartData[itemId][size]) {
+      // ✅ Nếu đã có size này, tăng số lượng
+      cartData[itemId][size] += 1;
+    } else {
+      // ✅ Nếu chưa có, thêm mới với số lượng 1
+      cartData[itemId][size] = 1;
+    }
 
     setCartItems(cartData);
     syncCartToServer(cartData);
@@ -330,9 +335,6 @@ const ShopContextProvider = ({ children }) => {
     return total;
   };
 
-  // ================================
-  // TOGGLE WISHLIST
-  // ================================
   const toggleWishlist = async (productId) => {
     if (!user) {
       toast.error("Please login to use wishlist");
