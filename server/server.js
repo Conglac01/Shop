@@ -26,9 +26,20 @@ app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 CORS - CHỈ ĐỊNH RÕ ORIGIN CHO COOKIE HOẠT ĐỘNG
+// 🔥 CORS - CHO PHÉP CẢ LOCALHOST VÀ VERCEL
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://shop-five-eosin.vercel.app'
+];
+
 app.use(cors({
-    origin: 'https://shop-five-eosin.vercel.app',  // ✅ domain frontend chính xác
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
 }));
 

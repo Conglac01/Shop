@@ -11,6 +11,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: isProduction,                    // ✅ true trên production, false trên dev
   sameSite: isProduction ? "none" : "lax", // ✅ none trên production, lax trên dev
+  domain: isProduction ? ".onrender.com" : undefined,  // ✅ THÊM DÒNG NÀY
   maxAge: 7 * 24 * 60 * 60 * 1000
 };
 
@@ -128,6 +129,7 @@ export const userLogin = async (req, res) => {
 
     return res.json({
       success: true,
+      token: token,
       user: {
         _id: user._id,
         name: user.name,
