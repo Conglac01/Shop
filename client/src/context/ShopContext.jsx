@@ -151,9 +151,12 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
+  // ✅ ĐÃ SỬA - THÊM withCredentials: true
   const fetchUser = async () => {
     try {
-      const { data } = await api.get("/api/user/is-auth");
+      const { data } = await api.get("/api/user/is-auth", {
+        withCredentials: true
+      });
 
       if (data.success) {
         setUser(data.user);
@@ -353,7 +356,7 @@ const ShopContextProvider = ({ children }) => {
 
   const value = {
     navigate,
-    axios: api,  // ✅ dùng api instance thay vì axios mặc định
+    axios: api,
 
     user,
     setUser,
