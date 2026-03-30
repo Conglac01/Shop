@@ -61,7 +61,12 @@ export const userRegister = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    console.log("🔐 [REGISTER] Token generated:", token);
+    console.log("🍪 [REGISTER] Setting cookie with options:", cookieOptions);
+
     res.cookie("token", token, cookieOptions);
+
+    console.log("✅ [REGISTER] Cookie set successfully");
 
     return res.json({
       success: true,
@@ -74,7 +79,7 @@ export const userRegister = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error.message);
+    console.log("❌ [REGISTER] Error:", error.message);
     res.json({
       success: false,
       message: error.message,
@@ -114,7 +119,12 @@ export const userLogin = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    console.log("🔐 [LOGIN] Token generated:", token);
+    console.log("🍪 [LOGIN] Setting cookie with options:", cookieOptions);
+
     res.cookie("token", token, cookieOptions);
+
+    console.log("✅ [LOGIN] Cookie set successfully");
 
     return res.json({
       success: true,
@@ -127,7 +137,7 @@ export const userLogin = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error.message);
+    console.log("❌ [LOGIN] Error:", error.message);
     res.json({
       success: false,
       message: error.message,
