@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 
 const Login = () => {
 
-    const { setShowUserLogin, navigate, axios, setUser } = useContext(ShopContext)
+    const { setShowUserLogin, navigate, axios, setUser, setCartItems } = useContext(ShopContext)  // ✅ THÊM setCartItems
 
     const [state, setState] = useState('login')
     const [name, setName] = useState('')
@@ -34,6 +34,8 @@ const Login = () => {
                         localStorage.setItem('token', data.token);
                     }
                     setUser(data.user)
+                    // ✅ THÊM: đồng bộ giỏ hàng từ server
+                    setCartItems(data.user.cartData || {})
                     setShowUserLogin(false)
                     toast.success('Registration successful!')
                     navigate('/')
@@ -54,6 +56,8 @@ const Login = () => {
                         localStorage.setItem('token', data.token);
                     }
                     setUser(data.user)
+                    // ✅ THÊM: đồng bộ giỏ hàng từ server
+                    setCartItems(data.user.cartData || {})
                     setShowUserLogin(false)
                     toast.success('Login successful!')
                     navigate('/')
