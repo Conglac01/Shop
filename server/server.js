@@ -16,7 +16,8 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-// ✅ KHÔNG connect DB ở top-level nữa
+// ✅ THÊM DÒNG NÀY ĐỂ HỖ TRỢ PROXY (QUAN TRỌNG CHO COOKIE CROSS-DOMAIN)
+app.set("trust proxy", 1);
 
 // ✅ QUAN TRỌNG: Webhook phải đặt trước express.json()
 app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
@@ -25,20 +26,9 @@ app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 SỬA CORS - THÊM DOMAIN VERCEL MỚI
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://shop-seven-roan-99.vercel.app'  // link web mới
-];
-
+// 🔥 CORS - CẤU HÌNH ĐỂ TEST (sau khi OK có thể siết lại)
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: true,  // ✅ tạm thời cho phép tất cả origin để test
     credentials: true
 }));
 

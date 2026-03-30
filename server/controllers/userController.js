@@ -4,11 +4,13 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
-// 🔥 SỬA COOKIE OPTIONS - ĐƠN GIẢN HÓA ĐỂ TEST
+// ✅ CẤU HÌNH COOKIE THEO MÔI TRƯỜNG
+const isProduction = process.env.APP_ENV === "production";
+
 const cookieOptions = {
   httpOnly: true,
-  secure: false,      // tạm thời để false để test trên cross-domain
-  sameSite: "lax",    // thay vì "none" hoặc "strict"
+  secure: isProduction,                    // ✅ true trên production, false trên dev
+  sameSite: isProduction ? "none" : "lax", // ✅ none trên production, lax trên dev
   maxAge: 7 * 24 * 60 * 60 * 1000
 };
 
