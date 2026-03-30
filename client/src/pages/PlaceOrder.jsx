@@ -104,17 +104,24 @@ const PlaceOrder = () => {
         console.log("💳 Calling Stripe API...");
         
         try {
-          const { data } = await axios.post("/api/payment/create-checkout-session", {
-            items: orderItems.map(item => ({
-              name: item.name,
-              price: item.price,
-              quantity: item.quantity,
-              size: item.size,
-              image: item.image
-            })),
-            email: user?.email || "guest@example.com",
-            address: address
-          });
+          // ✅ THÊM withCredentials: true
+          const { data } = await axios.post(
+            "/api/payment/create-checkout-session",
+            {
+              items: orderItems.map(item => ({
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                size: item.size,
+                image: item.image
+              })),
+              email: user?.email || "guest@example.com",
+              address: address
+            },
+            {
+              withCredentials: true   // 🔥 THÊM DÒNG NÀY
+            }
+          );
 
           console.log("✅ Stripe response:", data);
 
@@ -146,7 +153,14 @@ const PlaceOrder = () => {
         console.log("📦 Order Data:", orderData);
 
         try {
-          const { data } = await axios.post("/api/order/cod", orderData);
+          // ✅ THÊM withCredentials: true
+          const { data } = await axios.post(
+            "/api/order/cod",
+            orderData,
+            {
+              withCredentials: true   // 🔥 THÊM DÒNG NÀY
+            }
+          );
           console.log("✅ COD response:", data);
 
           if (data.success) {

@@ -22,35 +22,33 @@ const Login = () => {
 
             if (state === "register") {
 
-                const { data } = await axios.post("/api/user/register", {
+                const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/register`, {
                     name,
                     email,
                     password
-                })
+                }, { withCredentials: true })
 
                 if (data.success) {
                     setUser(data.user)
                     setShowUserLogin(false)
                     toast.success('Registration successful!')
-                    // ✅ FIX LỖI 4: Reload để sync lại toàn bộ state
-                    window.location.reload()
+                    navigate('/')  // ✅ ĐÃ SỬA
                 } else {
                     toast.error(data.message || 'Registration failed')
                 }
 
             } else {
 
-                const { data } = await axios.post("/api/user/login", {
+                const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/login`, {
                     email,
                     password
-                })
+                }, { withCredentials: true })
 
                 if (data.success) {
                     setUser(data.user)
                     setShowUserLogin(false)
                     toast.success('Login successful!')
-                    // ✅ FIX LỖI 4: Reload để sync lại toàn bộ state
-                    window.location.reload()
+                    navigate('/')  // ✅ ĐÃ SỬA
                 } else {
                     toast.error(data.message || 'Login failed')
                 }

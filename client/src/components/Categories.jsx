@@ -17,14 +17,21 @@ const Categories = () => {
                 paraStyles="hidden"
             />
 
+            {/* RESPONSIVE: Mobile xuống dòng, desktop cuộn ngang */}
             <div className="
-                flex
-                flex-wrap
-                justify-center
-                gap-x-14
-                gap-y-12
+                grid
+                grid-cols-2
+                sm:grid-cols-3
+                md:flex
+                md:flex-nowrap
+                md:overflow-x-auto
+                justify-items-center
+                gap-x-8
+                gap-y-10
                 max-w-[1100px]
                 mx-auto
+                md:pb-4
+                md:no-scrollbar
             ">
 
                 {categories.map((cat) => (
@@ -36,7 +43,10 @@ const Categories = () => {
                             flexCenter flex-col
                             cursor-pointer
                             group
-                            w-[180px]
+                            w-[140px]
+                            sm:w-[160px]
+                            md:w-[180px]
+                            md:flex-shrink-0
                             hover:scale-105
                             transition
                         "
@@ -45,7 +55,9 @@ const Categories = () => {
                         {/* IMAGE */}
                         <div className="
                             relative
-                            w-[180px] h-[180px]
+                            w-[140px] h-[140px]
+                            sm:w-[160px] sm:h-[160px]
+                            md:w-[180px] md:h-[180px]
                             flexCenter
                             rounded-full
                             bg-gray-100
@@ -77,8 +89,9 @@ const Categories = () => {
 
                         {/* TEXT */}
                         <h5 className="
-                            mt-5
-                            text-[14px]
+                            mt-4
+                            text-[12px]
+                            sm:text-[14px]
                             font-semibold
                             uppercase
                             tracking-wide

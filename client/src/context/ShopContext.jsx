@@ -11,8 +11,14 @@ import { dummyProducts } from "../assets/data.js";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
+// ✅ TẠO AXIOS INSTANCE VỚI CẤU HÌNH CHUẨN
+const api = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
 
 const ShopContext = createContext();
 
@@ -43,7 +49,7 @@ const ShopContextProvider = ({ children }) => {
 
   const handleAutoLogout = useCallback(async () => {
     try {
-      await axios.post("/api/user/logout");
+      await api.post("/api/user/logout");
       setUser(null);
       setCartItems({});
       setWishlist([]);
@@ -106,7 +112,7 @@ const ShopContextProvider = ({ children }) => {
     if (!user) return;
 
     try {
-      await axios.post("/api/user/sync-cart", {
+      await api.post("/api/user/sync-cart", {
         cartData: cart,
       });
     } catch (error) {
@@ -118,7 +124,7 @@ const ShopContextProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const { data } = await axios.get("/api/product/list");
+      const { data } = await api.get("/api/product/list");
 
       if (data.success && data.products?.length > 0) {
         setProducts(data.products);
@@ -134,7 +140,7 @@ const ShopContextProvider = ({ children }) => {
     if (!user) return;
 
     try {
-      const { data } = await axios.get("/api/user/wishlist");
+      const { data } = await api.get("/api/user/wishlist");
 
       if (data.success) {
         const wishlistIds = data.wishlist.map(item => item._id);
@@ -147,7 +153,7 @@ const ShopContextProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get("/api/user/is-auth");
+      const { data } = await api.get("/api/user/is-auth");
 
       if (data.success) {
         setUser(data.user);
@@ -173,7 +179,7 @@ const ShopContextProvider = ({ children }) => {
 
   const fetchAdmin = async () => {
     try {
-      const { data } = await axios.get("/api/admin/is-auth");
+      const { data } = await api.get("/api/admin/is-auth");
       setIsAdmin(data.success);
     } catch {
       setIsAdmin(false);
@@ -182,7 +188,7 @@ const ShopContextProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const { data } = await axios.post("/api/user/logout");
+      const { data } = await api.post("/api/user/logout");
 
       if (data.success) {
         setUser(null);
@@ -313,7 +319,7 @@ const ShopContextProvider = ({ children }) => {
         setWishlist(prev => [...prev, productId]);
       }
 
-      const { data } = await axios.post("/api/user/toggle-wishlist", {
+      const { data } = await api.post("/api/user/toggle-wishlist", {
         productId,
       });
 
@@ -347,7 +353,7 @@ const ShopContextProvider = ({ children }) => {
 
   const value = {
     navigate,
-    axios,
+    axios: api,  // ✅ dùng api instance thay vì axios mặc định
 
     user,
     setUser,
@@ -376,7 +382,7 @@ const ShopContextProvider = ({ children }) => {
     getCartAmount,
 
     wishlist,
-    toggleWishlist,  // ✅ ĐÃ THÊM
+    toggleWishlist,
 
     isAdmin,
     setIsAdmin,

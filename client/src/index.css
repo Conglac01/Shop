@@ -3,10 +3,9 @@
 /* ================================
    GLOBAL FIX
 ================================ */
-
 *,
 *::before,
-*::after {
+*after {
   box-sizing: border-box;
 }
 
@@ -16,7 +15,7 @@ body {
   overflow-x: hidden;
 }
 
-/* 🔥 FIX LỖI UI BỊ PHÓNG TO */
+/* 🔥 QUAN TRỌNG: Fix font-size cố định, không bị to */
 html {
   font-size: 16px;
 }
@@ -25,7 +24,6 @@ html {
    DESIGN TOKENS
 ================================ */
 @theme {
-
   --color-primary: #f4f4f4;
   --color-primary-deep: #1b1b1726;
   --color-secondary: #777777;
@@ -34,142 +32,237 @@ html {
   --color-gray-50: #585858;
 
   --breakpoint-xs: 480px;
-
-  --background-image-hero: url("/src/assets/hero-bg.png");
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
 
   --font-sans: "Inter", system-ui, sans-serif;
   --font-pacifico: "Pacifico", cursive;
 }
 
 /* ================================
-   BASE
+   BASE STYLES - FONT SIZE CỐ ĐỊNH
 ================================ */
-
 @layer base {
-
   html {
     font-family: var(--font-sans);
   }
 
   body {
-    @apply text-tertiary bg-white;
+    background-color: #ffffff;
+    color: var(--color-tertiary);
   }
 
+  /* Font-size cố định theo px, không dùng clamp hay vw */
   h1 {
-    @apply text-[36px] sm:text-[45px] md:text-[60px] font-bold leading-tight;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
   }
 
   h2 {
-    @apply text-[22px] sm:text-[28px] md:text-[35px] font-bold;
+    font-size: 28px;
+    font-weight: 700;
   }
 
   h3 {
-    @apply text-[20px] sm:text-[24px] md:text-[28px] font-bold;
+    font-size: 24px;
+    font-weight: 700;
   }
 
   h4 {
-    @apply text-[15px] md:text-[17px] font-bold;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   h5 {
-    @apply text-[13px] md:text-[15px] font-bold;
+    font-size: 16px;
+    font-weight: 700;
   }
 
   p {
-    @apply text-[14px] leading-[1.5] text-gray-30;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-gray-30);
+  }
+
+  /* Responsive nhẹ nhàng */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 28px;
+    }
+    h2 {
+      font-size: 22px;
+    }
+    h3 {
+      font-size: 20px;
+    }
+    h4 {
+      font-size: 16px;
+    }
+    p {
+      font-size: 13px;
+    }
   }
 }
 
 /* ================================
    UTILITIES
 ================================ */
-
 @layer utilities {
-
   .active-link {
-    @apply relative;
+    position: relative;
   }
 
   .active-link::after {
     content: "";
-    @apply absolute right-1 -bottom-1 h-0.5 w-2/5 bg-black;
+    position: absolute;
+    right: 4px;
+    bottom: -4px;
+    height: 2px;
+    width: 40%;
+    background-color: black;
   }
 
   .btn-white {
-    @apply px-6 py-3 text-sm font-medium transition-all bg-white text-tertiary;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+    color: var(--color-tertiary);
+    border: 1px solid transparent;
+  }
+
+  .btn-white:hover {
+    background-color: var(--color-primary);
   }
 
   .btn-dark {
-    @apply px-6 py-3 text-sm font-medium transition-all bg-tertiary text-white;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background-color: var(--color-tertiary);
+    color: #ffffff;
+  }
+
+  .btn-dark:hover {
+    opacity: 0.9;
   }
 
   .btn-light {
-    @apply px-6 py-3 text-sm font-medium transition-all bg-primary ring-1 ring-slate-900/10 hover:bg-white;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background-color: var(--color-primary);
+    color: var(--color-tertiary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-light:hover {
+    background-color: #ffffff;
   }
 
   .btn-outline {
-    @apply px-6 py-3 text-sm font-medium transition-all bg-white ring-1 ring-slate-900/10 hover:bg-primary;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    color: var(--color-tertiary);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--color-primary);
+    border-color: transparent;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 text-sm font-medium transition-all bg-secondary text-white;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background-color: var(--color-secondary);
+    color: #ffffff;
+  }
+
+  .btn-secondary:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 640px) {
+    .btn-white,
+    .btn-dark,
+    .btn-light,
+    .btn-outline,
+    .btn-secondary {
+      padding: 10px 20px;
+      font-size: 13px;
+    }
   }
 
   .max-padd-container {
-    @apply w-full mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10;
+    width: 100%;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .flexCenter {
-    @apply flex items-center justify-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .flexBetween {
-    @apply flex items-center justify-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   img {
-    @apply max-w-full h-auto;
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* ================================
-   HERO
+   RESPONSIVE CONTAINER
 ================================ */
+@media (min-width: 640px) {
+  .max-padd-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
 
-.bg-hero {
-  background-size: cover;
-  background-position: right center;
-  background-repeat: no-repeat;
+@media (min-width: 1024px) {
+  .max-padd-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 }
 
 /* ================================
-   RESPONSIVE HERO
+   SMOOTH SCROLLING
 ================================ */
-
-@media (max-width: 768px) {
-  .bg-hero {
-    background-position: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .bg-hero {
-    background-position: 80% center !important;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .bg-hero {
-    background-position: 75% center !important;
-  }
-}
-
-@media (min-width: 769px) {
-  .bg-hero {
-    background-position: 70% center !important;
-  }
+html {
+  scroll-behavior: smooth;
 }
