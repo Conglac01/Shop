@@ -29,10 +29,14 @@ const Login = () => {
                 }, { withCredentials: true })
 
                 if (data.success) {
+                    // ✅ LƯU TOKEN VÀO LOCALSTORAGE
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
                     setUser(data.user)
                     setShowUserLogin(false)
                     toast.success('Registration successful!')
-                    navigate('/')  // ✅ ĐÃ SỬA
+                    navigate('/')
                 } else {
                     toast.error(data.message || 'Registration failed')
                 }
@@ -45,10 +49,14 @@ const Login = () => {
                 }, { withCredentials: true })
 
                 if (data.success) {
+                    // ✅ LƯU TOKEN VÀO LOCALSTORAGE
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
                     setUser(data.user)
                     setShowUserLogin(false)
                     toast.success('Login successful!')
-                    navigate('/')  // ✅ ĐÃ SỬA
+                    navigate('/')
                 } else {
                     toast.error(data.message || 'Login failed')
                 }

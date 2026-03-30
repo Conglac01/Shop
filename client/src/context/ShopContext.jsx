@@ -20,6 +20,15 @@ const api = axios.create({
   }
 });
 
+// ✅ HÀM LẤY TOKEN TỪ LOCALSTORAGE
+const getToken = () => localStorage.getItem('token');
+
+// ✅ HÀM LẤY HEADER AUTH
+const getAuthHeader = () => {
+  const token = getToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 const ShopContext = createContext();
 
 const ShopContextProvider = ({ children }) => {
@@ -49,7 +58,10 @@ const ShopContextProvider = ({ children }) => {
 
   const handleAutoLogout = useCallback(async () => {
     try {
-      await api.post("/api/user/logout");
+      await api.post("/api/user/logout", {}, {
+        headers: getAuthHeader()
+      });
+      localStorage.removeItem('token');
       setUser(null);
       setCartItems({});
       setWishlist([]);
@@ -114,6 +126,8 @@ const ShopContextProvider = ({ children }) => {
     try {
       await api.post("/api/user/sync-cart", {
         cartData: cart,
+      }, {
+        headers: getAuthHeader()
       });
     } catch (error) {
       console.log("Sync cart error:", error.message);
@@ -140,7 +154,9 @@ const ShopContextProvider = ({ children }) => {
     if (!user) return;
 
     try {
-      const { data } = await api.get("/api/user/wishlist");
+      const { data } = await api.get("/api/user/wishlist", {
+        headers: getAuthHeader()
+      });
 
       if (data.success) {
         const wishlistIds = data.wishlist.map(item => item._id);
@@ -151,11 +167,17 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  // ✅ ĐÃ SỬA - THÊM withCredentials: true
+  // ✅ SỬA fetchUser - DÙNG TOKEN TỪ LOCALSTORAGE
   const fetchUser = async () => {
     try {
+      const token = getToken();
+      if (!token) {
+        setUser(null);
+        return;
+      }
+      
       const { data } = await api.get("/api/user/is-auth", {
-        withCredentials: true
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       if (data.success) {
@@ -174,6 +196,8 @@ const ShopContextProvider = ({ children }) => {
         localStorage.removeItem("cart_guest");
 
         await fetchWishlist();
+      } else {
+        setUser(null);
       }
     } catch {
       setUser(null);
@@ -191,9 +215,12 @@ const ShopContextProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const { data } = await api.post("/api/user/logout");
+      const { data } = await api.post("/api/user/logout", {}, {
+        headers: getAuthHeader()
+      });
 
       if (data.success) {
+        localStorage.removeItem('token');
         setUser(null);
         setCartItems({});
         setWishlist([]);
@@ -324,6 +351,8 @@ const ShopContextProvider = ({ children }) => {
 
       const { data } = await api.post("/api/user/toggle-wishlist", {
         productId,
+      }, {
+        headers: getAuthHeader()
       });
 
       if (!data.success) {
