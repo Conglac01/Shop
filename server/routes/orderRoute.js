@@ -16,7 +16,7 @@ const orderRouter = express.Router();
 /* USER */
 orderRouter.post("/cod", authUser, placeOrderCOD);
 orderRouter.post("/stripe", authUser, placeOrderStripe);
-orderRouter.post("/user-orders", authUser, userOrders);  // ✅ SỬA THÀNH user-orders
+orderRouter.post("/user-orders", authUser, userOrders);  
 
 /* ADMIN */
 orderRouter.post("/list", authAdmin, allOrders);

@@ -9,6 +9,9 @@ const MyOrders = () => {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
 
+    // ✅ LẤY TOKEN TỪ LOCALSTORAGE
+    const getToken = () => localStorage.getItem('token')
+
     const loadOrderData = async () => {
         if (!user) {
             setLoading(false)
@@ -19,8 +22,12 @@ const MyOrders = () => {
             setLoading(true)
             console.log("📢 Fetching user orders...")
             
-            // ✅ SỬA: Không gửi userId trong body, auth middleware sẽ tự lấy từ token
+            const token = getToken()
+            const authHeader = token ? { Authorization: `Bearer ${token}` } : {}
+            
+            // ✅ SỬA: Thêm Authorization header
             const { data } = await axios.post("/api/order/user-orders", {}, {
+                headers: authHeader,
                 withCredentials: true
             })
 

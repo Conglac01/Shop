@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import toast from "react-hot-toast";
+import axios from "axios"; // ✅ THÊM IMPORT AXIOS GỐC
 
 const PlaceOrder = () => {
 
@@ -9,7 +10,7 @@ const PlaceOrder = () => {
     products,
     getCartAmount,
     navigate,
-    axios,
+    axios: contextAxios,  // ✅ ĐỔI TÊN ĐỂ PHÂN BIỆT
     currency,
     user,
     setCartItems
@@ -39,6 +40,9 @@ const PlaceOrder = () => {
       });
     }
   }
+
+  // ✅ LẤY TOKEN TỪ LOCALSTORAGE
+  const getToken = () => localStorage.getItem('token');
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
@@ -99,14 +103,19 @@ const PlaceOrder = () => {
       console.log("📦 User:", user);
       console.log("📦 Order Items:", orderItems);
 
+      const token = getToken();
+      console.log("🔑 Token from localStorage:", token);
+      
+      const authHeader = token ? { Authorization: `Bearer ${token}` } : {};
+      console.log("📋 Auth Header:", authHeader);
+
       // Stripe payment
       if (paymentMethod === "stripe") {
         console.log("💳 Calling Stripe API...");
         
         try {
-          // ✅ THÊM withCredentials: true
           const { data } = await axios.post(
-            "/api/payment/create-checkout-session",
+            `${import.meta.env.VITE_BACKEND_URL}/api/payment/create-checkout-session`,
             {
               items: orderItems.map(item => ({
                 name: item.name,
@@ -119,7 +128,8 @@ const PlaceOrder = () => {
               address: address
             },
             {
-              withCredentials: true   // 🔥 THÊM DÒNG NÀY
+              headers: authHeader,
+              withCredentials: true
             }
           );
 
@@ -153,12 +163,12 @@ const PlaceOrder = () => {
         console.log("📦 Order Data:", orderData);
 
         try {
-          // ✅ THÊM withCredentials: true
           const { data } = await axios.post(
-            "/api/order/cod",
+            `${import.meta.env.VITE_BACKEND_URL}/api/order/cod`,
             orderData,
             {
-              withCredentials: true   // 🔥 THÊM DÒNG NÀY
+              headers: authHeader,
+              withCredentials: true
             }
           );
           console.log("✅ COD response:", data);
@@ -166,7 +176,8 @@ const PlaceOrder = () => {
           if (data.success) {
             setCartItems({});
             
-            await axios.post("/api/user/clear-cart", {}, {
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/clear-cart`, {}, {
+              headers: authHeader,
               withCredentials: true
             });
             

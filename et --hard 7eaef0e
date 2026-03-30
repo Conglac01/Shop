@@ -1,0 +1,21 @@
+[33mac83cf1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix: remove domain from cookie
+[33m29c260f[m fix: add domain .onrender.com to cookie
+[33m7d6e8cc[m fix: cookie cross-site sameSite=none secure=true
+[33m7eaef0e[m fix: axios instance, withCredentials cho payment, move vite to dependencies
+[33mc9c9df0[m fix: cookie cross-domain production ready
+[33md944619[m fix: cookie secure=false, sameSite=lax để test
+[33me21a435[m fix: CORS cho domain Vercel mới
+[33m2ba3d32[m fix UI scale
+[33m8bb0629[m Fix: Thêm image vào webhook Stripe và sửa hiển thị ảnh trong My Orders
+[33m8c15beb[m Fix Stripe webhook and order display
+[33m754342f[m sửa thêm lỗi user mới đăng ký thanh toá lần 1 không hiện my order
+[33m9b9fee6[m cập nhập user mới thanh toán được, code paymentsuccess.jsx
+[33m9d30e3e[m Fix mongo
+[33m8cce4d6[m fix gan het loi
+[33m5b143cd[m Fix wishlish, cart, data.js
+[33mb47917b[m Update project with latest changes
+[33m43c9d27[m Update full project with cart sync and protected routes
+[33m564f93a[m Update project: fix bugs and update features
+[33m7bc8e3b[m Update full project
+[33md12cf83[m Update frontend and admin pages
+[33ma060bc4[m init Shop project with client

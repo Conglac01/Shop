@@ -71,6 +71,7 @@ export const userRegister = async (req, res) => {
 
     return res.json({
       success: true,
+      token: token,
       user: {
         _id: user._id,
         name: user.name,
