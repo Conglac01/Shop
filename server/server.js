@@ -26,9 +26,9 @@ app.use("/api/payment/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 CORS - CẤU HÌNH ĐỂ TEST (sau khi OK có thể siết lại)
+// 🔥 CORS - CHỈ ĐỊNH RÕ ORIGIN CHO COOKIE HOẠT ĐỘNG
 app.use(cors({
-    origin: true,  // ✅ tạm thời cho phép tất cả origin để test
+    origin: 'https://shop-five-eosin.vercel.app',  // ✅ domain frontend chính xác
     credentials: true
 }));
 
