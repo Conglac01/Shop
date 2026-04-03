@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 /* ================================
-   GLOBAL FIX
+   GLOBAL FIX - RESET CƠ BẢN
 ================================ */
 *,
 *::before,
-*after {
+*::after {
   box-sizing: border-box;
 }
 
@@ -15,9 +15,17 @@ body {
   overflow-x: hidden;
 }
 
-/* 🔥 QUAN TRỌNG: Fix font-size cố định, không bị to */
+/* 🔥 QUAN TRỌNG: Fix font-size cố định, không bị to trên mobile */
 html {
   font-size: 16px;
+}
+
+/* 🔥 FIX 6: #root - xóa padding/margin thừa gây lỗi mobile */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 /* ================================
@@ -88,7 +96,7 @@ html {
     color: var(--color-gray-30);
   }
 
-  /* Responsive nhẹ nhàng */
+  /* Responsive nhẹ nhàng cho mobile */
   @media (max-width: 768px) {
     h1 {
       font-size: 28px;
@@ -195,6 +203,7 @@ html {
     opacity: 0.9;
   }
 
+  /* Responsive button padding cho mobile */
   @media (max-width: 640px) {
     .btn-white,
     .btn-dark,

@@ -86,7 +86,6 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ FIX LỖI 2: Cart count chỉ hiện khi có user
   const cartCount = useMemo(() => {
     if (!user) return 0;
     return getCartCount();
@@ -95,12 +94,13 @@ const Header = () => {
   return (
     <>
       {!isHomepage && (
-        <div className="absolute top-0 left-0 w-full bg-gradient-to-l from-primary via-white to-primary h-[72px] z-40" />
+        <div className="absolute top-0 left-0 w-full bg-gradient-to-l from-primary via-white to-primary h-[72px] z-30" />
       )}
 
+      {/* 🔥 FIX 1: Header z-index = 40, relative thay vì absolute */}
       <header
-        className={`top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isSticky ? "fixed bg-white shadow-md" : "absolute"
+        className={`top-0 left-0 w-full z-40 transition-all duration-300 ${
+          isSticky ? "fixed bg-white shadow-md" : "relative"
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between py-3">
@@ -114,15 +114,23 @@ const Header = () => {
             Shop <span className="text-secondary bold-28">.</span>
           </Link>
 
-          {/* Navbar */}
+          {/* 🔥 FIX 2: Navbar - menu mobile full màn hình */}
           <Navbar
             setMenuOpened={setMenuOpened}
             containerStyles={
-            menuOpened
-                ? "flex flex-col gap-6 fixed top-16 right-6 bg-white p-6 shadow-xl rounded-lg z-50"
+              menuOpened
+                ? "flex flex-col gap-6 fixed top-0 left-0 w-full h-screen bg-white p-6 z-50"
                 : "hidden lg:flex items-center gap-x-10"
             }
           />
+
+          {/* 🔥 FIX 3: Overlay đóng menu */}
+          {menuOpened && (
+            <div
+              onClick={() => setMenuOpened(false)}
+              className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+            />
+          )}
 
           {/* Right icons */}
           <div className="flex gap-8 items-center">
@@ -158,7 +166,7 @@ const Header = () => {
 
             </div>
 
-            {/* Cart - chỉ hiện badge khi có user */}
+            {/* Cart */}
             <div
               onClick={() => {
                 if (!user) {
@@ -254,8 +262,8 @@ const Header = () => {
 
             </div>
 
-            {/* Mobile menu */}
-            <div className="lg:hidden">
+            {/* Mobile menu button */}
+            <div className="lg:hidden relative z-50">
               {menuOpened ? (
                 <FaBarsStaggered
                   onClick={toggleMenu}

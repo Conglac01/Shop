@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 
 const Login = () => {
 
-    const { setShowUserLogin, navigate, axios, setUser, setCartItems } = useContext(ShopContext)  // ✅ THÊM setCartItems
+    const { setShowUserLogin, navigate, axios, setUser, setCartItems } = useContext(ShopContext)
 
     const [state, setState] = useState('login')
     const [name, setName] = useState('')
@@ -29,12 +29,10 @@ const Login = () => {
                 }, { withCredentials: true })
 
                 if (data.success) {
-                    // ✅ LƯU TOKEN VÀO LOCALSTORAGE
                     if (data.token) {
                         localStorage.setItem('token', data.token);
                     }
                     setUser(data.user)
-                    // ✅ THÊM: đồng bộ giỏ hàng từ server
                     setCartItems(data.user.cartData || {})
                     setShowUserLogin(false)
                     toast.success('Registration successful!')
@@ -51,12 +49,10 @@ const Login = () => {
                 }, { withCredentials: true })
 
                 if (data.success) {
-                    // ✅ LƯU TOKEN VÀO LOCALSTORAGE
                     if (data.token) {
                         localStorage.setItem('token', data.token);
                     }
                     setUser(data.user)
-                    // ✅ THÊM: đồng bộ giỏ hàng từ server
                     setCartItems(data.user.cartData || {})
                     setShowUserLogin(false)
                     toast.success('Login successful!')
@@ -77,9 +73,10 @@ const Login = () => {
     }
 
     return (
+        {/* 🔥 FIX 4: Login modal z-index = 999 */}
         <div 
             onClick={() => setShowUserLogin(false)}
-            className='fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center text-sm text-gray-600 bg-black/60 backdrop-blur-sm'
+            className='fixed top-0 bottom-0 left-0 right-0 z-[999] flex items-center justify-center text-sm text-gray-600 bg-black/60 backdrop-blur-sm'
         >
             <form 
                 onSubmit={onSubmitHandler}
